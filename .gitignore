@@ -1,0 +1,14 @@
+# Node.js 依赖文件夹（绝对不能传）
+node_modules/
+
+# VitePress 编译生成的临时文件和缓存
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# 系统生成的隐藏文件 (Mac / Windows)
+.DS_Store
+Thumbs.db
+
+# 本地环境变量文件 (如果有)
+.env
+.env.*.local

@@ -1,0 +1,11 @@
+/* docs/.vitepress/theme/style.css */
+
+/* 去除文章正文里所有链接的默认下划线 */
+.vp-doc a {
+	text-decoration: none;
+}
+
+/* 强烈建议保留这一段：鼠标悬浮（放上去）时显示下划线，这样用户才知道这是个链接 */
+.vp-doc a:hover {
+	text-decoration: underline;
+}

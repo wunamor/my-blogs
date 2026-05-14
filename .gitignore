@@ -12,3 +12,5 @@ Thumbs.db
 # 本地环境变量文件 (如果有)
 .env
 .env.*.local
+
+test/

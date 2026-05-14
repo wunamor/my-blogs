@@ -8,8 +8,20 @@ const docsDir = path.resolve(__dirname, '../docs');
 
 function generateIndexForDir(dir) {
   const items = fs.readdirSync(dir);
-  let content = `\n# 📁 ${path.basename(dir)}\n\n`;
-  content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;
+  // 👇 1. 提取出干净的文件夹名称（没有图标）
+  const cleanName = path.basename(dir);
+
+  // 👇 2. 注意：--- 必须在绝对的第一行！
+  let content = `---\n`;
+  content += `title: ${cleanName}\n`;
+  content += `---\n\n`;
+
+  // 把自动生成注释移到配置项下面
+  content += `<!-- AUTO_GENERATED -->\n\n`;
+
+  // 👇 3. 正文里依然保留带有图标的漂亮大标题
+  content += `# 📁 ${cleanName}\n\n`;
+  content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;;
   let hasItems = false;
 
   for (const item of items) {

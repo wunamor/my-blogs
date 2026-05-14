@@ -5,6 +5,9 @@ export default defineConfig({
   lang: 'zh-CN', 
   title: "我的学习笔记",
   description: "记录驾考与编程知识",
+  head: [
+    ['link', { rel: 'icon', href: '/logo.png' }]
+  ],
   cleanUrls: true, 
   lastUpdated: true,
   

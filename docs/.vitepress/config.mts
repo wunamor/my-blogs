@@ -2,16 +2,25 @@ import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
 
 export default defineConfig({
-  lang: 'zh-CN', // 👉 强烈建议加上这一行！告诉浏览器这是中文网站，防止弹跳出“是否翻译”的提示
+  lang: 'zh-CN', 
   title: "我的学习笔记",
   description: "记录驾考与编程知识",
   cleanUrls: true, 
+  lastUpdated: true,
   
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
       { text: '驾考交规', link: '/驾考交规/' } // 直接指向文件夹即可
     ],
+
+    lastUpdated: {
+      text: '最后更新于',
+      formatOptions: {
+        dateStyle: 'short', // 显示为：2026/05/13
+        timeStyle: 'short'  // 显示为：晚上11:14
+      }
+    },
 
     sidebar: generateSidebar({
       documentRootPath: 'docs',

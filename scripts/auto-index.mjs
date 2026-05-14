@@ -27,8 +27,24 @@ function generateIndexForDir(dir) {
       hasItems = true;
       generateIndexForDir(itemPath); // 递归处理子文件夹
     } else if (item.endsWith('.md')) {
-      const name = item.replace('.md', '');
-      content += `- 📄 [${name}](./${encodedItem})\n`;
+      // 默认名称为去掉 .md 的文件名
+      let displayName = item.replace('.md', '');
+
+      try {
+        // 读取文件内容
+        const fileContent = fs.readFileSync(itemPath, 'utf-8');
+        // 使用正则匹配第一出现的一级标题 (例如: # 我的标题)
+        const titleMatch = fileContent.match(/^#\s+(.+)/m);
+
+        // 如果匹配到了标题，就用提取出的标题替换掉默认文件名
+        if (titleMatch) {
+          displayName = titleMatch[1].trim();
+        }
+      } catch (err) {
+        console.error(`读取文件 ${item} 失败:`, err);
+      }
+
+      content += `- 📄 [${displayName}](./${encodedItem})\n`;
       hasItems = true;
     }
   }

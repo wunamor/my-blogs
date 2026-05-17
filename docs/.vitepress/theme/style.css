@@ -9,3 +9,11 @@
 .vp-doc a:hover {
 	text-decoration: underline;
 }
+
+/* 限制主内容区域内的所有图片，最大宽度不超过 400px */
+.vp-doc img {
+	max-width: 400px;
+	width: 100%;
+	height: auto;
+	border-radius: 4px; /* 顺便加个圆角，看起更像卡片 */
+}

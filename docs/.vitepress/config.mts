@@ -1,6 +1,34 @@
 import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
+import fs from 'node:fs' // 👇 1. 引入文件读取模块
 
+// 👇 2. 写一个自动生成导航栏的函数
+function autoGetNavs() {
+  const navs = [
+    { text: '首页', link: '/' } // 永远保留首页
+  ];
+  
+  try {
+    // 读取 docs 目录下的所有内容
+    const items = fs.readdirSync('docs');
+    for (const item of items) {
+      // 排除掉隐藏文件夹（如 .vitepress）、public 文件夹和 index.md
+      if (item.startsWith('.') || item === 'public' || item === 'index.md') continue;
+      
+      // 判断是不是文件夹
+      if (fs.statSync(`docs/${item}`).isDirectory()) {
+        navs.push({
+          text: item, // 文件夹名就是导航名
+          link: `/${item}/` // 自动指向该文件夹的导读页
+        });
+      }
+    }
+  } catch (err) {
+    console.error('自动生成 Nav 失败', err);
+  }
+  
+  return navs;
+}
 export default defineConfig({
   lang: 'zh-CN', 
   title: "我的学习笔记",
@@ -12,10 +40,7 @@ export default defineConfig({
   lastUpdated: true,
   
   themeConfig: {
-    nav: [
-      { text: '首页', link: '/' },
-      { text: '驾考交规', link: '/驾考交规/' } // 直接指向文件夹即可
-    ],
+    nav: autoGetNavs(),
 
     lastUpdated: {
       text: '最后更新于',

@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "micromatch": "^4.0.8",
     "vitepress": "^1.6.4",
     "vitepress-sidebar": "^1.33.2"
   }

@@ -1,34 +1,26 @@
 import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
-import fs from 'node:fs' // 👇 1. 引入文件读取模块
+// 👇 引入上一层 scripts 文件夹里的扫描器
+import { scanDir } from '../../scripts/scanner.mjs' 
 
-// 👇 2. 写一个自动生成导航栏的函数
+// 👇 自动生成导航栏的函数
 function autoGetNavs() {
-  const navs = [
-    { text: '首页', link: '/' } // 永远保留首页
+  // 定义规则：匹配所有，排除隐藏文件夹、public资源库、以及可能的零散文件
+  const rules = ['*', '!.*', '!public'];
+  
+  // 一行代码搞定！
+  const { directories } = scanDir('docs', rules);
+  
+  return [
+    { text: '首页', link: '/' },
+    // 遍历获取到的文件夹，生成路由
+    ...directories.map(dir => ({
+      text: dir,
+      link: `/${dir}/`
+    }))
   ];
-  
-  try {
-    // 读取 docs 目录下的所有内容
-    const items = fs.readdirSync('docs');
-    for (const item of items) {
-      // 排除掉隐藏文件夹（如 .vitepress）、public 文件夹和 index.md
-      if (item.startsWith('.') || item === 'public' || item === 'index.md') continue;
-      
-      // 判断是不是文件夹
-      if (fs.statSync(`docs/${item}`).isDirectory()) {
-        navs.push({
-          text: item, // 文件夹名就是导航名
-          link: `/${item}/` // 自动指向该文件夹的导读页
-        });
-      }
-    }
-  } catch (err) {
-    console.error('自动生成 Nav 失败', err);
-  }
-  
-  return navs;
 }
+
 export default defineConfig({
   lang: 'zh-CN', 
   title: "我的学习笔记",

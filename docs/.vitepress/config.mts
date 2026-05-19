@@ -95,6 +95,12 @@ export default defineConfig({
     outline: {
       label: '本页目录', // 右侧悬浮大纲的标题
       level: 'deep'      // 自动提取文章里的所有二级、三级标题
-    }
+    },
+
+    
+    footer: {
+      message: '<a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备2026033572号-1</a>',
+      copyright: 'Copyright © 2026 wunamor'
+    },
   }
 })

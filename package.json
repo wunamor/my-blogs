@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:dev": "node scripts/auto-index.mjs && vitepress dev docs",
-    "docs:build": "node scripts/auto-index.mjs && vitepress build docs",
+    "docs:build": "node scripts/auto-index.mjs && chmod -R +x node_modules/.bin/ && vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "keywords": [],

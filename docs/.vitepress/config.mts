@@ -99,7 +99,12 @@ export default defineConfig({
 
     
     footer: {
-      message: '<a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备2026033572号-1</a>',
+      message: `
+        <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" style="margin-right: 15px; color: #888; text-decoration: none;">浙ICP备2026033572号-1</a>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33078402101562"  target="_blank" style="color: #888; text-decoration: none; display: inline-flex; align-items: center;">
+          <img src="../public/备案图标.png" style="width: 16px; height: 16px; margin-right: 5px;">
+          浙公网安备33078402101562号
+        </a>`,
       copyright: 'Copyright © 2026 wunamor'
     },
   }

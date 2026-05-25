@@ -22,6 +22,11 @@ function generateIndexForDir(dir) {
   content += `# 📁 ${cleanName}\n\n`;
   content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;
 
+  // 如果当前目录不是 docs 根目录，就注入一个返回上一级的相对超链接
+  if (dir !== docsDir) {
+    content += `[⬅️ 返回上一级](../)\n\n`;
+  }
+
   let hasItems = false;
 
   // 👉 实例化当前目录的解析器，传入所有的物理名称
@@ -64,10 +69,11 @@ function generateIndexForDir(dir) {
     hasItems = true;
   }
 
-  // 生成或更新 index.md
+  // 把恒成立的 .includes('') 换成真正的内容一致性校验
   if (hasItems) {
     const indexPath = path.join(dir, 'index.md');
-    if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf-8').includes('')) {
+    // 如果文件不存在，或者【旧文件内容】与【新生成内容】不一致时，才允许写入磁盘
+    if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf-8') !== content) {
       fs.writeFileSync(indexPath, content);
     }
   }

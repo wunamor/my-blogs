@@ -1,8 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
 // 👇 引入上一层 scripts 文件夹里的扫描器
-import { scanDir } from '../../scripts/scanner.mjs' 
-
+import { scanDir, createNameResolver } from '../../scripts/scanner.mjs'
 // 👇 自动生成导航栏的函数
 function autoGetNavs() {
   // 定义规则：匹配所有，排除隐藏文件夹、public资源库、以及可能的零散文件
@@ -15,10 +14,32 @@ function autoGetNavs() {
     { text: '首页', link: '/' },
     // 遍历获取到的文件夹，生成路由
     ...directories.map(dir => ({
-      text: dir,
+      text: dir.replace(/^(\d+-)+/, ''),
       link: `/${dir}/`
     }))
   ];
+}
+
+// 使用共用引擎的侧边栏清洗器
+function cleanSidebar(sidebarItems) {
+  if (!Array.isArray(sidebarItems)) return sidebarItems;
+
+  // 👉 提取当前菜单层级的所有 text，传给解析器
+  const currentLevelNames = sidebarItems.map(item => item.text).filter(Boolean);
+  const resolver = createNameResolver(currentLevelNames);
+
+  return sidebarItems.map(item => {
+    const newItem = { ...item };
+    if (newItem.text) {
+      // 核心：调用共用方法安全去前缀
+      newItem.text = resolver(newItem.text);
+    }
+    // 递归处理子菜单
+    if (newItem.items) {
+      newItem.items = cleanSidebar(newItem.items);
+    }
+    return newItem;
+  });
 }
 
 export default defineConfig({
@@ -42,12 +63,12 @@ export default defineConfig({
       }
     },
 
-    sidebar: generateSidebar({
+    sidebar: cleanSidebar(generateSidebar({
       documentRootPath: 'docs',
       useTitleFromFileHeading: true,
       collapsed: true,
       sortMenusByFrontmatterOrder: true
-    }),
+    })),
 
     search: {
       provider: 'local',

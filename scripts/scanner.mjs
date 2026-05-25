@@ -36,3 +36,32 @@ export function scanDir(dirPath, patterns = ['*']) {
 
   return { directories, files };
 }
+
+/**
+ * 创建一个当前层级的“防撞车”名称解析器
+ * @param {string[]} existingNamesArray - 当前层级所有真实的物理名称列表
+ */
+export function createNameResolver(existingNamesArray) {
+  // 1. 记录当前层级所有真实存在的物理名字
+  const allNames = new Set(existingNamesArray);
+  // 2. 记录已经被脱去马甲展示过的名字
+  const seen = new Set();
+
+  /**
+   * @param {string} originalName - 真实的文件/文件夹名 (例如: 01-test)
+   * @param {string} [candidateName] - 备选名(例如从 Markdown 提取的大标题)
+   */
+  return function resolve(originalName, candidateName = null) {
+    let targetName = candidateName || originalName;
+    let displayName = targetName.replace(/^(\d+-)+/, ''); // 尝试脱马甲
+
+    // 智能避让逻辑：
+    // 如果脱马甲后的名字和别人真实存在的物理名字撞了，或者已经被前面的兄弟抢注了
+    if ((displayName !== targetName && allNames.has(displayName)) || seen.has(displayName)) {
+      displayName = targetName; // 乖乖穿回马甲，防止冲突
+    }
+
+    seen.add(displayName);
+    return displayName;
+  };
+}

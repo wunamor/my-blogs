@@ -11,3 +11,4 @@ title: 比特就业课
 [⬅️ 返回上一级](../)
 
 - 📂 [Java118期-直播课](./Java118%E6%9C%9F-%E7%9B%B4%E6%92%AD%E8%AF%BE/)
+- 📂 [Python基础课](./Python%E5%9F%BA%E7%A1%80%E8%AF%BE/)

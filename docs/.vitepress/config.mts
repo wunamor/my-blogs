@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
-// 👇 引入上一层 scripts 文件夹里的扫描器
 import { scanDir, createNameResolver } from '../../scripts/scanner.mjs'
+
+import { autoLinkKeywordsPlugin } from './glossary.mts'
 // 👇 自动生成导航栏的函数
 function autoGetNavs() {
   // 定义规则：匹配所有，排除隐藏文件夹、public资源库、以及可能的零散文件
@@ -51,6 +52,12 @@ export default defineConfig({
   ],
   cleanUrls: true, 
   lastUpdated: true,
+
+  markdown: {
+    config: (md) => {
+      md.use(autoLinkKeywordsPlugin);
+    }
+  },
   
   themeConfig: {
     nav: autoGetNavs(),

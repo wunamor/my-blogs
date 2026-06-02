@@ -69,14 +69,19 @@ function generateIndexForDir(dir) {
     hasItems = true;
   }
 
-  // 把恒成立的 .includes('') 换成真正的内容一致性校验
-  if (hasItems) {
-    const indexPath = path.join(dir, 'index.md');
-    // 如果文件不存在，或者【旧文件内容】与【新生成内容】不一致时，才允许写入磁盘
-    if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf-8') !== content) {
-      fs.writeFileSync(indexPath, content);
-    }
+  // 如果遍历完发现是空目录，优雅地追加一句占位提示
+  if (!hasItems) {
+    content += `\n*📭 此目录下暂无内容，正在建设中...*\n`;
   }
+
+  // 把恒成立的 .includes('') 换成真正的内容一致性校验 
+  // 移除掉外层的 if (hasItems) 限制，允许空目录也写入文件
+  const indexPath = path.join(dir, 'index.md');
+  // 如果文件不存在，或者【旧文件内容】与【新生成内容】不一致时，才允许写入磁盘
+  if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf-8') !== content) {
+    fs.writeFileSync(indexPath, content);
+  }
+
 }
 
 // 启动扫描（针对根目录，额外排除 public 文件夹）

@@ -17,3 +17,10 @@
 	height: auto;
 	border-radius: 4px; /* 顺便加个圆角，看起更像卡片 */
 }
+
+/* 方案二：使用主题品牌色渲染粗体 */
+.vp-doc strong,
+.vp-doc b {
+	font-weight: 700 !important;
+	color: var(--vp-c-brand-1); /* 调用 VitePress 默认的主题色（通常是清爽的蓝紫色） */
+}

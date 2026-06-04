@@ -70,6 +70,12 @@ export default defineConfig({
       }
     },
 
+    socialLinks: [
+      // 1. GitHub 链接（VitePress 原生自带图标，直接写 'github' 即可）
+      { icon: 'github', link: 'https://github.com/wunamor/my-blogs' },
+    ],
+
+
     sidebar: cleanSidebar(generateSidebar({
       documentRootPath: 'docs',
       useTitleFromFileHeading: true,

@@ -11,25 +11,41 @@ const docsDir = path.resolve(__dirname, '../docs');
 const ignorePatterns = ['*', '!.*', '!index.md', '!images'];
 
 function generateIndexForDir(dir) {
-  // 一行代码获取过滤好的文件夹和文件列表！
   const { directories, files } = scanDir(dir, ignorePatterns);
-  const cleanName = path.basename(dir).replace(/^(\d+-)+/, ''); // 去掉 0xx-...-0xx- 数字前缀，保留纯名称
+  const cleanName = path.basename(dir).replace(/^(\d+-)+/, '');
+
+  // 👉 【修改这里】：不再只看当前层，而是调用我们刚写的深层扫描器！
+  const { totalFiles, totalDirs } = getDeepStats(dir);
 
   let content = `---\n`;
   content += `title: ${cleanName}\n`;
   content += `---\n\n`;
-  content += `\n\n`;
   content += `# 📁 ${cleanName}\n\n`;
-  content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;
 
-  // 如果当前目录不是 docs 根目录，就注入一个返回上一级的相对超链接
   if (dir !== docsDir) {
     content += `[⬅️ 返回上一级](../)\n\n`;
   }
 
-  let hasItems = false;
+  content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;
 
-  // 👉 实例化当前目录的解析器，传入所有的物理名称
+  // 👉 【修改文案】：让文案体现出宏观感
+  if (totalDirs > 0 || totalFiles > 0) {
+    content += `<div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">\n`;
+    content += `  📊 <strong>本区统计</strong>：`;
+
+    const stats = [];
+    if (totalDirs > 0) stats.push(`下辖 <b>${totalDirs}</b> 个子文件夹`);
+    if (totalFiles > 0) stats.push(`累计收录 <b>${totalFiles}</b> 篇笔记`);
+
+    content += stats.join(' ｜ ') + `\n`;
+    content += `</div>\n\n`;
+  } else {
+    // 依然保留兜底的空目录提示
+    content += `*📭 此板块暂无内容，正在建设中...*\n\n`;
+  }
+
+  let hasItems = false;
+  // 实例化当前目录的解析器 
   const resolver = createNameResolver([
     ...directories,
     ...files.map(f => f.replace('.md', ''))
@@ -82,6 +98,30 @@ function generateIndexForDir(dir) {
     fs.writeFileSync(indexPath, content);
   }
 
+}
+
+
+// 👉 【新增核心逻辑】：递归计算当前目录及所有子目录下的真实文件数量
+function getDeepStats(targetPath) {
+  let totalFiles = 0;
+  let totalDirs = 0;
+
+  // 复用你已经写好的 scanDir，它自带了忽略 public 和 .git 等文件夹的功能
+  const { directories, files } = scanDir(targetPath, ignorePatterns);
+
+  // 统计当前层的有效笔记
+  const validFiles = files.filter(f => f.endsWith('.md') && f !== 'index.md');
+  totalFiles += validFiles.length;
+  totalDirs += directories.length;
+
+  // 顺藤摸瓜，递归统计子文件夹里的数量
+  for (const dir of directories) {
+    const subStats = getDeepStats(path.join(targetPath, dir));
+    totalFiles += subStats.totalFiles;
+    totalDirs += subStats.totalDirs;
+  }
+
+  return { totalFiles, totalDirs };
 }
 
 // 启动扫描（针对根目录，额外排除 public 文件夹）

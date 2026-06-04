@@ -2,13 +2,15 @@
 title: 设计模式
 ---
 
-
-
 # 📁 设计模式
+
+[⬅️ 返回上一级](../)
 
 > 本页面由系统自动生成，请勿手动修改。
 
-[⬅️ 返回上一级](../)
+<div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
+  📊 <strong>本区统计</strong>：累计收录 <b>3</b> 篇笔记
+</div>
 
 - 📄 [单例模式](./01-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.md)
 - 📄 [工厂模式](./02-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.md)

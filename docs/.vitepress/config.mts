@@ -56,8 +56,11 @@ export default defineConfig({
   markdown: {
     config: (md) => {
       md.use(autoLinkKeywordsPlugin);
-    }
+    },
+    math: true // 开启数学公式渲染
   },
+
+  
   
   themeConfig: {
     nav: autoGetNavs(),

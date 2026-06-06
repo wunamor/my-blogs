@@ -44,50 +44,59 @@ function generateIndexForDir(dir) {
     content += `*📭 此板块暂无内容，正在建设中...*\n\n`;
   }
 
-  let hasItems = false;
+  // let hasItems = false;
   // 实例化当前目录的解析器 
   const resolver = createNameResolver([
     ...directories,
     ...files.map(f => f.replace('.md', ''))
   ]);
 
-  // 1. 递归处理子文件夹
-  for (const item of directories) {
-    const encodedItem = encodeURIComponent(item);
+  const validFiles = files.filter(f => f.endsWith('.md') && f !== 'index.md');
+  const allItems = [
+    ...directories.map(dir => ({ name: dir, isDir: true })),
+    ...validFiles.map(file => ({ name: file, isDir: false }))
+  ];
 
-    // 一行代码搞定防重名去前缀！
-    const displayName = resolver(item);
+  allItems.sort((a, b) => {
+    const matchA = a.name.match(/^(\d+)-/);
+    const matchB = b.name.match(/^(\d+)-/);
+    const numA = matchA ? parseInt(matchA[1], 10) : null;
+    const numB = matchB ? parseInt(matchB[1], 10) : null;
 
-    content += `- 📂 [${displayName}](./${encodedItem}/)\n`;
-    hasItems = true;
-    generateIndexForDir(path.join(dir, item));
-  }
+    if (numA !== null && numB !== null) return numA - numB;
+    if (numA !== null) return -1;
+    if (numB !== null) return 1;
+    if (a.isDir && !b.isDir) return -1;
+    if (!a.isDir && b.isDir) return 1;
+    return a.name.localeCompare(b.name, 'zh-CN');
+  });
 
-  // 2. 处理 Markdown 文件
-  for (const item of files) {
-    if (!item.endsWith('.md')) continue;
+  for (const item of allItems) {
+    // let hasItems = true;
+    const encodedItem = encodeURIComponent(item.name);
 
-    let originalName = item.replace('.md', '');
-    let explicitTitle = null;
-    const itemPath = path.join(dir, item);
+    if (item.isDir) {
+      // 1. 递归处理子文件夹
+      // 一行代码搞定防重名去前缀！
+      const displayName = resolver(item.name);
+      content += `- 📂 [${displayName}](./${encodedItem}/)\n`;
+      generateIndexForDir(path.join(dir, item.name));
+    } else {
+      // 2. 处理 Markdown 文件
+      let originalName = item.name.replace('.md', '');
+      let explicitTitle = null;
+      const itemPath = path.join(dir, item.name);
 
-    try {
-      const fileContent = fs.readFileSync(itemPath, 'utf-8');
-      const titleMatch = fileContent.match(/^#\s+(.+)/m);
-      if (titleMatch) explicitTitle = titleMatch[1].trim();
-    } catch (err) { }
+      try {
+        const fileContent = fs.readFileSync(itemPath, 'utf-8');
+        const titleMatch = fileContent.match(/^#\s+(.+)/m);
+        if (titleMatch) explicitTitle = titleMatch[1].trim();
+      } catch (err) { }
 
-    // 一行代码搞定带标题提取的防重名！
-    const displayName = resolver(originalName, explicitTitle);
-
-    const encodedItem = encodeURIComponent(item);
-    content += `- 📄 [${displayName}](./${encodedItem})\n`;
-    hasItems = true;
-  }
-
-  // 如果遍历完发现是空目录，优雅地追加一句占位提示
-  if (!hasItems) {
-    content += `\n*📭 此目录下暂无内容，正在建设中...*\n`;
+      // 一行代码搞定带标题提取的防重名！
+      const displayName = resolver(originalName, explicitTitle);
+      content += `- 📄 [${displayName}](./${encodedItem})\n`;
+    }
   }
 
   // 把恒成立的 .includes('') 换成真正的内容一致性校验 

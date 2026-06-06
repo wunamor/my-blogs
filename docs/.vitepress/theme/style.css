@@ -24,3 +24,20 @@
 	font-weight: 700 !important;
 	color: var(--vp-c-brand-1); /* 调用 VitePress 默认的主题色（通常是清爽的蓝紫色） */
 }
+
+/**
+  针对 alt 属性包含 "blur" 的图片开启模糊模式 
+  使用方法 ：在 Markdown 中插入图片时，在 alt 文本里包含 "blur" 关键词，例如：
+  ![blur-secret](./images/secret.png)
+  这样这张图片就会默认模糊，用户需要悬停（或触摸）才能看到清晰的版本。
+*/
+.vp-doc img[alt*='blur'] {
+	filter: blur(6px); /* 这里的数值越大，图片越模糊，连轮廓都看不清 */
+	transition: filter 0.4s ease; /* 添加平滑的过渡动画 */
+	cursor: help; /* 鼠标放上去变成问号，提示这里有玄机 */
+}
+
+/* 交互 1：鼠标悬停（或手机端触摸）时，在原文位置逐渐变清晰 */
+.vp-doc img[alt*='blur']:hover {
+	filter: blur(0);
+}

@@ -1,47 +1,12 @@
+// .vitepress/config.mts
 import { defineConfig } from 'vitepress'
-import { generateSidebar } from 'vitepress-sidebar'
-import { scanDir, createNameResolver } from '../../scripts/scanner.mjs'
 
-import { autoLinkKeywordsPlugin } from './glossary.mts'
-// 👇 自动生成导航栏的函数
-function autoGetNavs() {
-  // 定义规则：匹配所有，排除隐藏文件夹、public资源库、以及可能的零散文件
-  const rules = ['*', '!.*', '!public'];
-  
-  // 一行代码搞定！
-  const { directories } = scanDir('docs', rules);
-  
-  return [
-    { text: '首页', link: '/' },
-    // 遍历获取到的文件夹，生成路由
-    ...directories.map(dir => ({
-      text: dir.replace(/^(\d+-)+/, ''),
-      link: `/${dir}/`
-    }))
-  ];
-}
+// 1. 导入自己写的 Markdown 插件
+import { autoLinkKeywordsPlugin } from './plugins/markdown-glossary.mts'
+import { autoDownloadPlugin } from './plugins/markdown-download.mts'
 
-// 使用共用引擎的侧边栏清洗器
-function cleanSidebar(sidebarItems) {
-  if (!Array.isArray(sidebarItems)) return sidebarItems;
-
-  // 👉 提取当前菜单层级的所有 text，传给解析器
-  const currentLevelNames = sidebarItems.map(item => item.text).filter(Boolean);
-  const resolver = createNameResolver(currentLevelNames);
-
-  return sidebarItems.map(item => {
-    const newItem = { ...item };
-    if (newItem.text) {
-      // 核心：调用共用方法安全去前缀
-      newItem.text = resolver(newItem.text);
-    }
-    // 递归处理子菜单
-    if (newItem.items) {
-      newItem.items = cleanSidebar(newItem.items);
-    }
-    return newItem;
-  });
-}
+// 2. 导入刚才抽离的主题配置
+import { themeConfig } from './configs/theme-config.mts'
 
 export default defineConfig({
   lang: 'zh-CN', 
@@ -53,96 +18,15 @@ export default defineConfig({
   cleanUrls: true, 
   lastUpdated: true,
 
+  // 核心 Markdown 渲染配置
   markdown: {
     config: (md) => {
       md.use(autoLinkKeywordsPlugin);
+      md.use(autoDownloadPlugin);
     },
-    math: true // 开启数学公式渲染
+    math: true 
   },
 
-  
-  
-  themeConfig: {
-    nav: autoGetNavs(),
-
-    lastUpdated: {
-      text: '最后更新于',
-      formatOptions: {
-        dateStyle: 'short', // 显示为：2026/05/13
-        timeStyle: 'short'  // 显示为：晚上11:14
-      }
-    },
-
-    socialLinks: [
-      // 1. GitHub 链接（VitePress 原生自带图标，直接写 'github' 即可）
-      { icon: 'github', link: 'https://github.com/wunamor/my-blogs' },
-    ],
-
-
-    sidebar: cleanSidebar(generateSidebar({
-      documentRootPath: 'docs',
-      useTitleFromFileHeading: true,
-      collapsed: true,
-      sortMenusByFrontmatterOrder: true
-    })),
-
-    search: {
-      provider: 'local',
-      options: {
-        translations: {
-          button: {
-            buttonText: '搜索文档',
-            buttonAriaLabel: '搜索文档'
-            
-          },
-          modal: {
-            noResultsText: '无法找到相关结果',
-            resetButtonTitle: '清除查询条件',
-            footer: {
-              selectText: '选择',
-              navigateText: '切换',
-              closeText: '关闭'
-            }
-          }
-        }
-      }
-    },
-
-    // 👇 从这里开始，把下面的代码全部加到 themeConfig 里面
-
-    // 1. 汉化外观/主题切换按钮
-    darkModeSwitchLabel: '外观',
-    lightModeSwitchTitle: '切换到浅色模式',
-    darkModeSwitchTitle: '切换到深色模式',
-    sidebarMenuLabel: '菜单', // 移动端显示的菜单文字
-    returnToTopLabel: '返回顶部', // 移动端显示的回到顶部文字
-
-    // 2. 汉化 404 页面
-    notFound: {
-      title: '页面找不到了',
-      quote: '糟糕，你似乎来到了没有知识存在的荒原...', // 这里可以随便写你想吐槽的句子
-      linkText: '带我回首页'
-    },
-
-    // 3. 强烈推荐顺手汉化的部分：文章底部的翻页和右侧大纲
-    docFooter: {
-      prev: '上一篇',
-      next: '下一篇'
-    },
-    outline: {
-      label: '本页目录', // 右侧悬浮大纲的标题
-      level: 'deep'      // 自动提取文章里的所有二级、三级标题
-    },
-
-    
-    footer: {
-      message: `
-        <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" style="margin-right: 15px; color: #888; text-decoration: none;">浙ICP备2026033572号-1</a>
-        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33078402101562"  target="_blank" style="color: #888; text-decoration: none; display: inline-flex; align-items: center;">
-          <img src="/beian.png" style="width: 16px; height: 16px; margin-right: 5px;">
-          浙公网安备33078402101562号
-        </a>`,
-      copyright: 'Copyright © 2026 wunamor'
-    },
-  }
+  // 直接挂载外部引入的主题配置
+  themeConfig
 })

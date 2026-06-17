@@ -10,9 +10,9 @@
 	text-decoration: underline;
 }
 
-/* 限制主内容区域内的所有图片，最大宽度不超过 400px */
+/* 限制主内容区域内的所有图片，最大宽度不超过 350px */
 .vp-doc img {
-	max-width: 400px;
+	max-width: 350px;
 	width: 100%;
 	height: auto;
 	border-radius: 4px; /* 顺便加个圆角，看起更像卡片 */
@@ -40,4 +40,46 @@
 /* 交互 1：鼠标悬停（或手机端触摸）时，在原文位置逐渐变清晰 */
 .vp-doc img[alt*='blur']:hover {
 	filter: blur(0);
+}
+
+/* 给自动识别到的下载链接穿上“漂亮衣服” */
+.auto-download-link {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 10px;
+	margin: 0 4px;
+	background-color: var(--vp-c-bg-soft);
+	border: 1px solid var(--vp-c-divider);
+	border-radius: 6px;
+	text-decoration: none !important; /* 去掉原生的下划线 */
+	font-size: 0.95em;
+	font-weight: 500;
+	transition: all 0.25s ease;
+}
+
+/* 自动在文字前面加一个现代 UI 下载图标 */
+.auto-download-link::before {
+	content: ''; /* 清空之前的 emoji */
+	display: inline-block;
+	width: 1.1em;
+	height: 1.1em;
+	margin-right: 6px;
+	vertical-align: -0.15em; /* 微调垂直对齐，使其与文字居中 */
+
+	/* 核心魔法：使用背景色填充，并通过 SVG 遮罩镂空出图标形状 */
+	background-color: currentColor;
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+/* 鼠标放上去时的发光交互效果 */
+.auto-download-link:hover {
+	border-color: var(--vp-c-brand);
+	color: var(--vp-c-brand);
+	background-color: var(--vp-c-brand-soft);
+	transform: translateY(-1px);
 }

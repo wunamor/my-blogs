@@ -83,3 +83,20 @@
 	background-color: var(--vp-c-brand-soft);
 	transform: translateY(-1px);
 }
+
+/* 默认浅色模式下，白底或保持原样 */
+.viewer-canvas img {
+	background-color: #ffffff;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+/* 🌙 当系统处于深色模式时，自动调用 VitePress 原生的深色背景 */
+.dark .viewer-canvas img {
+	/* background-color: var(--vp-c-bg); 与网页底色完全一致的纯正深色 */
+
+	/* 💡 备用选项：如果你希望图片区域比背景稍微亮那么一点点，产生类似卡片的层次感，
+     可以把上面那行注释掉，换成下面这行：*/
+	background-color: var(--vp-c-bg-soft);
+}

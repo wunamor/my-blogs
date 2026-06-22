@@ -1,4 +1,5 @@
 # LangChain 快速入门
+> 本文章只写了快速入门的内容，如果想要参数配置/自定义模型，那么迁移到[这篇文章](./05-定义聊天模型.md)中
 ## 环境准备
 1. `OPENAI_API_KEY` 配置，以 [阿里云百炼平台](https://bailian.console.aliyun.com/) 为例
    1. [获取 API_KEY](https://bailian.console.aliyun.com/cn-beijing?tab=model#/api-key)

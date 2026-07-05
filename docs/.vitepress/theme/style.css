@@ -12,7 +12,7 @@
 
 /* 限制主内容区域内的所有图片，最大宽度不超过 350px */
 .vp-doc img {
-	max-width: 350px;
+	max-width: 400px;
 	width: 100%;
 	height: auto;
 	border-radius: 4px; /* 顺便加个圆角，看起更像卡片 */
@@ -40,6 +40,19 @@
 /* 交互 1：鼠标悬停（或手机端触摸）时，在原文位置逐渐变清晰 */
 .vp-doc img[alt*='blur']:hover {
 	filter: blur(0);
+}
+
+/* 修复大段数学公式（$$）上下被截断、出现垂直滚动条的问题 */
+.vp-doc mjx-container[display='true'],
+.vp-doc .katex-display,
+.vp-doc .math.display {
+	/* 上下增加半个字符高度的缓冲空间，防止大括号/分式被削顶 */
+	padding-top: 0.8em !important;
+	padding-bottom: 0.8em !important;
+
+	/* 强行隐藏垂直滚动条，但保留水平滚动条（防止超长公式手机端溢出） */
+	overflow-y: hidden !important;
+	overflow-x: auto;
 }
 
 /* 给自动识别到的下载链接穿上“漂亮衣服” */

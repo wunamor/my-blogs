@@ -1,5 +1,26 @@
 /* docs/.vitepress/theme/style.css */
 
+/* 1. 声明并注册本地 Fira Code 可变字体 (Variable Font) */
+@font-face {
+	font-family: 'Fira Code VF';
+	src: url('/fonts/FiraCode-VF.woff') format('woff');
+	/* 可变字体的魔法：指定它支持的字重范围，通常 Fira Code 是 300 到 700 */
+	font-weight: 300 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* 2. 覆盖 VitePress 的全局代码字体变量 */
+:root {
+	--vp-font-family-mono:
+		'Fira Code VF', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* 3. 开启 Fira Code 灵魂的“编程连字”功能 */
+code {
+	font-variant-ligatures: contextual;
+}
+
 /* 去除文章正文里所有链接的默认下划线 */
 .vp-doc a {
 	text-decoration: none;

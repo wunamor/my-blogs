@@ -1,10 +1,16 @@
+// .vitepress/theme/index.ts
 import DefaultTheme from 'vitepress/theme';
 import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
 
-// 引入 Viewer.js 及其核心 CSS 样式
+// 1. 引入 Viewer.js 及其核心 CSS 样式
 import Viewer from 'viewerjs';
 import 'viewerjs/dist/viewer.css'; 
+
+// 2. 引入抽离出来的数学公式交互逻辑
+import { initMathCopy } from './math-interaction';
+
+// 3. 引入全局样式
 import './style.css'; 
 
 export default {
@@ -49,12 +55,16 @@ export default {
     // 页面首次加载时挂载
     onMounted(() => {
       initViewer();
+      initMathCopy(); // 注入数学公式复制监听
     });
 
-    // 监听路由变化，确保点击左侧菜单切换文章后，新页面的图片也能绑定
+    // 监听路由变化，确保点击左侧菜单切换文章后，新页面的图片和公式也能重新绑定
     watch(
       () => route.path,
-      () => nextTick(() => initViewer())
+      () => nextTick(() => {
+        initViewer();
+        initMathCopy(); // 路由切换后重新注入复制监听
+      })
     );
   }
 };

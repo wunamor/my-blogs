@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 // 1. 导入自己写的 Markdown 插件
 import { autoLinkKeywordsPlugin } from './plugins/markdown-glossary.mts'
 import { autoDownloadPlugin } from './plugins/markdown-download.mts'
+import { mathToolPlugin } from './plugins/markdown-math-tool.mts'
 
 // 2. 导入刚才抽离的主题配置
 import { themeConfig } from './configs/theme-config.mts'
@@ -23,6 +24,7 @@ export default defineConfig({
     config: (md) => {
       md.use(autoLinkKeywordsPlugin);
       md.use(autoDownloadPlugin);
+      md.use(mathToolPlugin);
     },
     math: true 
   },

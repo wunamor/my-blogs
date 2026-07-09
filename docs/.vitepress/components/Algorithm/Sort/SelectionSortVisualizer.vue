@@ -7,13 +7,15 @@
     @calculate="calculateSteps"
   >
     <template #visualization="{ step }">
-      <div
+      <TransitionGroup
         v-if="step"
+        name="swap"
+        tag="div"
         class="array-display-inner"
       >
         <div
-          v-for="(num, idx) in step.array"
-          :key="idx"
+          v-for="(item, idx) in step.array"
+          :key="item.id"
           class="array-item"
           :class="{
             'is-sorted': idx < step.i,
@@ -22,7 +24,7 @@
             'is-min': idx === step.minIdx && idx !== step.i
           }"
         >
-          <div class="item-value">{{ num }}</div>
+          <div class="item-value">{{ item.val }}</div>
           <div class="item-label">
             <span v-if="idx === step.i">i</span>
             <span v-if="idx === step.j">j</span>
@@ -32,7 +34,7 @@
             >min</span>
           </div>
         </div>
-      </div>
+      </TransitionGroup>
     </template>
   </AlgorithmVisualizerLayout>
 </template>
@@ -44,7 +46,12 @@
   const steps = ref([])
 
   const calculateSteps = (rawInputString) => {
-    const arr = rawInputString.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n))
+    const arr = rawInputString.split(',')
+      .map(n => parseInt(n.trim()))
+      .filter(n => !isNaN(n))
+      // 【核心魔法 3】：将纯数字转化为带有唯一 ID 的对象，让 Vue 知道“谁是谁”
+      .map(n => ({ val: n, id: Math.random().toString(36).slice(2) }))
+
     if (arr.length === 0) return
 
     steps.value = []
@@ -57,16 +64,18 @@
       steps.value.push({ array: [...currentArr], i, j: i + 1, minIdx, passId: i, description: `【第 ${i + 1} 轮】将位置 i(${i}) 设为当前最小值，开始向后寻找更小的值。` })
 
       for (let j = i + 1; j < currentArr.length; j++) {
-        let isNewMin = currentArr[j] < currentArr[minIdx]
+        // 注意：所有的比较都要带上 .val
+        let isNewMin = currentArr[j].val < currentArr[minIdx].val
         if (isNewMin) minIdx = j
-        steps.value.push({ array: [...currentArr], i, j, minIdx, passId: i, description: isNewMin ? `发现更小的值 ${currentArr[j]}！更新 min 指针。` : `比较 ${currentArr[j]} 和当前最小值 ${currentArr[minIdx]}，不更新。` })
+        steps.value.push({ array: [...currentArr], i, j, minIdx, passId: i, description: isNewMin ? `发现更小的值 ${currentArr[j].val}！更新 min 指针。` : `比较 ${currentArr[j].val} 和当前最小值 ${currentArr[minIdx].val}，不更新。` })
       }
 
       if (minIdx !== i) {
+        // 交换整个对象引用，这就触发了物理 DOM 的移动！
         let temp = currentArr[i]
         currentArr[i] = currentArr[minIdx]
         currentArr[minIdx] = temp
-        steps.value.push({ array: [...currentArr], i, j: -1, minIdx: i, passId: i, description: `扫描结束。将找到的最小值 ${currentArr[i]} 与位置 i 交换。该位置已排序完毕。` })
+        steps.value.push({ array: [...currentArr], i, j: -1, minIdx: i, passId: i, description: `扫描结束。将找到的最小值 ${currentArr[i].val} 与位置 i 交换。该位置已排序完毕。` })
       } else {
         steps.value.push({ array: [...currentArr], i, j: -1, minIdx: i, passId: i, description: `扫描结束。位置 i 就是这一轮的最小值，无需交换。该位置已排序完毕。` })
       }
@@ -83,6 +92,9 @@
     align-items: flex-end;
     justify-content: center;
     width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
   }
 
   .array-item {
@@ -125,6 +137,11 @@
   .min-label {
     color: #eab308;
     background: rgba(234, 179, 8, 0.2) !important;
+  }
+
+  /* 【核心魔法 4】：声明元素的移动补间动画 */
+  .swap-move {
+    transition: transform 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   }
 
   .is-sorted .item-value {

@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <!-- 🪄 魔法插槽：具体的算法组件将在这里渲染方块 -->
+    <!-- 🪄 纯净舞台插槽：限制了最大最小高度，超出可滚动 -->
     <div class="visualization-area">
       <slot
         name="visualization"
@@ -92,7 +92,7 @@
 
         <div class="config-section">
           <h4>基本参数</h4>
-          <label>默认数组元素: <input v-model="tempConfig.defaultArray" /></label>
+          <label>默认数据: <input v-model="tempConfig.defaultArray" /></label>
           <label>动画间隔 (毫秒): <input
               type="number"
               v-model="tempConfig.playIntervalMs"
@@ -186,7 +186,7 @@
     defaultArray: props.defaultArray,
     playIntervalMs: 800,
     labels: {
-      inputLabel: '自定义数组：',
+      inputLabel: '自定义数据：', // 改为更通用的“数据”
       inputPlaceholder: '如: 29,10,14',
       stepLabel: '步骤：',
       actionLabel: '当前动作：',
@@ -330,17 +330,8 @@
 </script>
 
 <style scoped>
-  .sort-visualizer-container {
-    position: relative;
-    background-color: var(--vp-c-bg-soft);
-    border: 1px solid var(--vp-c-border);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    font-family: var(--vp-font-family-mono);
-    overflow: hidden;
-  }
 
+  /* 这里保留你原本的 Layout 专属样式... */
   .controls-header {
     display: flex;
     justify-content: space-between;
@@ -384,11 +375,15 @@
   }
 
   .visualization-area {
-    margin: 30px 0;
+    margin: 20px 0;
+    width: 100%;
     min-height: 100px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    /* 改小最小高度，把排版权交还给具体的子组件 */
+    max-height: 500px;
+    overflow: auto;
+    background-color: var(--vp-c-bg-elv);
+    border-radius: 8px;
+    position: relative;
   }
 
   .explanation-panel {
@@ -648,5 +643,91 @@
   .config-actions .secondary-btn {
     background: var(--vp-c-bg-elv);
     color: var(--vp-c-text-1);
+  }
+</style>
+
+<!-- 【新增】：非 scoped 标签，作为所有算法子组件的全局 CSS 共享库 -->
+<style>
+
+  /* 复用：方块基本布局 */
+  .array-display-inner {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+  }
+
+  .array-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48px;
+  }
+
+  .item-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: var(--vp-c-default-soft);
+    color: var(--vp-c-text-1);
+    font-weight: bold;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .item-label {
+    height: 20px;
+    margin-top: 8px;
+    font-size: 12px;
+    display: flex;
+    gap: 4px;
+    color: var(--vp-c-text-2);
+  }
+
+  .item-label span {
+    padding: 0 4px;
+    border-radius: 4px;
+    background: rgba(128, 128, 128, 0.2);
+    white-space: nowrap;
+  }
+
+  /* 复用：FLIP 丝滑交换动画核心 */
+  .swap-move {
+    transition: transform 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+
+  /* 复用：通用状态高亮 (绿色、蓝色、粉色探照灯等) */
+  .is-sorted .item-value {
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: #10b981;
+    color: #10b981;
+  }
+
+  .is-current-i .item-value {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+
+  .is-scanning-j .item-value {
+    border-color: #ec4899;
+  }
+
+  .target-label {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.2) !important;
+  }
+
+  .min-label {
+    color: #eab308;
+    background: rgba(234, 179, 8, 0.2) !important;
   }
 </style>

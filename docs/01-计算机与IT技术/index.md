@@ -9,7 +9,7 @@ title: 计算机与IT技术
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：下辖 <b>11</b> 个子文件夹 ｜ 累计收录 <b>25</b> 篇笔记
+  📊 <strong>本区统计</strong>：下辖 <b>11</b> 个子文件夹 ｜ 累计收录 <b>26</b> 篇笔记
 </div>
 
 - 📂 [比特就业课](./01-%E6%AF%94%E7%89%B9%E5%B0%B1%E4%B8%9A%E8%AF%BE/)

@@ -117,6 +117,9 @@
     align-items: flex-end;
     justify-content: center;
     width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
   }
 
   .array-item {

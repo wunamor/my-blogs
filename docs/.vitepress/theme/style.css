@@ -137,63 +137,67 @@ code {
 
 /* --- 交互式公式块容器 --- */
 .clickable-math-block {
-  position: relative;
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 4px 0; /* 稍微撑开一点内边距 */
-  transition: background-color 0.2s ease;
+	position: relative;
+	cursor: pointer;
+	border-radius: 8px;
+	padding: 4px 0; /* 稍微撑开一点内边距 */
+	transition: background-color 0.2s ease;
 }
 
 /* 鼠标放上去，背景微微变色，提示可交互 */
 .clickable-math-block:hover {
-  background-color: var(--vp-c-bg-soft);
+	background-color: var(--vp-c-bg-soft);
 }
 
 /* 右上角“点击复制”幽灵文字 */
 .clickable-math-block::after {
-  content: '点击复制';
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--vp-c-text-3);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none; /* 防止遮挡公式的选中 */
+	content: '点击复制';
+	position: absolute;
+	top: 8px;
+	right: 12px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--vp-c-text-3);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	pointer-events: none; /* 防止遮挡公式的选中 */
 }
 
 .clickable-math-block:hover::after {
-  opacity: 1;
+	opacity: 1;
 }
 
 /* 点击成功后的品牌色高亮闪烁 */
 .clickable-math-block.math-copied-flash {
-  background-color: var(--vp-c-brand-soft) !important;
+	background-color: var(--vp-c-brand-soft) !important;
 }
 
 /* --- Voyager 风格居中悬浮 Toast 提示 --- */
 .math-copy-toast {
-  position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background-color: var(--vp-c-bg-elv);
-  color: var(--vp-c-brand);
-  padding: 10px 24px;
-  border-radius: 30px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--vp-c-border);
-  font-size: 14px;
-  font-weight: bold;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: 9999;
+	position: fixed;
+	top: 30px;
+	left: 50%;
+	transform: translateX(-50%) translateY(-20px);
+	background-color: var(--vp-c-bg-elv);
+	color: var(--vp-c-brand);
+	padding: 10px 24px;
+	border-radius: 30px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	border: 1px solid var(--vp-c-border);
+	font-size: 14px;
+	font-weight: bold;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+	z-index: 9999;
 }
 
 /* 弹出时的终态 */
 .math-copy-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+	opacity: 1;
+	transform: translateX(-50%) translateY(0);
+}
+
+.VPDocFooter .last-updated {
+	display: none !important;
 }

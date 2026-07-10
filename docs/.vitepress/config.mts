@@ -1,6 +1,7 @@
 // .vitepress/config.mts
 import { defineConfig } from 'vitepress'
 import { fileURLToPath, URL } from 'node:url'
+import fs from 'fs'
 
 // 1. 导入自己写的 Markdown 插件
 import { autoLinkKeywordsPlugin } from './plugins/markdown-glossary.mts'

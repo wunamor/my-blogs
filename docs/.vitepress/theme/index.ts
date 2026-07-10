@@ -1,6 +1,6 @@
 // .vitepress/theme/index.ts
 import DefaultTheme from 'vitepress/theme';
-import { onMounted, watch, nextTick } from 'vue';
+import { onMounted, watch, nextTick, h } from 'vue';
 import { useRoute } from 'vitepress';
 
 // 1. 引入 Viewer.js 及其核心 CSS 样式
@@ -15,9 +15,17 @@ import './style.css';
 
 // 💡 新增：引入你刚写的马赛克组件 (使用你配置好的别名)
 import Spoiler from '@components/common/Spoiler.vue';
+import ArticleMetadata from '@components/common/ArticleMetadata.vue';
 
 export default {
   extends: DefaultTheme,
+
+  // 使用 Layout 渲染函数，利用 doc-before 插槽将组件注入到文章顶部
+  Layout: () => {
+    return h(DefaultTheme.Layout, null, {
+      'doc-before': () => h(ArticleMetadata)
+    })
+  },
   
   // 💡 新增：enhanceApp 专门用来扩展 Vue 应用级别的内容（如注册全局组件）
   enhanceApp({ app }) {

@@ -13,8 +13,17 @@ import { initMathCopy } from './math-interaction';
 // 3. 引入全局样式
 import './style.css'; 
 
+// 💡 新增：引入你刚写的马赛克组件 (使用你配置好的别名)
+import Spoiler from '@components/common/Spoiler.vue';
+
 export default {
   extends: DefaultTheme,
+  
+  // 💡 新增：enhanceApp 专门用来扩展 Vue 应用级别的内容（如注册全局组件）
+  enhanceApp({ app }) {
+    app.component('Spoiler', Spoiler);
+  },
+
   setup() {
     const route = useRoute();
     let viewer: Viewer | null = null; // 用于存储当前页面的看图实例

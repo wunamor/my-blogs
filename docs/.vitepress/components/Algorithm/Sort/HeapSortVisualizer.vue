@@ -235,8 +235,8 @@
   }
 
   .is-largest .item-value {
-    background-color: var(--vp-c-brand);
-    color: var(--vp-c-bg-elv);
+    /* 核心魔法：将 20% 的主题橙色，与当前 VitePress 的纯色背景（白天是白，黑夜是深灰）进行实体混合！ */
+    background-color: color-mix(in srgb, #f59e0b 20%, var(--vp-c-bg));
     border-color: #f59e0b;
   }
 </style>

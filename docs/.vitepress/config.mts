@@ -6,6 +6,9 @@ import { fileURLToPath, URL } from 'node:url'
 import { autoLinkKeywordsPlugin } from './plugins/markdown-glossary.mts'
 import { autoDownloadPlugin } from './plugins/markdown-download.mts'
 import { mathToolPlugin } from './plugins/markdown-math-tool.mts'
+// 💡 从统一的插件文件中引入语法糖合集
+import { syntaxSugarPlugin } from './plugins/markdown-syntax-sugar.mts'
+
 
 // 2. 导入刚才抽离的主题配置
 import { themeConfig } from './configs/theme-config.mts'
@@ -35,6 +38,7 @@ export default defineConfig({
       md.use(autoLinkKeywordsPlugin);
       md.use(autoDownloadPlugin);
       md.use(mathToolPlugin);
+      md.use(syntaxSugarPlugin);
     },
     math: true 
   },

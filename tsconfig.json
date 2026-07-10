@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@components/*": ["docs/.vitepress/components/*"]
+		}
+	},
+	"include": ["docs/**/*.vue", "docs/**/*.ts", "docs/**/*.js", "docs/**/*.mts", "*.mts"],
+	"exclude": ["node_modules", "docs/.vitepress/dist"]
+}

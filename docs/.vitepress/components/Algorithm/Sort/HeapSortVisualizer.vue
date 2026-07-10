@@ -212,6 +212,10 @@
   /* 【修复】：堆排序专属——强制覆盖全局的方块属性，变为完美的圆形！ */
   .tree-node .item-value {
     border-radius: 50% !important;
+    /* 使用主题主背景色：白天是纯白，黑夜是深灰。能完美遮盖底下的连线 */
+    background-color: var(--vp-c-bg);
+    /* 使用主题标准边框色：白天是浅灰框，黑夜是深灰框 */
+    border-color: var(--vp-c-border);
     z-index: 10;
   }
 
@@ -220,7 +224,7 @@
     background: rgba(245, 158, 11, 0.2) !important;
   }
 
-  /* 专属的高亮逻辑 */
+  /* 专属的高亮逻辑 (保持你原有的不变，这些亮色本身在双主题下都很醒目) */
   .is-parent .item-value {
     border-color: #f59e0b;
     box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
@@ -231,7 +235,8 @@
   }
 
   .is-largest .item-value {
-    background-color: rgba(245, 158, 11, 0.2);
+    background-color: var(--vp-c-brand);
+    color: var(--vp-c-bg-elv);
     border-color: #f59e0b;
   }
 </style>

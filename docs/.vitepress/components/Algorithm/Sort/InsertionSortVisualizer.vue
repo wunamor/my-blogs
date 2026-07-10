@@ -10,27 +10,29 @@
     <template #visualization="{ step }">
       <div
         v-if="step"
-        class="array-display-inner"
+        class="insertion-wrapper"
       >
-        <div
-          v-for="(num, idx) in step.array"
-          :key="idx"
-          class="array-item"
-          :class="{
-            'is-sorted': idx <= step.sortedTo && idx !== step.i && idx !== step.j,
-            'is-current-i': idx === step.i,
-            'is-scanning-j': idx === step.j
-          }"
-        >
-          <div class="item-value">{{ num }}</div>
-          <div class="item-label">
-            <span
-              v-if="idx === step.i"
-              class="target-label"
-            >待插入</span>
-            <span v-if="idx === step.j">j</span>
+        <div class="temp-area">
+          <span class="temp-label">temp (临时变量)</span>
+          <div
+            class="array-item"
+            v-if="step.temp"
+          >
+            <div class="item-value temp-value">{{ step.temp.val }}</div>
+          </div>
+          <div
+            class="array-item empty-temp"
+            v-else
+          >
+            <div class="item-value">空</div>
           </div>
         </div>
+
+        <ArrayDisplay
+          :items="step.currentArray"
+          :highlights="step.highlights"
+          :labels="step.labels"
+        />
       </div>
     </template>
   </AlgorithmVisualizerLayout>
@@ -38,73 +40,75 @@
 
 <script setup>
   import { ref } from 'vue'
-  // 直接复用你之前写好的绝赞底层骨架组件！
   import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import ArrayDisplay from '../../common/ArrayDisplay.vue' // 引入通用数组组件
 
   const steps = ref([])
 
-  // 插入排序的核心状态机快照逻辑
   const calculateSteps = (rawInputString) => {
     const arr = rawInputString.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n))
+      .map(n => ({ val: n, id: Math.random().toString(36).slice(2) })) // 注入原始 ID
     if (arr.length === 0) return
 
     steps.value = []
     let currentArr = [...arr]
 
-    // 初始化：第一个元素（索引0）天然是有序的
-    steps.value.push({
-      array: [...currentArr], i: -1, j: -1, sortedTo: 0, passId: 0,
-      description: '初始状态，默认第一个元素已被视为有序区间（绿色）。'
-    })
+    // 增加 tempObj 参数用于可视化
+    const pushStep = (sortedTo, currentI, scanningJ, tempObj, description, passId) => {
+      const highlights = {}
+      const labels = {}
 
-    // 外层循环：从第二个元素开始，逐个向前插入
+      for (let k = 0; k <= sortedTo; k++) {
+        if (k !== currentI && k !== scanningJ) highlights[k] = ['is-sorted']
+      }
+      if (currentI !== -1) {
+        highlights[currentI] = ['is-current-i'] // 蓝色：目标插入位/移动的元素
+        labels[currentI] = ['插入位']
+      }
+      if (scanningJ !== -1) {
+        highlights[scanningJ] = ['is-scanning-j'] // 粉色：被扫描或被覆盖的残影
+        labels[scanningJ] = ['覆盖残影']
+      }
+
+      steps.value.push({ currentArray: [...currentArr], highlights, labels, temp: tempObj, description, passId })
+    }
+
+    pushStep(0, -1, -1, null, '初始状态，第一个元素天然有序（绿色）。', 0)
+
     for (let i = 1; i < currentArr.length; i++) {
-      let currentVal = currentArr[i]
+      let temp = currentArr[i] // 提取出真正的对象（带有它的原始 ID）
       let j = i - 1
 
-      steps.value.push({
-        array: [...currentArr], i: i, j: -1, sortedTo: i - 1, passId: i,
-        description: `【第 ${i} 轮】抽出无序区间的第一个元素 ${currentVal}，准备向前寻找插入位置。`
-      })
+      // 💡 ID 魔法 1：在原位置留下一个全新 ID 的假体，这样 temp 的 ID 就被“抽离”出来了
+      currentArr[i] = { val: temp.val, id: Math.random().toString(36).slice(2) }
 
-      // 内层循环：向前扫描，寻找待插入的位置
+      pushStep(i - 1, i, -1, temp, `【第 ${i} 轮】抽出元素 ${temp.val} 到 temp，留出插入空位。`, i)
+
       while (j >= 0) {
-        steps.value.push({
-          array: [...currentArr], i: j + 1, j: j, sortedTo: i - 1, passId: i,
-          description: `比较元素：待插入值 ${currentVal} 与有序区间的 ${currentArr[j]}。`
-        })
+        pushStep(i - 1, -1, j, temp, `比较：temp(${temp.val}) 与 有序区元素(${currentArr[j].val})。`, i)
 
-        if (currentArr[j] > currentVal) {
-          // 遇到比自己大的，把那个元素往后挪一个坑
-          currentArr[j + 1] = currentArr[j]
-          steps.value.push({
-            array: [...currentArr], i: j, j: -1, sortedTo: i - 1, passId: i,
-            description: `${currentArr[j]} 大于 ${currentVal}，向右移动腾出空位。`
-          })
+        if (currentArr[j].val > temp.val) {
+          // 💡 ID 魔法 2：移位操作。将真实对象移动到右边，触发平滑动画！
+          let movingObj = currentArr[j]
+          currentArr[j + 1] = movingObj
+
+          // 在原来的位置留下一个拥有新 ID 的“残影”，用粉色高亮表示它将被覆盖
+          currentArr[j] = { val: movingObj.val, id: Math.random().toString(36).slice(2) }
+
+          pushStep(i - 1, j + 1, j, temp, `${movingObj.val} 大于 ${temp.val}，向右移位。`, i)
           j--
         } else {
-          // 遇到比自己小或者等于的，说明找到了位置，停止扫描
-          steps.value.push({
-            array: [...currentArr], i: j + 1, j: j, sortedTo: i - 1, passId: i,
-            description: `${currentArr[j]} 小于等于待插入值，无需继续向前寻找。`
-          })
+          pushStep(i - 1, j + 1, -1, temp, `${currentArr[j].val} 小于等于 temp，找到插入位置。`, i)
           break
         }
       }
 
-      // 正式把元素放入找到的坑位
-      currentArr[j + 1] = currentVal
-      steps.value.push({
-        array: [...currentArr], i: j + 1, j: -1, sortedTo: i, passId: i,
-        description: `将 ${currentVal} 成功插入到该位置。此时前 ${i + 1} 个元素已排序。`
-      })
+      // 💡 ID 魔法 3：将带有原始 ID 的 temp 放回数组，它会精准地滑向目标位置！
+      currentArr[j + 1] = temp
+      pushStep(i, j + 1, -1, null, `将 temp(${temp.val}) 插入到最终位置。`, i)
     }
 
-    // 结束状态
-    steps.value.push({
-      array: [...currentArr], i: -1, j: -1, sortedTo: currentArr.length - 1, passId: currentArr.length,
-      description: '🎉 插入排序彻底完成！所有元素均已进入有序区间。'
-    })
+    pushStep(currentArr.length - 1, -1, -1, null, '🎉 插入排序彻底完成！', currentArr.length)
   }
 </script>
 
@@ -183,5 +187,43 @@
   /* 粉红：正在和待插入元素作比较的有序区间元素 */
   .is-scanning-j .item-value {
     border-color: #ec4899;
+  }
+
+  .insertion-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .temp-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background: var(--vp-c-bg-elv);
+    border: 1px dashed var(--vp-c-brand);
+    border-radius: 8px;
+  }
+
+  .temp-label {
+    font-size: 14px;
+    color: var(--vp-c-text-2);
+    font-weight: bold;
+  }
+
+  .temp-value {
+    border-color: #3b82f6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+
+  .empty-temp .item-value {
+    border: 2px dashed var(--vp-c-border);
+    background: transparent;
+    color: var(--vp-c-text-3);
+    font-size: 14px;
   }
 </style>

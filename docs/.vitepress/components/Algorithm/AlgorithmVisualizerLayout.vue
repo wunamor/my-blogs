@@ -76,102 +76,115 @@
     </div>
 
     <!-- ⚙️ 配置面板 (Modal) -->
-    <div
-      class="config-overlay"
-      v-if="isConfigOpen"
-    >
-      <div class="config-modal">
-        <div class="modal-header">
-          <h3>⚙️ {{ title }} - 配置管理</h3>
-          <button
-            class="close-btn"
-            @click="closeConfig"
-            title="关闭"
-          >×</button>
-        </div>
-
-        <div class="config-section">
-          <h4>基本参数</h4>
-          <label>默认数据: <input v-model="tempConfig.defaultArray" /></label>
-          <label>动画间隔 (毫秒): <input
-              type="number"
-              v-model="tempConfig.playIntervalMs"
-              step="100"
-              min="100"
-            /></label>
-        </div>
-
-        <div class="config-section">
-          <h4>底部按钮配置 <span class="hint-text">(💡按住 ☰ 拖拽排版，双击文案修改)</span></h4>
-          <ul class="draggable-list">
-            <li
-              v-for="(btn, index) in tempConfig.actionButtons"
-              :key="btn.id"
-              draggable="true"
-              @dragstart="onDragStart($event, index)"
-              @dragover.prevent
-              @drop="onDrop($event, index)"
-              class="draggable-item"
-              :class="{ 'dragging': draggedIndex === index }"
-            >
-              <span
-                class="drag-handle"
-                title="按住拖拽排列"
-              >☰</span>
-              <div
-                class="btn-edit-content"
-                @dblclick="editBtnIndex = index"
-                title="双击直接修改"
-              >
-                <template v-if="editBtnIndex === index">
-                  <input
-                    v-model="btn.label"
-                    @blur="editBtnIndex = -1"
-                    @keyup.enter="editBtnIndex = -1"
-                    v-focus
-                  />
-                  <input
-                    v-if="btn.id === 'play'"
-                    v-model="btn.labelPause"
-                    placeholder="暂停文案"
-                    @blur="editBtnIndex = -1"
-                    @keyup.enter="editBtnIndex = -1"
-                  />
-                </template>
-                <template v-else>
-                  {{ btn.label }} <span
-                    v-if="btn.id === 'play'"
-                    class="sub-label"
-                  >(暂停: {{ btn.labelPause }})</span>
-                </template>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="config-actions">
-          <button
-            @click="resetConfigToDefault"
-            class="danger-btn"
-          >恢复出厂配置</button>
-          <div class="right-actions">
+    <Teleport to="body">
+      <div
+        class="config-overlay"
+        v-if="isConfigOpen"
+      >
+        <div class="config-modal">
+          <div class="modal-header">
+            <h3>⚙️ {{ title }} - 配置管理</h3>
             <button
+              class="close-btn"
               @click="closeConfig"
-              class="secondary-btn"
-            >取消</button>
+              title="关闭"
+            >×</button>
+          </div>
+
+          <div class="config-section">
+            <h4>基本参数</h4>
+            <label>默认数据: <input v-model="tempConfig.defaultArray" /></label>
+            <label>动画间隔 (毫秒): <input
+                type="number"
+                v-model="tempConfig.playIntervalMs"
+                step="100"
+                min="100"
+              /></label>
+          </div>
+
+          <div class="config-section">
+            <h4>底部按钮配置 <span class="hint-text">(💡按住 ☰ 拖拽排版，双击文案修改)</span></h4>
+            <ul class="draggable-list">
+              <li
+                v-for="(btn, index) in tempConfig.actionButtons"
+                :key="btn.id"
+                draggable="true"
+                @dragstart="onDragStart($event, index)"
+                @dragover.prevent
+                @drop="onDrop($event, index)"
+                class="draggable-item"
+                :class="{ 'dragging': draggedIndex === index }"
+              >
+                <span
+                  class="drag-handle"
+                  title="按住拖拽排列"
+                >☰</span>
+                <div
+                  class="btn-edit-content"
+                  @dblclick="editBtnIndex = index"
+                  title="双击直接修改"
+                >
+                  <template v-if="editBtnIndex === index">
+                    <input
+                      v-model="btn.label"
+                      @blur="editBtnIndex = -1"
+                      @keyup.enter="editBtnIndex = -1"
+                      v-focus
+                    />
+                    <input
+                      v-if="btn.id === 'play'"
+                      v-model="btn.labelPause"
+                      placeholder="暂停文案"
+                      @blur="editBtnIndex = -1"
+                      @keyup.enter="editBtnIndex = -1"
+                    />
+                  </template>
+                  <template v-else>
+                    {{ btn.label }} <span
+                      v-if="btn.id === 'play'"
+                      class="sub-label"
+                    >(暂停: {{ btn.labelPause }})</span>
+                  </template>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="config-actions">
             <button
-              @click="saveConfig"
-              class="primary-btn"
-            >保存并应用</button>
+              @click="resetConfigToDefault"
+              class="danger-btn"
+            >恢复出厂配置</button>
+            <div class="right-actions">
+              <button
+                @click="closeConfig"
+                class="secondary-btn"
+              >取消</button>
+              <button
+                @click="saveConfig"
+                class="primary-btn"
+              >保存并应用</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Teleport>
+
+    <!-- 全局弹窗与提示组件 -->
+    <ActionConfirm ref="confirmModal" />
+    <MessageToast ref="messageToast" />
   </div>
 </template>
 
 <script setup>
+  import '../common/sortStyles.css'
   import { ref, computed, onUnmounted, reactive, onMounted } from 'vue'
+
+  import ActionConfirm from '../common/ActionConfirm.vue'
+  import MessageToast from '../common/MessageToast.vue'
+
+  const confirmModal = ref(null)
+  const messageToast = ref(null)
 
   const props = defineProps({
     title: { type: String, default: '组件' },
@@ -238,16 +251,19 @@
     isConfigOpen.value = true
   }
 
-  const closeConfig = () => {
+  const closeConfig = async () => {
     if (isDirty.value) {
-      if (confirm('检测到有未保存的配置修改，是否保存并应用？\n(点击取消将丢弃修改)')) {
+      // 确保这里使用的是 confirmModal.value.show
+      const isOk = await confirmModal.value.show('检测到有未保存的配置修改，是否保存并应用？\n(点击取消将丢弃修改)')
+      if (isOk) {
         saveConfig()
-        return
       } else {
         Object.assign(tempConfig, JSON.parse(JSON.stringify(config)))
+        isConfigOpen.value = false
       }
+    } else {
+      isConfigOpen.value = false
     }
-    isConfigOpen.value = false
   }
 
   const saveConfigToLocal = () => {
@@ -259,16 +275,19 @@
     saveConfigToLocal()
     inputRaw.value = config.defaultArray
     isConfigOpen.value = false
+    messageToast.value.show('配置保存成功！', 'success')
     reset()
   }
 
-  const resetConfigToDefault = () => {
-    if (confirm('确定要恢复到出厂默认配置吗？这将清除你自定义的排版和文案。')) {
+  const resetConfigToDefault = async () => {
+    const isOk = await confirmModal.value.show('确定要恢复到出厂默认配置吗？这将清除你自定义的排版和文案。', { type: 'danger' })
+    if (isOk) {
       Object.assign(tempConfig, JSON.parse(JSON.stringify(DEFAULT_CONFIG)))
       Object.assign(config, JSON.parse(JSON.stringify(DEFAULT_CONFIG)))
       if (typeof window !== 'undefined') localStorage.removeItem(props.storageKey)
       inputRaw.value = config.defaultArray
       isConfigOpen.value = false
+      messageToast.value.show('已恢复出厂配置', 'info')
       reset()
     }
   }
@@ -430,13 +449,13 @@
   }
 
   .action-controls button.primary-btn {
-    background: var(--vp-c-brand);
-    color: white;
+    color: var(--vp-c-text-1);
     border-color: var(--vp-c-brand);
   }
 
   .action-controls button.primary-btn:hover:not(:disabled) {
-    background: var(--vp-c-brand-dark);
+    background: var(--vp-c-brand);
+    color: var(--vp-c-bg-elv);
   }
 
   .action-controls button.play-btn {
@@ -449,12 +468,14 @@
     background: #059669;
   }
 
+  /* 将 absolute 替换为 fixed，并加大 z-index */
   .config-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
-    z-index: 10;
+    z-index: 9990;
+    /* 提升层级，防止被 VitePress 顶栏遮挡 */
     display: flex;
     align-items: center;
     justify-content: center;

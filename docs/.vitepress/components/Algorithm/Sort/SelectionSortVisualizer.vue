@@ -7,34 +7,11 @@
     @calculate="calculateSteps"
   >
     <template #visualization="{ step }">
-      <TransitionGroup
-        v-if="step"
-        name="swap"
-        tag="div"
-        class="array-display-inner"
-      >
-        <div
-          v-for="(item, idx) in step.array"
-          :key="item.id"
-          class="array-item"
-          :class="{
-            'is-sorted': idx < step.i,
-            'is-current-i': idx === step.i,
-            'is-scanning-j': idx === step.j,
-            'is-min': idx === step.minIdx && idx !== step.i
-          }"
-        >
-          <div class="item-value">{{ item.val }}</div>
-          <div class="item-label">
-            <span v-if="idx === step.i">i</span>
-            <span v-if="idx === step.j">j</span>
-            <span
-              v-if="idx === step.minIdx"
-              class="min-label"
-            >min</span>
-          </div>
-        </div>
-      </TransitionGroup>
+      <ArrayDisplay
+        :items="step.currentArray"
+        :highlights="step.highlights"
+        :labels="step.labels"
+      />
     </template>
   </AlgorithmVisualizerLayout>
 </template>
@@ -42,46 +19,59 @@
 <script setup>
   import { ref } from 'vue'
   import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import ArrayDisplay from '../../common/ArrayDisplay.vue' // 引入通用数组组件
 
   const steps = ref([])
 
   const calculateSteps = (rawInputString) => {
-    const arr = rawInputString.split(',')
-      .map(n => parseInt(n.trim()))
-      .filter(n => !isNaN(n))
-      // 【核心魔法 3】：将纯数字转化为带有唯一 ID 的对象，让 Vue 知道“谁是谁”
-      .map(n => ({ val: n, id: Math.random().toString(36).slice(2) }))
-
+    const arr = rawInputString.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n))
+      .map(n => ({ val: n, id: Math.random().toString(36).slice(2) })) // 注入 ID 开启物理动画
     if (arr.length === 0) return
 
     steps.value = []
     let currentArr = [...arr]
 
-    steps.value.push({ array: [...currentArr], i: 0, j: -1, minIdx: 0, passId: 0, description: '初始状态，准备开始选择排序。' })
+    // 核心：标准化的快照推入函数
+    const pushStep = (highlights, labels, description, passId) => {
+      steps.value.push({ currentArray: [...currentArr], highlights, labels, description, passId })
+    }
+
+    pushStep({ 0: ['is-current-i'] }, { 0: ['i'] }, '初始状态，准备开始选择排序。', 0)
+
+    // 记录已经排好序的索引，用于累加绿色高亮
+    const sortedIdx = []
 
     for (let i = 0; i < currentArr.length - 1; i++) {
       let minIdx = i
-      steps.value.push({ array: [...currentArr], i, j: i + 1, minIdx, passId: i, description: `【第 ${i + 1} 轮】将位置 i(${i}) 设为当前最小值，开始向后寻找更小的值。` })
+      // 生成当前已排序的绿色底色对象
+      const baseHighlights = Object.fromEntries(sortedIdx.map(idx => [idx, ['is-sorted']]))
+
+      pushStep({ ...baseHighlights, [i]: ['is-current-i'], [i + 1]: ['is-scanning-j'] }, { [i]: ['i'], [i + 1]: ['j'] }, `【第 ${i + 1} 轮】位置 i(${i}) 设为当前最小值，向后寻找。`, i + 1)
 
       for (let j = i + 1; j < currentArr.length; j++) {
-        // 注意：所有的比较都要带上 .val
         let isNewMin = currentArr[j].val < currentArr[minIdx].val
         if (isNewMin) minIdx = j
-        steps.value.push({ array: [...currentArr], i, j, minIdx, passId: i, description: isNewMin ? `发现更小的值 ${currentArr[j].val}！更新 min 指针。` : `比较 ${currentArr[j].val} 和当前最小值 ${currentArr[minIdx].val}，不更新。` })
+        pushStep(
+          { ...baseHighlights, [i]: ['is-current-i'], [j]: ['is-scanning-j'], [minIdx]: ['is-min'] },
+          { [i]: ['i'], [j]: ['j'], [minIdx]: ['min'] },
+          isNewMin ? `发现更小值 ${currentArr[j].val}！更新 min。` : `比较 ${currentArr[j].val} 与当前最小值 ${currentArr[minIdx].val}。`,
+          i + 1
+        )
       }
 
       if (minIdx !== i) {
-        // 交换整个对象引用，这就触发了物理 DOM 的移动！
         let temp = currentArr[i]
         currentArr[i] = currentArr[minIdx]
         currentArr[minIdx] = temp
-        steps.value.push({ array: [...currentArr], i, j: -1, minIdx: i, passId: i, description: `扫描结束。将找到的最小值 ${currentArr[i].val} 与位置 i 交换。该位置已排序完毕。` })
-      } else {
-        steps.value.push({ array: [...currentArr], i, j: -1, minIdx: i, passId: i, description: `扫描结束。位置 i 就是这一轮的最小值，无需交换。该位置已排序完毕。` })
+        pushStep({ ...baseHighlights, [i]: ['is-sorted'], [minIdx]: ['is-sorted'] }, { [i]: ['已交换'] }, `将最小值 ${currentArr[i].val} 与位置 i 交换。`, i + 1)
       }
+
+      sortedIdx.push(i) // 本轮结束，i 正式进入已排序区
+      pushStep(Object.fromEntries(sortedIdx.map(idx => [idx, ['is-sorted']])), {}, `位置 i(${i}) 已排序完毕。`, i + 1)
     }
 
-    steps.value.push({ array: [...currentArr], i: currentArr.length, j: -1, minIdx: -1, passId: currentArr.length, description: '🎉 排序彻底完成！所有元素均已进入绿色安全区。' })
+    const allSorted = Object.fromEntries(currentArr.map((_, idx) => [idx, ['is-sorted']]))
+    pushStep(allSorted, {}, '🎉 排序彻底完成！', currentArr.length)
   }
 </script>
 

@@ -1,35 +1,37 @@
 <template>
-  <Transition name="fade">
-    <div
-      class="confirm-overlay"
-      v-if="visible"
-    >
-      <div class="confirm-box">
-        <div class="confirm-header">
-          <h3>{{ title }}</h3>
-          <button
-            class="close-btn"
-            @click="cancel"
-          >×</button>
-        </div>
-        <div class="confirm-body">
-          <p style="white-space: pre-wrap;">{{ message }}</p>
-        </div>
-        <div class="confirm-actions">
-          <button
-            class="secondary-btn"
-            @click="cancel"
-          >取消</button>
-          <button
-            :class="type === 'danger' ? 'danger-btn' : 'primary-btn'"
-            @click="confirm"
-          >
-            确定
-          </button>
+  <Teleport to="body">
+    <Transition name="fade">
+      <div
+        class="confirm-overlay"
+        v-if="visible"
+      >
+        <div class="confirm-box">
+          <div class="confirm-header">
+            <h3>{{ title }}</h3>
+            <button
+              class="close-btn"
+              @click="cancel"
+            >×</button>
+          </div>
+          <div class="confirm-body">
+            <p style="white-space: pre-wrap;">{{ message }}</p>
+          </div>
+          <div class="confirm-actions">
+            <button
+              class="secondary-btn"
+              @click="cancel"
+            >取消</button>
+            <button
+              :class="type === 'danger' ? 'danger-btn' : 'primary-btn'"
+              @click="confirm"
+            >
+              确定
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>

@@ -1,14 +1,16 @@
 <template>
-  <Transition name="slide-down">
-    <div
-      v-if="visible"
-      class="message-toast"
-      :class="type"
-    >
-      <span class="icon">{{ iconMap[type] }}</span>
-      <span>{{ message }}</span>
-    </div>
-  </Transition>
+  <Teleport to="body">
+    <Transition name="slide-down">
+      <div
+        v-if="visible"
+        class="message-toast"
+        :class="type"
+      >
+        <span class="icon">{{ iconMap[type] }}</span>
+        <span>{{ message }}</span>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>

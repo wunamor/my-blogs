@@ -1,10 +1,23 @@
 {
 	"compilerOptions": {
 		"baseUrl": ".",
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"lib": ["ESNext", "DOM"],
+		"isolatedModules": true,
+		"allowJs": true,
 		"paths": {
 			"@components/*": ["docs/.vitepress/components/*"]
 		}
 	},
-	"include": ["docs/**/*.vue", "docs/**/*.ts", "docs/**/*.js", "docs/**/*.mts", "*.mts"],
+	"include": [
+		// 💡 核心修复：必须显式地把 .vitepress 写出来，TS 才会进去扫描！
+		"docs/.vitepress/**/*.ts",
+		"docs/.vitepress/**/*.mts",
+		"docs/.vitepress/**/*.vue",
+		"docs/**/*.md",
+		"*.mts"
+	],
 	"exclude": ["node_modules", "docs/.vitepress/dist"]
 }

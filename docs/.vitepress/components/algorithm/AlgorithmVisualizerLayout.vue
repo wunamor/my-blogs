@@ -177,11 +177,11 @@
 </template>
 
 <script setup>
-  import '../common/sortStyles.css'
+import '@components/common/visualization/visualization-base.css'
   import { ref, computed, onUnmounted, reactive, onMounted } from 'vue'
 
-  import ActionConfirm from '../common/ActionConfirm.vue'
-  import MessageToast from '../common/MessageToast.vue'
+  import ActionConfirm from '@components/common/feedback/ActionConfirm.vue'
+  import MessageToast from '@components/common/feedback/MessageToast.vue'
 
   const confirmModal = ref(null)
   const messageToast = ref(null)

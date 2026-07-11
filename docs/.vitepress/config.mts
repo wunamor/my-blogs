@@ -66,8 +66,8 @@ export default defineConfig({
     // 4. 合并总字数
     const wordCount = cnCount + enCount
     
-    // 阅读时间：按每分钟阅读 300 字算，至少显示 1 分钟
-    const readTime = Math.ceil(wordCount / 300) || 1
+    // 阅读时间：按每分钟阅读 150 字算，至少显示 1 分钟
+    const readTime = Math.ceil(wordCount / 150) || 1
 
     return {
       frontmatter: {

@@ -19,7 +19,7 @@
 <script setup>
   import { ref } from 'vue'
   import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
-  import ArrayDisplay from '../../common/ArrayDisplay.vue' // 引入通用数组组件
+  import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue' // 引入通用数组组件
 
   const steps = ref([])
 

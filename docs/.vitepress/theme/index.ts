@@ -14,8 +14,8 @@ import { initMathCopy } from './math-interaction';
 import './style.css'; 
 
 // 💡 新增：引入你刚写的马赛克组件 (使用你配置好的别名)
-import Spoiler from '@components/common/Spoiler.vue';
-import ArticleMetadata from '@components/common/ArticleMetadata.vue';
+import Spoiler from '@components/common/content/Spoiler.vue';
+import ArticleMetadata from '@components/common/content/ArticleMetadata.vue';
 
 export default {
   extends: DefaultTheme,

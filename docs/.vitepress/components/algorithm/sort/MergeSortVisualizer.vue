@@ -59,7 +59,7 @@
 
   // 【路径修正 2】：ArrayDisplay 在公共组件目录 (@components/common/)
   // 跨模块调用，使用 @components 别名更加清晰，避免深层相对路径
-  import ArrayDisplay from '@components/common/ArrayDisplay.vue'
+  import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
 
   // 存储所有的动画步骤
   const steps = ref([])

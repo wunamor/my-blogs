@@ -52,7 +52,7 @@
 <script setup>
   import { ref } from 'vue'
   import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
-  import ArrayDisplay from '@components/common/ArrayDisplay.vue'
+  import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
 
   const steps = ref([])
 

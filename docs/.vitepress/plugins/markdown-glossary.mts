@@ -8,6 +8,19 @@ const glossary: Record<string, string> = {
 
   'RAG': '/01-计算机与IT技术/01-比特就业课/03-LangChain&LangGraph-AI应用开发框架精品课/01-LangChain-AI应用开发框架精品课/02-嵌入式模型#应用场景',
 
+  "直接插入排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#直接插入排序',
+  "希尔排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#希尔排序',
+  "选择排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#选择排序',
+  "堆排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#堆排序',
+  "冒泡排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#冒泡排序',
+  "快速排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#快速排序',
+  "归并排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#归并排序',
+  "计数排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#计数排序',
+  "基数排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#基数排序',
+  "桶排序": '/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序#桶排序',
+
+
+
   '不背单词': '/00-学习技巧/02-英语/00-单词背诵软件推荐#不背单词',
   'Anki': '/00-学习技巧/02-英语/00-单词背诵软件推荐#anki',
   // '科目一': '/驾考交规/01-科目一/index',
@@ -20,9 +33,25 @@ const sortedKeywords = Object.keys(glossary).sort((a, b) => b.length - a.length)
 // 2. 导出一个标准的 markdown-it 插件函数
 export function autoLinkKeywordsPlugin(md: any) {
   md.core.ruler.after('inline', 'auto-link-keywords', (state: any) => {
+    
+    // ✨ 核心修复 1：增加一个标记，记录当前是否处于标题（h1~h6）内部
+    let isInsideHeading = false; 
+
     state.tokens.forEach((blockToken: any) => {
-      if (blockToken.type !== 'inline') return;
       
+      // ✨ 核心修复 2：监听标题的开始和结束
+      if (blockToken.type === 'heading_open') {
+        isInsideHeading = true;
+      }
+      if (blockToken.type === 'heading_close') {
+        isInsideHeading = false;
+      }
+
+      if (blockToken.type !== 'inline') return;
+
+      // ✨ 核心修复 3：如果当前这段文字是在标题内部的，直接跳过，绝对不替换！
+      if (isInsideHeading) return;
+
       let isInsideLink = false;
       
       for (let i = 0; i < blockToken.children.length; i++) {
@@ -35,7 +64,6 @@ export function autoLinkKeywordsPlugin(md: any) {
           let html = token.content;
           let replaced = false;
           
-          // ✨ 新增：占位符字典，防止同义词相互嵌套
           const placeholders: Record<string, string> = {};
           let pId = 0;
           
@@ -45,10 +73,10 @@ export function autoLinkKeywordsPlugin(md: any) {
               for (let j = 0; j < parts.length; j++) {
                 if (!parts[j].startsWith('<') && parts[j].includes(keyword)) {
                   
+                  // 👇 注意这里的链接样式，你可以根据需要调整
                   const link = glossary[keyword];
                   const newHtml = `<a href="${link}" style="color: var(--vp-c-brand); font-weight: 500;">${keyword}</a>`;
                   
-                  // 👇 核心修复：用不可见的占位符替换关键词，保护它不被后续的短词扫描到
                   const pieces = parts[j].split(keyword);
                   const rebuilt = [];
                   for (let k = 0; k < pieces.length - 1; k++) {
@@ -66,7 +94,6 @@ export function autoLinkKeywordsPlugin(md: any) {
           });
           
           if (replaced) {
-            // ✨ 终极还原：所有词都扫描完后，把占位符集中变回真实的 HTML 链接
             for (const placeholder in placeholders) {
               html = html.replace(new RegExp(placeholder, 'g'), placeholders[placeholder]);
             }

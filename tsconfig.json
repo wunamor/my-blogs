@@ -19,5 +19,8 @@
 		"docs/**/*.md",
 		"*.mts"
 	],
-	"exclude": ["node_modules", "docs/.vitepress/dist"]
+	"exclude": ["node_modules", "docs/.vitepress/dist"],
+	"vueCompilerOptions": {
+		"extensions": [".vue", ".md"]
+	}
 }

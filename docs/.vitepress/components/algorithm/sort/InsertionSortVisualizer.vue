@@ -42,7 +42,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue' // 引入通用数组组件
 
   // 【标准化接入】：业务方定义的极简按钮组

@@ -21,7 +21,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
   import TreeDisplay from '@components/common/visualization/TreeDisplay.vue'
 
   const steps = ref([])

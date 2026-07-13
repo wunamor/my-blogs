@@ -53,7 +53,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
 
   // 【标准化接入】：业务方定义的极简按钮组

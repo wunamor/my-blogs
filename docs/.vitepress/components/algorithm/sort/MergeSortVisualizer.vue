@@ -55,7 +55,7 @@
   import { ref } from 'vue'
 
   // 【引入新基座】：使用规范化的绝对路径别名
-  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
 
   // 【控制反转】：由业务组件自己决定需要展示哪些控制按钮，传入 Layout

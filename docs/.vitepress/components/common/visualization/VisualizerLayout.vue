@@ -1,5 +1,16 @@
 <template>
-  <div class="sort-visualizer-container">
+  <div
+    class="sort-visualizer-container"
+    :class="{ 'is-fullscreen': isFullscreen }"
+    @dblclick="enterFullscreen"
+  >
+    <button
+      v-if="isFullscreen"
+      class="fullscreen-close-btn"
+      @click.stop="exitFullscreen"
+      title="退出全屏 (Esc)"
+    >×</button>
+
     <div class="controls-header">
       <div class="array-input">
         <label>{{ config.labels.inputLabel }}</label>
@@ -491,7 +502,55 @@
     }
   }
 
-  onUnmounted(() => { if (playTimer) clearInterval(playTimer) })
+  // ================= 6. 📺 双击全屏逻辑 =================
+  const isFullscreen = ref(false)
+
+  const enterFullscreen = (e) => {
+    // 💡 核心防误触：如果双击的是输入框、按钮或其内部元素，就不触发全屏
+    if (e && (e.target.tagName === 'INPUT' || e.target.closest('button'))) return;
+
+    if (!isFullscreen.value) {
+      isFullscreen.value = true
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = 'hidden'
+      }
+    }
+  }
+
+  const exitFullscreen = () => {
+    isFullscreen.value = false
+    // 退出全屏，恢复底层 body 的滚动
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = ''
+    }
+  }
+
+  // 监听键盘 Esc 按键
+  const handleGlobalKeyDown = (e) => {
+    if (e.key === 'Escape' && isFullscreen.value) {
+      exitFullscreen()
+    }
+  }
+
+  // 记得在生命周期内挂载和卸载键盘事件
+  onMounted(() => {
+    // ...(保留原有的 localStorage 逻辑)
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', handleGlobalKeyDown)
+    }
+  })
+
+  onUnmounted(() => {
+    if (playTimer) clearInterval(playTimer) // 保留你原有的定时器清理
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('keydown', handleGlobalKeyDown)
+    }
+    // 页面意外销毁时，确保底层滚动被恢复
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = ''
+    }
+  })
+
 </script>
 
 <style scoped>
@@ -933,5 +992,117 @@
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: bold;
+  }
+
+  /* =======================================
+     📺 全屏模式样式 (沉浸式布局：滚动条贴边、内容居中、上下压缩)
+  ========================================== */
+  .sort-visualizer-container.is-fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9980;
+    background-color: var(--vp-c-bg);
+    margin: 0;
+    /* 顶部预留 40px 给关闭按钮，左右 0 确保滚动条紧贴屏幕边缘，底部 10px */
+    padding: 40px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* 核心：从上往下排，拒绝整体垂直居中导致的溢出截断 */
+    align-items: center;
+    overflow: hidden;
+    /* 外层禁止滚动，把滚动权完全交接给中间的图表舞台 */
+  }
+
+  /* 💡 需求 3：大幅压缩上下控制面板的高度和边距，不挡住主体内容 */
+  .sort-visualizer-container.is-fullscreen>.controls-header {
+    margin-bottom: 10px;
+  }
+
+  .sort-visualizer-container.is-fullscreen>.explanation-panel {
+    margin-bottom: 10px;
+    min-height: auto;
+    /* 取消原本 72px 的最小高度 */
+    padding: 8px 16px;
+    /* 稍微压扁一点 */
+  }
+
+  .sort-visualizer-container.is-fullscreen>.action-controls {
+    margin-top: 0;
+  }
+
+  /* 💡 需求 2：上下控制台左右居中对齐，并留出安全内边距 */
+  .sort-visualizer-container.is-fullscreen>.controls-header,
+  .sort-visualizer-container.is-fullscreen>.explanation-panel,
+  .sort-visualizer-container.is-fullscreen>.action-controls {
+    width: 100%;
+    max-width: 1000px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+
+  /* 💡 需求 1：舞台区域上下高度不再受限，自动填满剩余空间，宽度100%让滚动条贴边 */
+  .sort-visualizer-container.is-fullscreen>.visualization-area {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    /* 解除原有高度限制 */
+    width: 100%;
+    /* 宽度撑满，把滚动条推到最右侧 */
+    margin: 0 0 10px 0;
+    overflow-y: auto;
+    /* 允许内部自由滚动 */
+    overflow-x: hidden;
+  }
+
+  /* 💡 需求 2：舞台内部的内容实现真正的水平居中 */
+  .sort-visualizer-container.is-fullscreen>.visualization-area>* {
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+
+  /* 右上角关闭按钮 (稍微缩小并靠边) */
+  .fullscreen-close-btn {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--vp-c-text-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    transition: color 0.2s;
+  }
+
+  .fullscreen-close-btn:hover {
+    color: #ef4444;
+  }
+
+  /* 🎨 附加：Mac 风格细线滚动条美化 */
+  .sort-visualizer-container.is-fullscreen>.visualization-area::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .sort-visualizer-container.is-fullscreen>.visualization-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sort-visualizer-container.is-fullscreen>.visualization-area::-webkit-scrollbar-thumb {
+    background-color: var(--vp-c-divider);
+    border-radius: 4px;
+  }
+
+  .sort-visualizer-container.is-fullscreen>.visualization-area::-webkit-scrollbar-thumb:hover {
+    background-color: var(--vp-c-text-3);
   }
 </style>

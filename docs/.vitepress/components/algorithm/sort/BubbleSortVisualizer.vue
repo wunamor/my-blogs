@@ -2,7 +2,9 @@
   <AlgorithmVisualizerLayout
     title="冒泡排序"
     storageKey="BubbleSortVisualizerConfig_v1"
-    defaultArray="64, 34, 25, 12, 22, 11, 90"
+    defaultData="64, 34, 25, 12, 22, 11, 90"
+    :defaultInterval="800"
+    :actionButtons="visualizerButtons"
     :steps="steps"
     @calculate="calculateSteps"
   >
@@ -19,8 +21,16 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
+
+  // 【标准化接入】：业务方定义的极简按钮组
+  const visualizerButtons = [
+    { id: 'prev', label: '上一步', icon: 'prev' },
+    { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
+    { id: 'next', label: '下一步', icon: 'next' },
+    { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  ]
 
   const steps = ref([])
 

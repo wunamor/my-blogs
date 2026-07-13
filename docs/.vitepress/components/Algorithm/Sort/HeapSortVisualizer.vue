@@ -3,6 +3,8 @@
     title="堆排序 (Heap Sort)"
     storageKey="HeapSortVisualizerConfig_v3"
     defaultArray="312, 122, 64, 25, 11, 81, 12, 22"
+    :defaultInterval="800"
+    :actionButtons="visualizerButtons"
     :steps="steps"
     @calculate="calculateSteps"
   >
@@ -19,10 +21,17 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
   import TreeDisplay from '@components/common/visualization/TreeDisplay.vue'
 
   const steps = ref([])
+
+  const visualizerButtons = [
+    { id: 'prev', label: '上一步', icon: 'prev' },
+    { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
+    { id: 'next', label: '下一步', icon: 'next' },
+    { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  ]
 
   const calculateSteps = (rawInputString) => {
     // 1. 数据解析并注入唯一 id，确保动画引擎正常追踪

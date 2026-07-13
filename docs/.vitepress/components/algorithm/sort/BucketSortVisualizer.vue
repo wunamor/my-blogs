@@ -2,7 +2,9 @@
   <AlgorithmVisualizerLayout
     title="桶排序 (Bucket Sort)"
     storageKey="bucket-sort-config"
-    defaultArray="29, 25, 3, 49, 9, 37, 21, 43"
+    defaultData="29, 25, 3, 49, 9, 37, 21, 43"
+    :defaultInterval="800"
+    :actionButtons="visualizerButtons"
     :steps="steps"
     @calculate="calculateSteps"
   >
@@ -69,8 +71,16 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
+
+  // 【标准化接入】：业务方定义的极简按钮组
+  const visualizerButtons = [
+    { id: 'prev', label: '上一步', icon: 'prev' },
+    { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
+    { id: 'next', label: '下一步', icon: 'next' },
+    { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  ]
 
   const steps = ref([])
 

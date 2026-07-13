@@ -3,6 +3,8 @@
     title="希尔排序"
     storageKey="ShellSortVisualizerConfig_v1"
     defaultArray="8, 9, 1, 7, 2, 3, 5, 4, 6, 0"
+    :defaultInterval="800"
+    :actionButtons="visualizerButtons"
     :steps="steps"
     @calculate="calculateSteps"
   >
@@ -56,8 +58,15 @@
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
+  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
+
+  const visualizerButtons = [
+    { id: 'prev', label: '上一步', icon: 'prev' },
+    { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
+    { id: 'next', label: '下一步', icon: 'next' },
+    { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  ]
 
   const steps = ref([])
 

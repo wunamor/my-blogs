@@ -2,7 +2,8 @@
   <AlgorithmVisualizerLayout
     title="归并排序 (Merge Sort)"
     storageKey="merge-sort-config"
-    defaultArray="7, 5, 2, 3, 6, 4"
+    defaultData="7, 5, 2, 3, 6, 4"
+    :actionButtons="visualizerButtons"
     :steps="steps"
     @calculate="calculateSteps"
   >
@@ -53,13 +54,18 @@
 <script setup>
   import { ref } from 'vue'
 
-  // 【路径修正 1】：AlgorithmVisualizerLayout 在上一级目录 (@components/algorithm/)
-  // 同属 algorithm 模块，使用相对路径 ../ 更加解耦
-  import AlgorithmVisualizerLayout from '../AlgorithmVisualizerLayout.vue'
-
-  // 【路径修正 2】：ArrayDisplay 在公共组件目录 (@components/common/)
-  // 跨模块调用，使用 @components 别名更加清晰，避免深层相对路径
+  // 【引入新基座】：使用规范化的绝对路径别名
+  import AlgorithmVisualizerLayout from '@components/common/visualization/AlgorithmVisualizerLayout.vue'
   import ArrayDisplay from '@components/common/visualization/ArrayDisplay.vue'
+
+  // 【控制反转】：由业务组件自己决定需要展示哪些控制按钮，传入 Layout
+  // 【传入 Layout】：通过 icon 字段自由指定你要的图标，不与 id 强绑定
+  const visualizerButtons = [
+    { id: 'prev', label: '上一步', icon: 'prev' },
+    { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
+    { id: 'next', label: '下一步', icon: 'next' },
+    { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  ]
 
   // 存储所有的动画步骤
   const steps = ref([])

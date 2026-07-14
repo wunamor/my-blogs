@@ -1,5 +1,6 @@
+<!-- https://leetcode.cn/problems/copy-list-with-random-pointer/ -->
 <template>
-  <AlgorithmVisualizerLayout
+  <VisualizerLayout
     title="复制带随机指针的链表 (LeetCode 138)"
     storageKey="copy-random-list-config"
     defaultData="[[7,null],[13,0],[11,4],[10,2],[1,0]]"
@@ -118,12 +119,12 @@
 
       </div>
     </template>
-  </AlgorithmVisualizerLayout>
+  </VisualizerLayout>
 </template>
 
 <script setup>
   import { ref } from 'vue'
-  import AlgorithmVisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
+  import VisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
 
   // 标准化接入 Layout 的控制按钮
   const visualizerButtons = [

@@ -3,7 +3,8 @@
 		"baseUrl": ".",
 		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
 		"lib": ["ESNext", "DOM"],
 		"isolatedModules": true,
 		"allowJs": true,
@@ -17,7 +18,8 @@
 		"docs/.vitepress/**/*.mts",
 		"docs/.vitepress/**/*.vue",
 		"docs/**/*.md",
-		"*.mts"
+		"*.mts",
+		"docs/.vitepress/components.d.ts"
 	],
 	"exclude": ["node_modules", "docs/.vitepress/dist"],
 	"vueCompilerOptions": {

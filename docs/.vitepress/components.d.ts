@@ -18,6 +18,7 @@ declare module 'vue' {
     InsertionSortVisualizer: typeof import('./components/algorithm/sort/InsertionSortVisualizer.vue')['default']
     LC1089DuplicateZerosExtraSpace: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC1089DuplicateZerosExtraSpace.vue')['default']
     LC1089DuplicateZerosInPlace: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC1089DuplicateZerosInPlace.vue')['default']
+    LC11ContainerWithMostWater: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC11ContainerWithMostWater.vue')['default']
     LC138CopyRandomList: typeof import('./components/oj/leetcode/LC138CopyRandomList.vue')['default']
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']

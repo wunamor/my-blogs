@@ -31,10 +31,16 @@ code {
 	text-decoration: underline;
 }
 
-/* 限制主内容区域内的所有图片，最大宽度不超过 350px */
+/* 优化主内容区域的图片显示逻辑 */
 .vp-doc img {
-	max-width: 400px;
-	width: 100%;
+	/* 1. 取消强制拉伸，让图片优先使用原本的大小 */
+	width: auto;
+
+	/* 2. 设定最大宽度上限。
+       建议设为 100%（即最大不超过文本区域的宽度），
+       或者根据你的喜好设为一个较大的固定值（如 600px 或 800px）。 */
+	max-width: 100%;
+
 	height: auto;
 	border-radius: 4px; /* 顺便加个圆角，看起更像卡片 */
 }

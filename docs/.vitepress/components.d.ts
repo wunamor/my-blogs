@@ -22,6 +22,7 @@ declare module 'vue' {
     LC138CopyRandomList: typeof import('./components/oj/leetcode/LC138CopyRandomList.vue')['default']
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']
+    LC611ValidTriangleNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     QuickSortHoareVisualizer: typeof import('./components/algorithm/sort/QuickSortHoareVisualizer.vue')['default']
     QuickSortHoleVisualizer: typeof import('./components/algorithm/sort/QuickSortHoleVisualizer.vue')['default']

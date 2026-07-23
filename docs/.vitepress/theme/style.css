@@ -69,6 +69,40 @@ code {
 	filter: blur(0);
 }
 
+/* --- 语义化图窗容器 --- */
+.vp-doc .custom-image-figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* 强行让图片和文字水平居中 */
+	margin: 28px 0; /* 上下留出舒服的阅读间距 */
+	width: 100%;
+}
+
+/* 确保在 figure 内部的图片应用之前的圆角和逻辑 */
+.vp-doc .custom-image-figure img {
+	width: auto;
+	max-width: 100%;
+	border-radius: 6px;
+	/* 添加微小的阴影让图解更有独立卡片的立体感 (可选) */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 深色模式下的阴影适配 */
+.dark .vp-doc .custom-image-figure img {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* --- 题注小字样式 --- */
+.vp-doc .image-caption {
+	margin-top: 12px;
+	font-size: 13.5px;
+	/* 使用 VitePress 内置的次级文本变量（通常是高级的灰色） */
+	color: var(--vp-c-text-2);
+	text-align: center;
+	line-height: 1.5;
+	font-weight: 500;
+}
+
 /* 修复大段数学公式（$$）上下被截断、出现垂直滚动条的问题 */
 .vp-doc mjx-container[display='true'],
 .vp-doc .katex-display,

@@ -20,6 +20,7 @@ declare module 'vue' {
     LC1089DuplicateZerosInPlace: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC1089DuplicateZerosInPlace.vue')['default']
     LC11ContainerWithMostWater: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC11ContainerWithMostWater.vue')['default']
     LC138CopyRandomList: typeof import('./components/oj/leetcode/LC138CopyRandomList.vue')['default']
+    LC15ThreeSum: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC15ThreeSum.vue')['default']
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']

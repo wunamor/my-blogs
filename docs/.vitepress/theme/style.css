@@ -212,6 +212,20 @@ code {
 	background-color: var(--vp-c-brand-soft) !important;
 }
 
+/* --- 补充行内公式专属样式 --- */
+.clickable-math-inline {
+	display: inline-block; /* 保证背景色和内边距渲染正常 */
+	padding: 0 4px;
+	margin: 0 2px;
+	border-radius: 4px;
+}
+
+/* ⚠️ 强行隐藏行内公式右上角的“点击复制”文字，因为空间不够会破坏正文排版。
+   但鼠标悬浮变色、点击闪烁发光和 Toast 提示依然会完美生效。 */
+.clickable-math-inline::after {
+	display: none !important;
+}
+
 /* --- Voyager 风格居中悬浮 Toast 提示 --- */
 .math-copy-toast {
 	position: fixed;

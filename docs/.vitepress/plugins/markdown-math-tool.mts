@@ -14,4 +14,16 @@ export const mathToolPlugin = (md: any) => {
       return `<div class="clickable-math-block" data-tex="${encodeURIComponent(rawTex)}">\n${renderedHtml}\n</div>`;
     };
   }
+
+  // --- 2. 新增：处理行内公式 ---
+  const defaultMathInlineRenderer = md.renderer.rules.math_inline;
+  if (defaultMathInlineRenderer) {
+    md.renderer.rules.math_inline = (tokens: any, idx: number, options: any, env: any, self: any) => {
+      const rawTex = tokens[idx].content;
+      const renderedHtml = defaultMathInlineRenderer(tokens, idx, options, env, self);
+      
+      // 核心魔法：使用 span 保持行内排版，增加 clickable-math-inline 类名，且标记为 inline
+      return `<span class="clickable-math-block clickable-math-inline" data-tex="${encodeURIComponent(rawTex)}" data-type="inline">${renderedHtml}</span>`;
+    };
+  }
 }

@@ -9,6 +9,7 @@ import 'viewerjs/dist/viewer.css'
 
 // 2. 引入抽离出来的数学公式交互逻辑
 import { initMathCopy } from './math-interaction'
+import { initCodeTools } from './code-interaction' // 你的实际路径
 
 // 3. 引入全局样式
 import './style.css'
@@ -75,6 +76,7 @@ export default {
 		onMounted(() => {
 			initViewer()
 			initMathCopy() // 注入数学公式复制监听
+      initCodeTools()
 		})
 
 		// 监听路由变化，确保点击左侧菜单切换文章后，新页面的图片和公式也能重新绑定

@@ -255,3 +255,66 @@ code {
 .VPDocFooter .last-updated {
 	display: none !important;
 }
+
+/* =======================================
+   代码块通用扩展 / 折叠专属样式
+======================================= */
+.custom-code-wrapper {
+	position: relative;
+	margin: 16px 0;
+}
+
+/* 💡 核心：加 !important，无情镇压 VitePress 原生样式的覆盖 */
+.custom-code-wrapper.collapsed > div[class*='language-'] {
+	max-height: 200px !important;
+	overflow: hidden !important;
+	margin-bottom: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
+/* 底部黑色渐变遮罩，营造代码未完结的视觉 */
+.custom-code-wrapper.collapsed .code-fold-mask {
+	position: absolute;
+	bottom: 36px; /* 悬浮在按钮上方 */
+	left: 0;
+	width: 100%;
+	height: 60px;
+	background: linear-gradient(to bottom, transparent, var(--vp-code-block-bg));
+	pointer-events: none; /* 让鼠标事件穿透遮罩 */
+	z-index: 10;
+}
+
+/* 展开按钮的完美 UI */
+.code-tool-btn.fold-btn {
+	display: block;
+	width: 100%;
+	padding: 8px 0;
+	text-align: center;
+	background-color: var(--vp-code-block-bg);
+	color: var(--vp-c-brand-1); /* 调用主题的主色调 */
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	border: none;
+	border-top: 1px dashed var(--vp-c-divider); /* 虚线分割线 */
+	border-radius: 0 0 8px 8px; /* 底部圆角 */
+	outline: none;
+	transition: all 0.2s ease;
+}
+
+/* 按钮悬浮反馈 */
+.code-tool-btn.fold-btn:hover {
+	background-color: var(--vp-c-bg-alt);
+	color: var(--vp-c-brand-2);
+}
+
+/* 💡 展开状态：隐藏遮罩，恢复默认边距 */
+.custom-code-wrapper:not(.collapsed) .code-fold-mask {
+	display: none;
+}
+.custom-code-wrapper:not(.collapsed) > div[class*='language-'] {
+	margin-bottom: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}

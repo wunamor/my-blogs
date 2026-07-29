@@ -1,77 +1,96 @@
 <template>
-  <span
+  <!-- 根据 mode 动态切换包裹标签，杜绝 HTML 规范冲突 -->
+  <component
+    :is="mode === 'block' ? 'div' : 'span'"
     class="vp-spoiler"
-    :class="{ 'is-revealed': isRevealed }"
+    :class="[mode === 'block' ? 'spoiler-block' : 'spoiler-inline', { 'is-revealed': isRevealed }]"
     @click="isRevealed = true"
     title="点击显示隐藏内容"
   >
-    <slot></slot>
-  </span>
+    <!-- 内部容器：通过控制它的透明度，完美解决任何内部元素（代码块、背景色）的穿透问题 -->
+    <component 
+      :is="mode === 'block' ? 'div' : 'span'"
+      class="spoiler-content"
+    >
+      <slot></slot>
+    </component>
+  </component>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  const isRevealed = ref(false)
+import { ref } from 'vue'
+
+const props = defineProps({
+  mode: {
+    type: String,
+    default: 'inline' // 默认为行内模式
+  }
+})
+
+const isRevealed = ref(false)
 </script>
 
 <style scoped>
+/* ================= 基础结构 ================= */
+.vp-spoiler {
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+}
 
-  /* 核心：未揭开时的状态 */
-  .vp-spoiler {
-    position: relative;
-    cursor: pointer;
-    color: transparent !important;
-    border-radius: 4px;
-    padding: 0 4px;
-    user-select: none;
-    transition: color 0.3s ease;
+/* ================= 行内形态 ================= */
+.spoiler-inline {
+  display: inline;
+  vertical-align: baseline;
+  padding: 0 4px;
+}
 
-    /* 保持不被撕裂 */
-    display: inline-block;
-    vertical-align: baseline;
-  }
+.spoiler-inline.is-revealed {
+  background-color: rgba(128, 128, 128, 0.15);
+}
 
-  /* 💡 终极屏蔽魔法：强行把内部的所有子元素（如 `code`、`strong` 等）全变透明！ */
-  .vp-spoiler:not(.is-revealed) * {
-    color: transparent !important;
-    background-color: transparent !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
-  }
+/* ================= 块级形态 ================= */
+.spoiler-block {
+  display: block;
+  width: 100%; /* 💡 块级模式下自动占满 100% 宽度 */
+  margin: 16px 0; /* 给多行代码块留出呼吸空间 */
+}
 
-  /* 纯 CSS 绘制 Telegram 风格的斜纹马赛克遮罩 */
-  .vp-spoiler::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 4px;
-    /* 使用纯色背景（白天浅灰/黑夜深灰），杜绝任何透视 */
-    background-color: var(--vp-c-bg-mute);
-    background-image: repeating-linear-gradient(45deg,
-        transparent,
-        transparent 2px,
-        var(--vp-c-text-3) 2px,
-        var(--vp-c-text-3) 4px);
-    /* 💡 透明度改为 1，100% 实体遮挡 */
-    opacity: 1;
-    transition: opacity 0.3s ease;
-  }
+/* ================= 核心屏蔽魔法 ================= */
+/* 
+  利用内层统一控制透明度：
+  未揭开时，将内部所有内容变为透明并禁用交互。
+  这不仅能遮挡文字，连代码块自带的背景色、高亮、甚至是点击复制按钮，都会被完美隐藏！
+*/
+.vp-spoiler:not(.is-revealed) > .spoiler-content {
+  opacity: 0 !important;
+  pointer-events: none;
+}
 
-  /* 揭开后的状态：恢复显示 */
-  .vp-spoiler.is-revealed {
-    color: var(--vp-c-text-1) !important;
-    background-color: rgba(128, 128, 128, 0.15);
-    user-select: text;
-    cursor: text;
-  }
+.vp-spoiler.is-revealed > .spoiler-content {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease;
+}
 
-  .vp-spoiler.is-revealed::after {
-    opacity: 0;
-    pointer-events: none;
-  }
+/* ================= 马赛克遮罩层 ================= */
+.vp-spoiler::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background-color: var(--vp-c-bg-mute);
+  background-image: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 2px,
+      var(--vp-c-text-3) 2px,
+      var(--vp-c-text-3) 4px);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 10; /* 💡 强行提升层级，彻底盖住代码块内部乱七八糟的 z-index */
+}
 
-  /* 揭开后，子元素也恢复原状 */
-  .vp-spoiler.is-revealed * {
-    transition: color 0.3s ease, background-color 0.3s ease;
-  }
+.vp-spoiler.is-revealed::after {
+  opacity: 0;
+  pointer-events: none;
+}
 </style>

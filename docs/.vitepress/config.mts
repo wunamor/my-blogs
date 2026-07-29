@@ -14,6 +14,7 @@ import { mathToolPlugin } from './plugins/markdown-math-tool.mts'
 // 💡 从统一的插件文件中引入语法糖合集
 import { syntaxSugarPlugin } from './plugins/markdown-syntax-sugar.mts'
 import { imageCaptionPlugin } from './plugins/markdown-image-caption.mts'
+import { codeToolPlugin } from './plugins/markdown-code-tool.mts'
 
 export default defineConfig({
 	lang: 'zh-CN',
@@ -44,6 +45,7 @@ export default defineConfig({
 			md.use(mathToolPlugin)
 			md.use(syntaxSugarPlugin)
 			md.use(imageCaptionPlugin)
+			md.use(codeToolPlugin)
 		},
 		math: true,
 	},

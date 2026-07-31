@@ -5,7 +5,7 @@
     class="vp-spoiler"
     :class="[mode === 'block' ? 'spoiler-block' : 'spoiler-inline', { 'is-revealed': isRevealed }]"
     @click="isRevealed = true"
-    title="点击显示隐藏内容"
+    :title="isRevealed ? null : '点击显示隐藏内容'"
   >
     <!-- 内部容器：通过控制它的透明度，完美解决任何内部元素（代码块、背景色）的穿透问题 -->
     <component 
@@ -62,6 +62,18 @@ const isRevealed = ref(false)
   未揭开时，将内部所有内容变为透明并禁用交互。
   这不仅能遮挡文字，连代码块自带的背景色、高亮、甚至是点击复制按钮，都会被完美隐藏！
 */
+
+.vp-spoiler {
+  position: relative;
+  cursor: pointer; /* 未揭开时：全局小手样式 */
+  border-radius: 4px;
+}
+
+/* 💡 核心优化：揭开后，恢复浏览器默认的光标逻辑 */
+.vp-spoiler.is-revealed {
+  cursor: auto; 
+}
+
 .vp-spoiler:not(.is-revealed) > .spoiler-content {
   opacity: 0 !important;
   pointer-events: none;
@@ -93,4 +105,5 @@ const isRevealed = ref(false)
   opacity: 0;
   pointer-events: none;
 }
+
 </style>

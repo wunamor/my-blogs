@@ -2,7 +2,7 @@
 title: JavaEE
 ---
 
-# 📁 JavaEE
+# 📁 JavaEE {#content-top}
 
 [⬅️ 返回上一级](../)
 
@@ -12,4 +12,4 @@ title: JavaEE
   📊 <strong>本区统计</strong>：下辖 <b>1</b> 个子文件夹 ｜ 累计收录 <b>1</b> 篇笔记
 </div>
 
-- 📂 [JavaEE初阶](./01-JavaEE%E5%88%9D%E9%98%B6/)
+- 📂 [JavaEE初阶](./01-JavaEE%E5%88%9D%E9%98%B6/#content-top)

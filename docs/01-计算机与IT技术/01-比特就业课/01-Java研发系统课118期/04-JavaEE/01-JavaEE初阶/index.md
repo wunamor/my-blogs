@@ -2,7 +2,7 @@
 title: JavaEE初阶
 ---
 
-# 📁 JavaEE初阶
+# 📁 JavaEE初阶 {#content-top}
 
 [⬅️ 返回上一级](../)
 
@@ -12,4 +12,4 @@ title: JavaEE初阶
   📊 <strong>本区统计</strong>：累计收录 <b>1</b> 篇笔记
 </div>
 
-- 📄 [多线程初阶](./2025-11-03-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%88%9D%E9%98%B6.md)
+- 📄 [多线程初阶](./2025-11-03-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%88%9D%E9%98%B6.md#2025-11-03-多线程初阶)

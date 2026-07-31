@@ -2,7 +2,7 @@
 title: Python基础课
 ---
 
-# 📁 Python基础课
+# 📁 Python基础课 {#content-top}
 
 [⬅️ 返回上一级](../)
 
@@ -12,5 +12,5 @@ title: Python基础课
   📊 <strong>本区统计</strong>：累计收录 <b>2</b> 篇笔记
 </div>
 
-- 📄 [Python 基础语法](./01-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.md)
-- 📄 [Python 代码案例](./02-%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B.md)
+- 📄 [Python 基础语法](./01-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.md#python-基础语法)
+- 📄 [Python 代码案例](./02-%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B.md#python-代码案例)

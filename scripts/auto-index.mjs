@@ -10,6 +10,18 @@ const docsDir = path.resolve(__dirname, '../docs');
 // 💡 提取公共过滤规则：匹配所有(*)，排除隐藏文件(!.*)和导读页(!index.md)
 const ignorePatterns = ['*', '!.*', '!index.md', '!images'];
 
+// 👇 【新增】工具函数：模拟 VitePress 的标题转换逻辑生成锚点
+function slugify(text) {
+  if (!text) return '';
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`]/g, '')
+    .toLowerCase()
+    .replace(/[\s`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 function generateIndexForDir(dir) {
   const { directories, files } = scanDir(dir, ignorePatterns);
   const cleanName = path.basename(dir).replace(/^(\d+-)+/, '');
@@ -20,7 +32,8 @@ function generateIndexForDir(dir) {
   let content = `---\n`;
   content += `title: ${cleanName}\n`;
   content += `---\n\n`;
-  content += `# 📁 ${cleanName}\n\n`;
+  // 👉 【修改】：为大标题强行分配一个固定锚点 {#content-top}
+  content += `# 📁 ${cleanName} {#content-top}\n\n`;
 
   if (dir !== docsDir) {
     content += `[⬅️ 返回上一级](../)\n\n`;
@@ -79,7 +92,8 @@ function generateIndexForDir(dir) {
       // 1. 递归处理子文件夹
       // 一行代码搞定防重名去前缀！
       const displayName = resolver(item.name);
-      content += `- 📂 [${displayName}](./${encodedItem}/)\n`;
+      // 👉 【修改】：结尾加上 /#content-top，让它直接空降到子目录正文
+      content += `- 📂 [${displayName}](./${encodedItem}/#content-top)\n`;
       generateIndexForDir(path.join(dir, item.name));
     } else {
       // 2. 处理 Markdown 文件
@@ -95,7 +109,9 @@ function generateIndexForDir(dir) {
 
       // 一行代码搞定带标题提取的防重名！
       const displayName = resolver(originalName, explicitTitle);
-      content += `- 📄 [${displayName}](./${encodedItem})\n`;
+      // 👉 【修改】：将提取到的标题转为 Hash 锚点，拼接到链接末尾
+      const anchorHash = explicitTitle ? `#${slugify(explicitTitle)}` : '';
+      content += `- 📄 [${displayName}](./${encodedItem}${anchorHash})\n`;
     }
   }
 

@@ -2,9 +2,9 @@
 title: 学习技巧
 ---
 
-# 📁 学习技巧 {#content-top}
+# 📁 学习技巧 {#dir-title}
 
-[⬅️ 返回上一级](../)
+<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>
 
 > 本页面由系统自动生成，请勿手动修改。
 
@@ -13,4 +13,4 @@ title: 学习技巧
 </div>
 
 - 📄 [导言-如何高效学习](./01-%E5%AF%BC%E8%A8%80-%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%AD%A6%E4%B9%A0.md#01-导言-如何高效学习)
-- 📂 [英语](./02-%E8%8B%B1%E8%AF%AD/#content-top)
+- 📂 [英语](./02-%E8%8B%B1%E8%AF%AD/#dir-title)

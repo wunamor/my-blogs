@@ -2,9 +2,9 @@
 title: 计算机与IT技术
 ---
 
-# 📁 计算机与IT技术 {#content-top}
+# 📁 计算机与IT技术 {#dir-title}
 
-[⬅️ 返回上一级](../)
+<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>
 
 > 本页面由系统自动生成，请勿手动修改。
 
@@ -12,6 +12,6 @@ title: 计算机与IT技术
   📊 <strong>本区统计</strong>：下辖 <b>18</b> 个子文件夹 ｜ 累计收录 <b>36</b> 篇笔记
 </div>
 
-- 📂 [比特就业课](./01-%E6%AF%94%E7%89%B9%E5%B0%B1%E4%B8%9A%E8%AF%BE/#content-top)
-- 📂 [设计模式](./02-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#content-top)
-- 📂 [出错总结](./99-%E5%87%BA%E9%94%99%E6%80%BB%E7%BB%93/#content-top)
+- 📂 [比特就业课](./01-%E6%AF%94%E7%89%B9%E5%B0%B1%E4%B8%9A%E8%AF%BE/#dir-title)
+- 📂 [设计模式](./02-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#dir-title)
+- 📂 [出错总结](./99-%E5%87%BA%E9%94%99%E6%80%BB%E7%BB%93/#dir-title)

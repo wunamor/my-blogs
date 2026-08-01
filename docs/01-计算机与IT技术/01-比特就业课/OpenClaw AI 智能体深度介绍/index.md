@@ -2,9 +2,9 @@
 title: OpenClaw AI 智能体深度介绍
 ---
 
-# 📁 OpenClaw AI 智能体深度介绍 {#content-top}
+# 📁 OpenClaw AI 智能体深度介绍 {#dir-title}
 
-[⬅️ 返回上一级](../)
+<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>
 
 > 本页面由系统自动生成，请勿手动修改。
 

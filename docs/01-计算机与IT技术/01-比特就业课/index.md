@@ -2,9 +2,9 @@
 title: 比特就业课
 ---
 
-# 📁 比特就业课 {#content-top}
+# 📁 比特就业课 {#dir-title}
 
-[⬅️ 返回上一级](../)
+<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>
 
 > 本页面由系统自动生成，请勿手动修改。
 
@@ -12,8 +12,8 @@ title: 比特就业课
   📊 <strong>本区统计</strong>：下辖 <b>15</b> 个子文件夹 ｜ 累计收录 <b>32</b> 篇笔记
 </div>
 
-- 📂 [Java研发系统课118期](./01-Java%E7%A0%94%E5%8F%91%E7%B3%BB%E7%BB%9F%E8%AF%BE118%E6%9C%9F/#content-top)
-- 📂 [Python基础课](./02-Python%E5%9F%BA%E7%A1%80%E8%AF%BE/#content-top)
-- 📂 [LangChain&LangGraph-AI应用开发框架精品课](./03-LangChain%26LangGraph-AI%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%B2%BE%E5%93%81%E8%AF%BE/#content-top)
-- 📂 [算法精品课](./100-%E7%AE%97%E6%B3%95%E7%B2%BE%E5%93%81%E8%AF%BE/#content-top)
-- 📂 [OpenClaw AI 智能体深度介绍](./OpenClaw%20AI%20%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B1%E5%BA%A6%E4%BB%8B%E7%BB%8D/#content-top)
+- 📂 [Java研发系统课118期](./01-Java%E7%A0%94%E5%8F%91%E7%B3%BB%E7%BB%9F%E8%AF%BE118%E6%9C%9F/#dir-title)
+- 📂 [Python基础课](./02-Python%E5%9F%BA%E7%A1%80%E8%AF%BE/#dir-title)
+- 📂 [LangChain&LangGraph-AI应用开发框架精品课](./03-LangChain%26LangGraph-AI%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E7%B2%BE%E5%93%81%E8%AF%BE/#dir-title)
+- 📂 [算法精品课](./100-%E7%AE%97%E6%B3%95%E7%B2%BE%E5%93%81%E8%AF%BE/#dir-title)
+- 📂 [OpenClaw AI 智能体深度介绍](./OpenClaw%20AI%20%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B1%E5%BA%A6%E4%BB%8B%E7%BB%8D/#dir-title)

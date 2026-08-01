@@ -32,11 +32,13 @@ function generateIndexForDir(dir) {
   let content = `---\n`;
   content += `title: ${cleanName}\n`;
   content += `---\n\n`;
-  // 👉 【修改】：为大标题强行分配一个固定锚点 {#content-top}
-  content += `# 📁 ${cleanName} {#content-top}\n\n`;
+
+  // 👉 【修改】：给大标题分配一个固定锚点 {#dir-title}
+  content += `# 📁 ${cleanName} {#dir-title}\n\n`;
 
   if (dir !== docsDir) {
-    content += `[⬅️ 返回上一级](../)\n\n`;
+    // 手动加上主题色，让它在视觉上和普通链接完全一致。
+    content += `<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>\n\n`;
   }
 
   content += `> 本页面由系统自动生成，请勿手动修改。\n\n`;
@@ -84,6 +86,10 @@ function generateIndexForDir(dir) {
     return a.name.localeCompare(b.name, 'zh-CN');
   });
 
+  // 👉 【新增】：在这里放置一个完全隐形、不占空间的 HTML 锚点！
+  // 这样一来，无论是点进子目录，还是返回上一级，视野都会跳过标题和统计，直接对齐这里。
+  // content += `<span id="content-top"></span>\n\n`;
+
   for (const item of allItems) {
     // let hasItems = true;
     const encodedItem = encodeURIComponent(item.name);
@@ -92,8 +98,8 @@ function generateIndexForDir(dir) {
       // 1. 递归处理子文件夹
       // 一行代码搞定防重名去前缀！
       const displayName = resolver(item.name);
-      // 👉 【修改】：结尾加上 /#content-top，让它直接空降到子目录正文
-      content += `- 📂 [${displayName}](./${encodedItem}/#content-top)\n`;
+      // 👉 【修改】：结尾加上 /#dir-title，完美定位到刚分配的大标题处
+      content += `- 📂 [${displayName}](./${encodedItem}/#dir-title)\n`;
       generateIndexForDir(path.join(dir, item.name));
     } else {
       // 2. 处理 Markdown 文件

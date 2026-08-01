@@ -2,9 +2,9 @@
 title: JavaEE
 ---
 
-# 📁 JavaEE {#content-top}
+# 📁 JavaEE {#dir-title}
 
-[⬅️ 返回上一级](../)
+<a style="cursor: pointer; color: var(--vp-c-brand-1);" onclick="history.back()">⬅️ 返回上一级</a>
 
 > 本页面由系统自动生成，请勿手动修改。
 
@@ -12,4 +12,4 @@ title: JavaEE
   📊 <strong>本区统计</strong>：下辖 <b>1</b> 个子文件夹 ｜ 累计收录 <b>1</b> 篇笔记
 </div>
 
-- 📂 [JavaEE初阶](./01-JavaEE%E5%88%9D%E9%98%B6/#content-top)
+- 📂 [JavaEE初阶](./01-JavaEE%E5%88%9D%E9%98%B6/#dir-title)

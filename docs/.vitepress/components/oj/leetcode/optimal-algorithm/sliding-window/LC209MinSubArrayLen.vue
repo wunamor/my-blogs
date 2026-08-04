@@ -133,11 +133,11 @@
 import { ref } from 'vue'
 import VisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
 
+// 💡 仅保留三个核心按钮，移除“跳过本轮”
 const visualizerButtons = [
   { id: 'prev', label: '上一步', icon: 'prev' },
   { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
-  { id: 'next', label: '下一步', icon: 'next' },
-  { id: 'skip', label: '跳过本轮', icon: 'skip' }
+  { id: 'next', label: '下一步', icon: 'next' }
 ]
 
 const steps = ref([])
@@ -217,8 +217,6 @@ const calculateSteps = (inputRaw) => {
       sum += arr[right]
       right++
       
-      // 为了视觉连贯，可以在扩张后推一帧空状态
-      // pushState(`【完成扩张】右指针已移动，当前窗口 [${left}, ${right})，总和更新为 ${sum}。`, left, right, sum, ret, ret, 'pending')
     } else {
       // 动作判定：总和达标，记录最优解，并尝试压缩窗口
       let len = right - left
@@ -444,7 +442,7 @@ const calculateSteps = (inputRaw) => {
 .array-track {
   display: flex;
   gap: 12px;
-  position: relative; /* 核心：让子元素绝对定位基于此容器 */
+  position: relative; 
   padding-top: 10px; 
 }
 
@@ -452,13 +450,12 @@ const calculateSteps = (inputRaw) => {
 .window-frame {
   position: absolute;
   top: 0;
-  height: 70px; /* 覆盖在盒子上方 */
+  height: 70px; 
   background: rgba(59, 130, 246, 0.12);
   border: 2px solid #3b82f6;
   border-radius: 10px;
   z-index: 1;
   pointer-events: none;
-  /* 非常平滑的物理弹簧过渡特效，使得框的伸缩充满生命力 */
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .window-frame.is-valid-frame {
@@ -488,7 +485,7 @@ const calculateSteps = (inputRaw) => {
   align-items: center;
   position: relative;
   width: 50px;
-  z-index: 2; /* 浮于背景框之上 */
+  z-index: 2; 
 }
 
 .array-box {
@@ -506,13 +503,11 @@ const calculateSteps = (inputRaw) => {
   transition: all 0.3s;
 }
 
-/* 窗口内的元素提升亮度 */
 .is-in-window {
-  border-color: transparent; /* 边框由背后的 frame 提供了，这里使其透明融入背景 */
+  border-color: transparent; 
   background: var(--vp-c-bg-elv);
 }
 
-/* 彻底被排出的废弃节点降噪 */
 .is-processed {
   opacity: 0.25;
 }

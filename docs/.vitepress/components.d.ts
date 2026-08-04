@@ -25,6 +25,7 @@ declare module 'vue' {
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC209MinSubArrayLen: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC209MinSubArrayLen.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']
+    LC3LongestSubstring: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC3LongestSubstring.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     QuickSortHoareVisualizer: typeof import('./components/algorithm/sort/QuickSortHoareVisualizer.vue')['default']

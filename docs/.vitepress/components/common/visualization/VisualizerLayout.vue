@@ -477,14 +477,23 @@
     currentStepIndex.value = 0
   }
 
+// 找到你原本的 skipPass 函数，替换为以下代码：
   const skipPass = () => {
     if (!currentStep.value) return;
-    const currentPass = currentStep.value.passId;
-    if (currentPass === undefined) { nextStep(); return; }
+    
+    // 💡 改为读取当前帧所在的轮次标签 roundId
+    const currentRound = currentStep.value.roundId; 
+    
+    // 如果业务组件没传 roundId，则降级为普通的下一步
+    if (currentRound === undefined) { nextStep(); return; }
+    
     let nextIdx = currentStepIndex.value;
-    while (nextIdx < props.steps.length - 1 && props.steps[nextIdx].passId === currentPass) {
+    
+    // 💡 往后疯狂快进，直到遇到一个 roundId 不同的帧（即进入了下一轮）
+    while (nextIdx < props.steps.length - 1 && props.steps[nextIdx].roundId === currentRound) {
       nextIdx++;
     }
+    
     currentStepIndex.value = nextIdx;
   }
 

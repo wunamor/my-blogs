@@ -16,6 +16,7 @@ declare module 'vue' {
     CountingSortVisualizer: typeof import('./components/algorithm/sort/CountingSortVisualizer.vue')['default']
     HeapSortVisualizer: typeof import('./components/algorithm/sort/HeapSortVisualizer.vue')['default']
     InsertionSortVisualizer: typeof import('./components/algorithm/sort/InsertionSortVisualizer.vue')['default']
+    LC1004MaxConsecutiveOnesIII: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC1004MaxConsecutiveOnesIII.vue')['default']
     LC1089DuplicateZerosExtraSpace: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC1089DuplicateZerosExtraSpace.vue')['default']
     LC1089DuplicateZerosInPlace: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC1089DuplicateZerosInPlace.vue')['default']
     LC11ContainerWithMostWater: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC11ContainerWithMostWater.vue')['default']

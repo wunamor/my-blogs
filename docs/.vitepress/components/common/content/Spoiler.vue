@@ -106,4 +106,22 @@ const isRevealed = ref(false)
   pointer-events: none;
 }
 
+
+/* ================= 智能形态感知 (核心修复) ================= */
+/* 
+  利用 :has() 伪类侦测内部插槽。
+  即使 Markdown 插件没有传入 mode="block"，只要内部包含了块级元素（如引用、代码块、段落等），
+  组件就会自动强制觉醒为 block 块级形态，完美解决 span 塌陷导致遮罩层变成一条线的问题！
+*/
+.vp-spoiler:has(blockquote, pre, div, p, ul, ol, li, table) {
+  display: block !important;
+  width: 100% !important;
+  margin: 16px 0 !important;
+  padding: 0 !important; /* 抵消 inline 模式可能带入的 0 4px */
+}
+
+/* 同步升级内部内容容器的形态 */
+.vp-spoiler:has(blockquote, pre, div, p, ul, ol, li, table) > .spoiler-content {
+  display: block !important;
+}
 </style>

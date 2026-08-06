@@ -283,8 +283,9 @@ const calculateSteps = (inputRaw) => {
 .array-wrapper {
   width: 100%;
   overflow-x: auto;
+  /* overflow-y: hidden; */
   background-color: transparent; /* 去除深色背景块 */
-  padding: 30px 20px 20px 20px;
+  padding: 40px 20px 50px 20px;
   display: flex;
   justify-content: center;
 }

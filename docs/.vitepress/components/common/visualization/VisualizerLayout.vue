@@ -616,7 +616,7 @@
     margin: 20px 0;
     width: 100%;
     min-height: 100px;
-    max-height: 500px;
+    max-height: 400px;
     overflow: auto;
     background-color: var(--vp-c-bg-elv);
     border-radius: 8px;

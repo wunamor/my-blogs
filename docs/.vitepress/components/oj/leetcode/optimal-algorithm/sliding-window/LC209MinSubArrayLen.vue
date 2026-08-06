@@ -431,10 +431,11 @@ const calculateSteps = (inputRaw) => {
 .array-wrapper {
   width: 100%;
   overflow-x: auto;
+  /* overflow-y: hidden; */
   background-color: var(--vp-c-bg-soft);
   border-radius: 12px;
   border: 1px solid var(--vp-c-border);
-  padding: 50px 20px 30px 20px;
+  padding: 40px 20px 50px 20px;
   display: flex;
   justify-content: center;
 }

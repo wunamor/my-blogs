@@ -36,44 +36,48 @@ const isRevealed = ref(false)
   position: relative;
   cursor: pointer;
   border-radius: 4px;
+  
+  /* 💡 核心转变：抛弃 ::after，直接将马赛克画在本体上，完美跟随文本换行 */
+  background-color: var(--vp-c-bg-mute);
+  background-image: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 2px,
+      var(--vp-c-text-3) 2px,
+      var(--vp-c-text-3) 4px);
+  transition: background 0.3s ease;
+  
+  /* 💡 视觉黑魔法：box-decoration-break
+     保证长文本换行时，每一行的首尾都会被独立切断，并保持圆角和背景的连贯性 */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-/* ================= 行内形态 ================= */
+/* 揭开后，清除马赛克，恢复普通背景并重置光标 */
+.vp-spoiler.is-revealed {
+  cursor: auto; 
+  background-image: none;
+  background-color: rgba(128, 128, 128, 0.15);
+}
+
+/* ================= 行内与块级形态 ================= */
 .spoiler-inline {
   display: inline;
   vertical-align: baseline;
   padding: 0 4px;
 }
 
-.spoiler-inline.is-revealed {
-  background-color: rgba(128, 128, 128, 0.15);
-}
-
-/* ================= 块级形态 ================= */
 .spoiler-block {
   display: block;
-  width: 100%; /* 💡 块级模式下自动占满 100% 宽度 */
-  margin: 16px 0; /* 给多行代码块留出呼吸空间 */
+  width: 100%; 
+  margin: 16px 0; 
 }
 
 /* ================= 核心屏蔽魔法 ================= */
 /* 
   利用内层统一控制透明度：
-  未揭开时，将内部所有内容变为透明并禁用交互。
-  这不仅能遮挡文字，连代码块自带的背景色、高亮、甚至是点击复制按钮，都会被完美隐藏！
+  这不仅能隐形文字，连代码块自带的背景色、高亮都会被彻底透明化。
+  由于外层有马赛克背景，所以完美实现了遮挡。
 */
-
-.vp-spoiler {
-  position: relative;
-  cursor: pointer; /* 未揭开时：全局小手样式 */
-  border-radius: 4px;
-}
-
-/* 💡 核心优化：揭开后，恢复浏览器默认的光标逻辑 */
-.vp-spoiler.is-revealed {
-  cursor: auto; 
-}
-
 .vp-spoiler:not(.is-revealed) > .spoiler-content {
   opacity: 0 !important;
   pointer-events: none;
@@ -84,43 +88,19 @@ const isRevealed = ref(false)
   transition: opacity 0.3s ease;
 }
 
-/* ================= 马赛克遮罩层 ================= */
-.vp-spoiler::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 4px;
-  background-color: var(--vp-c-bg-mute);
-  background-image: repeating-linear-gradient(45deg,
-      transparent,
-      transparent 2px,
-      var(--vp-c-text-3) 2px,
-      var(--vp-c-text-3) 4px);
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  z-index: 10; /* 💡 强行提升层级，彻底盖住代码块内部乱七八糟的 z-index */
-}
-
-.vp-spoiler.is-revealed::after {
-  opacity: 0;
-  pointer-events: none;
-}
-
-
-/* ================= 智能形态感知 (核心修复) ================= */
+/* ================= 智能形态感知 (防御性拓展) ================= */
 /* 
   利用 :has() 伪类侦测内部插槽。
-  即使 Markdown 插件没有传入 mode="block"，只要内部包含了块级元素（如引用、代码块、段落等），
-  组件就会自动强制觉醒为 block 块级形态，完美解决 span 塌陷导致遮罩层变成一条线的问题！
+  即使在行内语法下，只要内部意外包含了块级元素（如引用、代码块等），
+  自动强制觉醒为 block 块级形态，杜绝排版错乱。
 */
 .vp-spoiler:has(blockquote, pre, div, p, ul, ol, li, table) {
   display: block !important;
   width: 100% !important;
   margin: 16px 0 !important;
-  padding: 0 !important; /* 抵消 inline 模式可能带入的 0 4px */
+  padding: 0 !important;
 }
 
-/* 同步升级内部内容容器的形态 */
 .vp-spoiler:has(blockquote, pre, div, p, ul, ol, li, table) > .spoiler-content {
   display: block !important;
 }

@@ -27,6 +27,7 @@ declare module 'vue' {
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC209MinSubArrayLen: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC209MinSubArrayLen.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']
+    LC30FindSubstring: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC30FindSubstring.vue')['default']
     LC3LongestSubstring: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC3LongestSubstring.vue')['default']
     LC438FindAnagrams: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC438FindAnagrams.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']

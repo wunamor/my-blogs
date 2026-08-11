@@ -12,12 +12,18 @@ export const syntaxSugarPlugin = (md: any) => {
 
 		// 🧱 2. 匹配块级 Spoiler（独占一行的 ||）
 		// 匹配规则：行首的 || 加上换行，中间任意内容，最后又是行首的 ||
-		tempSrc = tempSrc.replace(
-			/^\|\|[ \t]*\r?\n([\s\S]*?)^\|\|[ \t]*(?:\r?\n|$)/gm,
-			(match: string, content: string) => {
-				return `\n\n<Spoiler mode="block">\n\n${content}\n\n</Spoiler>\n\n`
-			},
-		)
+		// tempSrc = tempSrc.replace(
+		// 	/^\|\|[ \t]*\r?\n([\s\S]*?)^\|\|[ \t]*(?:\r?\n|$)/gm,
+		// 	(match: string, content: string) => {
+		// 		return `\n\n<Spoiler mode="block">\n\n${content}\n\n</Spoiler>\n\n`
+		// 	},
+		// )
+    tempSrc = tempSrc.replace(/^([ \t>]*)\|\|[ \t]*\r?\n([\s\S]*?)^[ \t>]*\|\|[ \t]*(?:\r?\n|$)/gm, (match: string, prefix: string, content: string) => {
+      // 动态生成带有正确前缀的空行（比如 "> \n"），确保外部的引用块不断层
+      const blank = `${prefix}\n`;
+      // 在 HTML 标签与正文之间注入空行，强制 Markdown 引擎完整解析内部的列表和代码块！
+      return `${blank}${prefix}<Spoiler mode="block">\n${blank}${content}${blank}${prefix}</Spoiler>\n${blank}`;
+    });
 
 		// 📝 3. 匹配行内 Spoiler
 		tempSrc = tempSrc.replace(/\|\|([\s\S]*?)\|\|/g, (match: string, content: string) => {

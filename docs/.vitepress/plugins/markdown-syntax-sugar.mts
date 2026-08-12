@@ -27,7 +27,9 @@ export const syntaxSugarPlugin = (md: any) => {
 
 		// 📝 3. 匹配行内 Spoiler
 		tempSrc = tempSrc.replace(/\|\|([\s\S]*?)\|\|/g, (match: string, content: string) => {
-			return `<Spoiler mode="inline">${content}</Spoiler>`
+      // 💡 核心黑魔法：在开头强行塞入一个 HTML 零宽空白字符 &#8203;
+      // 彻底破坏 Markdown-it 将其误判为 "HTML代码块" 的规则，强制开启内部 Markdown 解析！
+			return `&#8203;<Spoiler mode="inline">${content}</Spoiler>`;
 		})
 
 		// 🔄 4. 将保护好的代码块和公式完美还原回去

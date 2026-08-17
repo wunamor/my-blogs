@@ -32,6 +32,7 @@ declare module 'vue' {
     LC3LongestSubstring: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC3LongestSubstring.vue')['default']
     LC438FindAnagrams: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC438FindAnagrams.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
+    LC69MySqrt: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC69MySqrt.vue')['default']
     LC704BinarySearch: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC704BinarySearch.vue')['default']
     LC76MinWindow: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC76MinWindow.vue')['default']
     LC904TotalFruit: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC904TotalFruit.vue')['default']

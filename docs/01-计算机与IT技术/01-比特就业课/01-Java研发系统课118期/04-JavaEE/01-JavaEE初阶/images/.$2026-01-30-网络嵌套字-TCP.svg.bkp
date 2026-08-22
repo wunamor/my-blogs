@@ -1,0 +1,192 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1150" pageHeight="950" background="#121212" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="Java TCP 并发通信逻辑架构图 (基于 IO流 与 线程池)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="300" y="30" width="550" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 模块背景框 ==================== -->
+    <!-- 客户端背景框 (蓝) -->
+    <mxCell id="client_box" value="客户端 (TCPClient)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#3b82f6;strokeWidth=2;fontColor=#60a5fa;verticalAlign=top;spacingTop=15;fontSize=18;fontStyle=1;dashed=0;" vertex="1" parent="1">
+      <mxGeometry x="40" y="100" width="300" height="740" as="geometry" />
+    </mxCell>
+
+    <!-- 服务端背景框 (绿) -->
+    <mxCell id="server_box" value="服务端 (TCPServer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#10b981;strokeWidth=2;fontColor=#34d399;verticalAlign=top;spacingTop=15;fontSize=18;fontStyle=1;dashed=0;" vertex="1" parent="1">
+      <mxGeometry x="750" y="100" width="340" height="740" as="geometry" />
+    </mxCell>
+    
+    <!-- 线程池内部逻辑框 (紫) -->
+    <mxCell id="threadpool_box" value="Worker Thread (并发处理单个连接)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#a855f7;strokeWidth=2;fontColor=#d8b4fe;verticalAlign=top;spacingTop=10;fontSize=14;fontStyle=1;dashed=1;" vertex="1" parent="1">
+      <mxGeometry x="770" y="380" width="300" height="420" as="geometry" />
+    </mxCell>
+
+    <!-- 网络传输虚线框 (橙) -->
+    <mxCell id="network_box" value="Internet / 网络层&#xa;(可靠的面向连接、字节流传输)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fcd34d;verticalAlign=top;spacingTop=15;fontSize=16;fontStyle=1;dashed=1;dashPattern=8 8;" vertex="1" parent="1">
+      <mxGeometry x="370" y="220" width="350" height="580" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 客户端节点 (X=80) ==================== -->
+    <mxCell id="c_socket" value="创建套接字并请求连接&#xa;new Socket(host, port)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#60a5fa;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="80" y="260" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="c_streams" value="获取双向 IO 流&#xa;getInputStream()&#xa;getOutputStream()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e40af;strokeColor=#93c5fd;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="80" y="440" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="c_send" value="向输出流写入请求&#xa;serverOut.println() / flush()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#60a5fa;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="80" y="550" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="c_recv" value="从输入流读取响应 [阻塞]&#xa;serverIn.next()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#60a5fa;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="80" y="700" width="220" height="60" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 服务端节点 ==================== -->
+    <!-- 主线程监听 (X=810) -->
+    <mxCell id="s_serversocket" value="创建服务器端点并绑定端口&#xa;new ServerSocket(9090)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#34d399;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="810" y="160" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="s_accept" value="监听并接收新连接 [阻塞]&#xa;server.accept()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#34d399;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="810" y="260" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="s_pool" value="将 Socket 移交线程池&#xa;service.submit(...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#6ee7b7;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="810" y="350" width="220" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- 工作线程池内部 (X=810) -->
+    <mxCell id="s_w_streams" value="获取专属连接的 IO 流&#xa;getInputStream()&#xa;getOutputStream()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="810" y="440" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="s_w_recv" value="从输入流读取请求 [阻塞]&#xa;clientIn.next()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="810" y="550" width="220" height="60" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="s_w_process" value="业务逻辑处理&#xa;handleData(data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b0764;strokeColor=#a855f7;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="810" y="630" width="220" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="s_w_send" value="向输出流写入响应&#xa;clientOut.println() / flush()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;fontColor=#ffffff;fontStyle=1;shadow=1;fontSize=14;" vertex="1" parent="1">
+      <mxGeometry x="810" y="700" width="220" height="60" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 客户端内部连线 ==================== -->
+    <mxCell id="edge_c1_c2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="c_socket" target="c_streams">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="190" y="320" as="sourcePoint" />
+        <mxPoint x="190" y="440" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="edge_c2_c3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="c_streams" target="c_send">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="190" y="500" as="sourcePoint" />
+        <mxPoint x="190" y="550" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="edge_c3_c4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="c_send" target="c_recv">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="190" y="610" as="sourcePoint" />
+        <mxPoint x="190" y="700" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 服务端主线程连线 ==================== -->
+    <mxCell id="edge_s1_s2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="s_serversocket" target="s_accept">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="920" y="220" as="sourcePoint" />
+        <mxPoint x="920" y="260" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="edge_s_loop" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="s_accept" target="s_pool">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="920" y="320" as="sourcePoint" />
+        <mxPoint x="920" y="350" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="edge_s_backtoaccept" value="while(true)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;dashed=1;" edge="1" parent="1" source="s_pool" target="s_accept">
+      <mxGeometry x="-0.7" relative="1" as="geometry">
+        <mxPoint x="1030" y="370" as="sourcePoint" />
+        <mxPoint x="1030" y="290" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="1070" y="370" />
+          <mxPoint x="1070" y="290" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 服务端工作线程内部连线 ==================== -->
+    <mxCell id="edge_sw1_sw2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="s_w_streams" target="s_w_recv">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="920" y="500" as="sourcePoint" />
+        <mxPoint x="920" y="550" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="edge_sw2_sw3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="s_w_recv" target="s_w_process">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="920" y="610" as="sourcePoint" />
+        <mxPoint x="920" y="630" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="edge_sw3_sw4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9ca3af;strokeWidth=2;fontColor=#ffffff;" edge="1" parent="1" source="s_w_process" target="s_w_send">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="920" y="680" as="sourcePoint" />
+        <mxPoint x="920" y="700" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ==================== 跨网络通信连线 (TCP流与握手) ==================== -->
+    
+    <!-- 三次握手建立连接 -->
+    <mxCell id="edge_net_handshake" value="1. TCP 三次握手建立连接 (Socket)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=3;fontColor=#fca5a5;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;" edge="1" parent="1" source="c_socket" target="s_accept">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="300" y="290" as="sourcePoint" />
+        <mxPoint x="810" y="290" as="targetPoint" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 客户端发送请求到服务端 -->
+    <mxCell id="edge_net_req" value="2. 字节流写入 (TCP Segment传输)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3b82f6;strokeWidth=3;fontColor=#93c5fd;dashed=1;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;" edge="1" parent="1" source="c_send" target="s_w_recv">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="300" y="580" as="sourcePoint" />
+        <mxPoint x="810" y="580" as="targetPoint" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 服务端发送响应到客户端 -->
+    <mxCell id="edge_net_res" value="3. 字节流返回 (TCP Segment传输)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=3;fontColor=#6ee7b7;dashed=1;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;" edge="1" parent="1" source="s_w_send" target="c_recv">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="810" y="730" as="sourcePoint" />
+        <mxPoint x="300" y="730" as="targetPoint" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 细节与说明标注 ==================== -->
+    <mxCell id="note_tcp" value="【架构师注】：相较于 UDP，TCP 具有三大显著差异：&#xa;1. 面向连接：必须先通过 server.accept() 和 new Socket() 完成连接握手。&#xa;2. 字节流通信：不再使用 DatagramPacket，而是拆解为流的 InputStream/OutputStream。&#xa;3. 阻塞与并发：主线程负责 accept 阻塞，工作线程（线程池）负责具体的流处理，解决并发访问。" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#333333;strokeColor=#555555;fontColor=#e5e7eb;fontSize=13;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="40" y="860" width="700" height="80" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

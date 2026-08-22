@@ -56,8 +56,10 @@ const isRevealed = ref(false)
 .vp-spoiler.is-revealed {
   cursor: auto; 
   background-image: none;
-  background-color: rgba(128, 128, 128, 0.15);
+  background-color: transparent;
+  border: solid 1px var(--vp-c-divider);
 }
+
 
 /* ================= 行内与块级形态 ================= */
 .spoiler-inline {
@@ -69,7 +71,11 @@ const isRevealed = ref(false)
 .spoiler-block {
   display: block;
   width: 100%; 
-  margin: 16px 0; 
+  margin: 16px 0;
+  /* 👉 核心修复：增加四周内边距，给文字留出呼吸空间 */
+  padding: 16px; 
+  /* 👉 占位黑魔法：先设置一个透明边框，防止点击出现边框时整个页面发生 1px 的抖动 */
+  border: 1px solid transparent;
 }
 
 /* ================= 核心屏蔽魔法 ================= */
@@ -98,7 +104,8 @@ const isRevealed = ref(false)
   display: block !important;
   width: 100% !important;
   margin: 16px 0 !important;
-  padding: 0 !important;
+  /* 👉 修改：从 0 改为 16px */
+  padding: 16px !important; 
 }
 
 .vp-spoiler:has(blockquote, pre, div, p, ul, ol, li, table) > .spoiler-content {

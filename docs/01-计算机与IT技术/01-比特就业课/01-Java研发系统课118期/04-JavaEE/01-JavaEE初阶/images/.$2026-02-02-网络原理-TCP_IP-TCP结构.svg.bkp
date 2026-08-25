@@ -1,0 +1,78 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="600" background="#121212" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="UDP 数据报文结构图 (Datagram Format)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="250" y="40" width="500" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 顶部区域标识 ==================== -->
+    <mxCell id="label_header" value="UDP 报头 (Header)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=bottom;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#93c5fd;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="140" width="400" height="40" as="geometry" />
+    </mxCell>
+
+    <mxCell id="label_payload" value="UDP 载荷 (完整的应用层数据包)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=bottom;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#6ee7b7;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="500" y="140" width="400" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 核心数据块 (报头 4 块 + 载荷 1 块) ==================== -->
+    
+    <!-- 1. 源端口 -->
+    <mxCell id="box_src_port" value="源端口&#xa;(Source Port)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;strokeWidth=2;fontColor=#ffffff;fontSize=15;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="190" width="100" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- 2. 目的端口 -->
+    <mxCell id="box_dst_port" value="目的端口&#xa;(Dest Port)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;strokeWidth=2;fontColor=#ffffff;fontSize=15;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="190" width="100" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- 3. 长度 -->
+    <mxCell id="box_length" value="长度&#xa;(Length)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;strokeWidth=2;fontColor=#ffffff;fontSize=15;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="300" y="190" width="100" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- 4. 校验和 -->
+    <mxCell id="box_checksum" value="校验和&#xa;(Checksum)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;strokeWidth=2;fontColor=#ffffff;fontSize=15;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="400" y="190" width="100" height="80" as="geometry" />
+    </mxCell>
+
+    <!-- 5. 载荷 (Data) -->
+    <mxCell id="box_data" value="数据 (Data)&#xa;&#xa;你之前写的 requestPacket.getData() 就会放在这里" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ffffff;fontSize=15;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="500" y="190" width="400" height="80" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 底部尺寸标注 (大括号 - 已修正方向为 north) ==================== -->
+    
+    <mxCell id="brace_1" value="2 字节" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;direction=north;size=0.5;fontColor=#9ca3af;strokeColor=#6b7280;strokeWidth=1.5;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="100" y="280" width="100" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="brace_2" value="2 字节" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;direction=north;size=0.5;fontColor=#9ca3af;strokeColor=#6b7280;strokeWidth=1.5;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="200" y="280" width="100" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="brace_3" value="2 字节" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;direction=north;size=0.5;fontColor=#9ca3af;strokeColor=#6b7280;strokeWidth=1.5;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="300" y="280" width="100" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="brace_4" value="2 字节" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;direction=north;size=0.5;fontColor=#9ca3af;strokeColor=#6b7280;strokeWidth=1.5;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="400" y="280" width="100" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- 总体报头大小标注 -->
+    <mxCell id="brace_header_total" value="UDP 报头固定长度：共 8 字节 (64 bit)" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;direction=north;size=0.5;fontColor=#93c5fd;strokeColor=#3b82f6;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="340" width="400" height="20" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 架构师说明看板 ==================== -->
+    <mxCell id="note_architect" value="【架构师深度解析】：&#xa;1. 极简设计：由于没有连接状态、确认机制和拥塞控制，UDP 的头部被极致压缩到了 8 个字节。&#xa;2. 长度字段 (Length)：不仅包含报头，也包含了载荷（Data）的总长度。&#xa;3. 校验和 (Checksum)：这是 UDP 唯一的纠错手段，用于检查数据在传输中是否被篡改或损坏。如果校验失败，系统会直接丢弃该包，且不会通知发送方（体现了其“不可靠性”）。" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#262626;strokeColor=#404040;fontColor=#e5e7eb;fontSize=14;align=left;spacingLeft=15;spacingTop=10;spacingRight=15;" vertex="1" parent="1">
+      <mxGeometry x="100" y="420" width="800" height="100" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

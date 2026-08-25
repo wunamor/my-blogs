@@ -1,0 +1,73 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="650" background="#121212" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="TCP 确认应答 (ACK) vs 业务响应 (Response)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="30" width="500" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 节点头部 ==================== -->
+    <mxCell id="client" value="客户端&#xa;(Client)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontColor=#60a5fa;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="100" width="100" height="40" as="geometry" />
+    </mxCell>
+
+    <mxCell id="server" value="服务器&#xa;(Server)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontColor=#34d399;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="650" y="100" width="100" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 时间轴 (隐形辅助线，不画出实线以贴合原图风格) ==================== -->
+    
+    <!-- ==================== 上半部分：客户端发数据，服务端 ACK ==================== -->
+    <mxCell id="text_scenario_1" value="场景一：客户端发送数据" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#fcd34d;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="50" y="150" width="200" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- 发送 hello -->
+    <mxCell id="c_to_s_data" value="hello (应用层请求数据)" style="edgeStyle=none;html=1;strokeColor=#ffffff;strokeWidth=2;fontColor=#ffffff;fontSize=15;align=center;verticalAlign=bottom;spacingBottom=5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="200" as="sourcePoint" />
+        <mxPoint x="700" y="250" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 返回 ACK -->
+    <mxCell id="s_to_c_ack" value="[ACK] (传输层确认应答)" style="edgeStyle=none;html=1;strokeColor=#10b981;strokeWidth=2;fontColor=#34d399;fontSize=15;align=center;verticalAlign=bottom;spacingBottom=5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="270" as="sourcePoint" />
+        <mxPoint x="200" y="320" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ==================== 下半部分：服务端发数据，客户端 ACK ==================== -->
+    <mxCell id="text_scenario_2" value="场景二：服务器发送数据" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#fcd34d;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="50" y="360" width="200" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- 发送 hello -->
+    <mxCell id="s_to_c_data" value="hello (应用层响应数据)" style="edgeStyle=none;html=1;strokeColor=#ffffff;strokeWidth=2;fontColor=#ffffff;fontSize=15;align=center;verticalAlign=bottom;spacingBottom=5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="410" as="sourcePoint" />
+        <mxPoint x="200" y="460" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 返回 ACK -->
+    <mxCell id="c_to_s_ack" value="[ACK] (传输层确认应答)" style="edgeStyle=none;html=1;strokeColor=#10b981;strokeWidth=2;fontColor=#34d399;fontSize=15;align=center;verticalAlign=bottom;spacingBottom=5;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="480" as="sourcePoint" />
+        <mxPoint x="700" y="530" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ==================== 分割虚线 ==================== -->
+    <mxCell id="divider" style="endArrow=none;html=1;strokeColor=#4b5563;strokeWidth=1;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="50" y="345" as="sourcePoint" />
+        <mxPoint x="850" y="345" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

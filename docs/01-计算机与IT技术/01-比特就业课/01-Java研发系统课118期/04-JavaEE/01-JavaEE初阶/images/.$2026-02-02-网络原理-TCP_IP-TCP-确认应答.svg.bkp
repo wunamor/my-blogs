@@ -1,0 +1,84 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="800" background="#121212" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="TCP 确认应答机制 (ACK Mechanism)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="250" y="30" width="400" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 主机节点头部 ==================== -->
+    <mxCell id="host_a" value="主机 A&#xa;(发送方)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;strokeWidth=2;fontColor=#ffffff;fontSize=16;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="100" width="150" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="host_b" value="主机 B&#xa;(接收方)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ffffff;fontSize=16;fontStyle=1;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="600" y="100" width="150" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 时间轴 (垂直虚线) ==================== -->
+    <mxCell id="timeline_a" style="endArrow=classic;html=1;strokeColor=#4b5563;strokeWidth=2;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="225" y="160" as="sourcePoint" />
+        <mxPoint x="225" y="620" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="timeline_b" style="endArrow=classic;html=1;strokeColor=#4b5563;strokeWidth=2;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="675" y="160" as="sourcePoint" />
+        <mxPoint x="675" y="620" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 时间轴文本提示 -->
+    <mxCell id="label_time1" value="时间 (Time) ↓" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#9ca3af;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="235" y="590" width="80" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="label_time2" value="时间 (Time) ↓" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#9ca3af;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="685" y="590" width="80" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 通信过程 (对角线箭头) ==================== -->
+
+    <!-- 1. 主机A 发送 数据 1-1000 -->
+    <mxCell id="data_1" value="发送数据报文&#xa;[ Seq = 1, 数据长度 = 1000 字节 ]" style="edgeStyle=none;html=1;strokeColor=#3b82f6;strokeWidth=3;fontColor=#93c5fd;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="225" y="200" as="sourcePoint" />
+        <mxPoint x="675" y="260" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 2. 主机B 确认 ACK 1001 -->
+    <mxCell id="ack_1" value="确认应答报文&#xa;[ ACK = 1001 ]" style="edgeStyle=none;html=1;strokeColor=#10b981;strokeWidth=3;fontColor=#6ee7b7;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;align=center;verticalAlign=bottom;spacingBottom=8;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="675" y="280" as="sourcePoint" />
+        <mxPoint x="225" y="340" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 3. 主机A 发送 数据 1001-2000 -->
+    <mxCell id="data_2" value="发送数据报文&#xa;[ Seq = 1001, 数据长度 = 1000 字节 ]" style="edgeStyle=none;html=1;strokeColor=#3b82f6;strokeWidth=3;fontColor=#93c5fd;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="225" y="380" as="sourcePoint" />
+        <mxPoint x="675" y="440" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 4. 主机B 确认 ACK 2001 -->
+    <mxCell id="ack_2" value="确认应答报文&#xa;[ ACK = 2001 ]" style="edgeStyle=none;html=1;strokeColor=#10b981;strokeWidth=3;fontColor=#6ee7b7;fontSize=14;fontStyle=1;labelBackgroundColor=#121212;align=center;verticalAlign=bottom;spacingBottom=8;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="675" y="460" as="sourcePoint" />
+        <mxPoint x="225" y="520" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 架构师说明看板 ==================== -->
+    <mxCell id="note_architect" value="【架构师深度解析 - TCP 的序列号数学逻辑】：&#xa;1. 序列号 (Seq)：表示当前发送的数据，其第一个字节在整个字节流中的序号。&#xa;2. 数据长度 (Length)：表示本次发送了多少个字节的数据（注：Length属于IP层载荷长度计算得出，不在TCP首部专属字段中）。&#xa;3. 确认应答号 (ACK)：这是最核心的公式！ACK = 接收到的 Seq + 数据长度。&#xa;&#xa;例如：主机 B 收到了 Seq=1，长度为 1000 的数据（即收到了第 1~1000 字节）。&#xa;主机 B 返回 ACK = 1001，意思是：“前 1000 个字节我已经无误收到了，请你下一次从第 1001 个字节开始发给我！”" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#262626;strokeColor=#404040;fontColor=#e5e7eb;fontSize=14;align=left;spacingLeft=15;spacingTop=10;spacingRight=15;spacingBottom=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="650" width="700" height="140" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

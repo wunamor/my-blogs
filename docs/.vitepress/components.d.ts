@@ -22,6 +22,7 @@ declare module 'vue' {
     LC11ContainerWithMostWater: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC11ContainerWithMostWater.vue')['default']
     LC138CopyRandomList: typeof import('./components/oj/leetcode/LC138CopyRandomList.vue')['default']
     LC15ThreeSum: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC15ThreeSum.vue')['default']
+    LC162FindPeakElement: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC162FindPeakElement.vue')['default']
     LC1658MinOperations: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC1658MinOperations.vue')['default']
     LC18FourSum: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC18FourSum.vue')['default']
     LC202HappyNumber: typeof import('./components/oj/leetcode/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']

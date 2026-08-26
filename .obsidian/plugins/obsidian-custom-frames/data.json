@@ -1,0 +1,17 @@
+{
+  "frames": [
+    {
+      "url": "http://localhost:5173/",
+      "displayName": "VitePress Preview",
+      "icon": "layout",
+      "hideOnMobile": true,
+      "addRibbonIcon": false,
+      "openInCenter": false,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": "",
+      "customJs": ""
+    }
+  ],
+  "padding": 5
+}

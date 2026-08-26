@@ -1,0 +1,128 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="700" background="#121212" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="TCP 连接释放 (四次挥手 Four-way Handshake)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontColor=#e5e7eb;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="150" y="30" width="600" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 节点头部 ==================== -->
+    <mxCell id="client" value="客户端 (Client)&#xa;主动关闭" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#172554;strokeColor=#60a5fa;strokeWidth=1.5;fontColor=#d1d5db;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="140" y="100" width="120" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="server" value="服务器 (Server)&#xa;被动关闭" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#022c22;strokeColor=#34d399;strokeWidth=1.5;fontColor=#d1d5db;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="640" y="100" width="120" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 时间轴 (垂直虚线) ==================== -->
+    <mxCell id="timeline_c" style="endArrow=classic;html=1;strokeColor=#4b5563;strokeWidth=1.5;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="150" as="sourcePoint" />
+        <mxPoint x="200" y="660" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="timeline_s" style="endArrow=classic;html=1;strokeColor=#4b5563;strokeWidth=1.5;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="150" as="sourcePoint" />
+        <mxPoint x="700" y="660" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 初始状态 ==================== -->
+    <mxCell id="state_c_est" value="ESTABLISHED" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#9ca3af;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="140" width="100" height="30" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="state_s_est" value="ESTABLISHED" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#9ca3af;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="720" y="140" width="100" height="30" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 第一次挥手 (FIN) ==================== -->
+    <mxCell id="arrow_fin1" value="第一次挥手 (FIN 报文)&#xa;FIN = 1, seq = u" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=2;fontColor=#d1d5db;fontSize=14;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="190" as="sourcePoint" />
+        <mxPoint x="700" y="250" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="state_c_fw1" value="FIN_WAIT_1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#93c5fd;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="190" width="100" height="30" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 第二次挥手 (ACK) ==================== -->
+    <mxCell id="arrow_ack1" value="第二次挥手 (ACK 报文)&#xa;ACK = 1, seq = v, ack = u + 1" style="edgeStyle=none;html=1;strokeColor=#34d399;strokeWidth=2;fontColor=#d1d5db;fontSize=14;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="270" as="sourcePoint" />
+        <mxPoint x="200" y="330" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="state_s_cw" value="CLOSE_WAIT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6ee7b7;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="720" y="270" width="100" height="30" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="state_c_fw2" value="FIN_WAIT_2" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#93c5fd;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="330" width="100" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- 可选：暗示服务端还在处理最后的数据 -->
+    <mxCell id="server_processing" value="(服务端可能继续发送剩余数据...)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#9ca3af;fontSize=13;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="580" y="320" width="220" height="30" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 第三次挥手 (FIN) ==================== -->
+    <mxCell id="arrow_fin2" value="第三次挥手 (FIN 报文)&#xa;FIN = 1, ACK = 1, seq = w, ack = u + 1" style="edgeStyle=none;html=1;strokeColor=#a78bfa;strokeWidth=2;fontColor=#d1d5db;fontSize=14;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="700" y="410" as="sourcePoint" />
+        <mxPoint x="200" y="470" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="state_s_la" value="LAST_ACK" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#c4b5fd;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="720" y="410" width="100" height="30" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 第四次挥手 (ACK) ==================== -->
+    <mxCell id="arrow_ack2" value="第四次挥手 (ACK 报文)&#xa;ACK = 1, seq = u + 1, ack = w + 1" style="edgeStyle=none;html=1;strokeColor=#d97706;strokeWidth=2;fontColor=#d1d5db;fontSize=14;align=center;verticalAlign=bottom;spacingBottom=8;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="490" as="sourcePoint" />
+        <mxPoint x="700" y="550" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="state_c_tw" value="TIME_WAIT" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#fcd34d;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="490" width="100" height="30" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="state_s_closed" value="CLOSED" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#9ca3af;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="720" y="550" width="100" height="30" as="geometry" />
+    </mxCell>
+
+
+    <!-- ==================== 等待 2MSL 阶段 (时间轴箭头平替括号) ==================== -->
+    <mxCell id="arrow_2msl" style="edgeStyle=none;html=1;strokeColor=#fcd34d;strokeWidth=2;dashed=1;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="200" y="520" as="sourcePoint" />
+        <mxPoint x="200" y="600" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="label_2msl" value="等待 2MSL" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#fcd34d;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="110" y="545" width="80" height="20" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="state_c_closed_final" value="CLOSED" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#9ca3af;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="80" y="600" width="100" height="30" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

@@ -1,7 +1,11 @@
 [
   "obsidian-git",
-  "obsidian-linter",
-  "obsidian-custom-frames",
   "obsidian-paste-image-rename",
-  "terminal"
+  "editing-toolbar",
+  "material-icon-theme",
+  "lean-terminal",
+  "reveal-hidden-files",
+  "better-markdown-links",
+  "obsidian-latex-suite",
+  "surfing"
 ]

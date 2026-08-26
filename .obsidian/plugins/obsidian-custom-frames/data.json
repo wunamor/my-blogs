@@ -1,12 +1,12 @@
 {
   "frames": [
     {
-      "url": "http://localhost:5173/",
-      "displayName": "VitePress Preview",
-      "icon": "layout",
+      "url": "http://localhost:5173",
+      "displayName": "VitePress预览",
+      "icon": "monitor",
       "hideOnMobile": true,
       "addRibbonIcon": false,
-      "openInCenter": false,
+      "openInCenter": true,
       "zoomLevel": 1,
       "forceIframe": false,
       "customCss": "",

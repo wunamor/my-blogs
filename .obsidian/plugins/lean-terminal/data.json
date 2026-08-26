@@ -1,0 +1,150 @@
+{
+  "shellPath": "",
+  "shellPathWin": "",
+  "shellPathMac": "",
+  "shellPathLinux": "",
+  "startupCommand": "npm run docs:dev",
+  "fontSize": 15,
+  "fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+  "lineHeight": 1,
+  "theme": "auto",
+  "backgroundColor": "",
+  "cursorBlink": true,
+  "cursorStyle": "block",
+  "copyOnSelect": true,
+  "scrollback": 5000,
+  "ribbonIcon": "terminal",
+  "defaultLocation": "bottom",
+  "notifyOnCompletion": false,
+  "notificationSound": "beep",
+  "notificationVolume": 50,
+  "searchShortcut": "Ctrl+Alt+F",
+  "persistBuffer": true,
+  "recentSessionsMax": 10,
+  "recentSessions": [
+    {
+      "name": "Terminal 6",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n22:46:29\u001b[0m \u001b[36;1m[vitepress]\u001b[0m \u001b[32mhmr update \u001b[39;2m/images.md\r\n\r\n\u001b[0mE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n22:53:00\u001b[0m \u001b[36;1m[vitepress]\u001b[0m \u001b[32mhmr update \u001b[39;2m/index.md\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[37A\u001b[0m\u001b[?1004h",
+      "closedAt": 1787756024753
+    },
+    {
+      "name": "Terminal 5",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[9A\u001b[0m\u001b[?1004h",
+      "closedAt": 1787755393472
+    },
+    {
+      "name": "Terminal 4",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>   \u001b[3D\u001b[?1004h",
+      "closedAt": 1787755387679
+    },
+    {
+      "name": "Terminal 3",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "\r\n\u001b[33mTerminal binaries not installed.\r\n\u001b[0mGo to Settings → Terminal to download them.\u001b[1B\u001b[43D",
+      "closedAt": 1787755387344
+    },
+    {
+      "name": "Terminal 2",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "\r\nFailed to spawn shell: Shell not found: pwsh.exe\r\n\r\nFailed to spawn shell: Shell not found: pwsh.exe\u001b[1B\u001b[48D",
+      "closedAt": 1787755386951
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "\r\nFailed to spawn shell: Shell not found: pwsh.exe\u001b[1B\u001b[48D",
+      "closedAt": 1787755185040
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnotepad\u001b[0m \u001b[92m$PROFILE\r\n\u001b[0me]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[?1004h",
+      "closedAt": 1787755157313
+    },
+    {
+      "name": "Terminal 3",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[?1004h",
+      "closedAt": 1787754724487
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnpm\u001b[0m \u001b[37mrun\u001b[0m \u001b[37mdocs:dev\u001b[0m     \r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\u001b[0me]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnpm\u001b[0m \u001b[37mrun\u001b[0m \u001b[37mdocs:dev\u001b[0m                               \r\n                                            \r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[0m: use --host\u001b[2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[0mh\u001b[2m to show help\r\n\u001b[0me]133;D;1e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnotepad\u001b[0m \u001b[92m$PROFILE\r\n\u001b[0me]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes>  \u001b[93mNew-Item\u001b[0m \u001b[90m-Type\u001b[0m \u001b[37mFile\u001b[0m \u001b[90m-Path\u001b[0m \u001b[92m$PROFILE\u001b[0m \u001b[90m-Force\r\n\u001b[0me]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> l\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> ame                                           \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> ---                                           \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> icrosoft.PowerShell_profile.ps1               \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes>  \u001b[93mnotepad\u001b[0m \u001b[92m$PROFILE\u001b[0m                         \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes>  e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[?1004h",
+      "closedAt": 1787754723432
+    },
+    {
+      "name": "Terminal 2",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnpm\u001b[0m \u001b[37mrun\u001b[0m \u001b[37mdocs:dev\u001b[0m     \r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\u001b[0me]133;D;1e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[8A\u001b[52C\u001b[?1004h",
+      "closedAt": 1787752207796
+    }
+  ],
+  "enableClaudeIntegration": false,
+  "claudeSessionsDir": "",
+  "claudeRegistryPath": "claude-sessions.md",
+  "claudeSessionsMax": 25,
+  "tabColorTintsBackground": true,
+  "tabColors": [
+    {
+      "name": "None",
+      "value": "",
+      "tintStrength": 0,
+      "builtin": true
+    },
+    {
+      "name": "Vermilion",
+      "value": "#FC3634",
+      "tintStrength": 12,
+      "builtin": true
+    },
+    {
+      "name": "Sky Blue",
+      "value": "#25D0F7",
+      "tintStrength": 12,
+      "builtin": true
+    },
+    {
+      "name": "Gold",
+      "value": "#FFD700",
+      "tintStrength": 12,
+      "builtin": true
+    },
+    {
+      "name": "Mint",
+      "value": "#18BC9C",
+      "tintStrength": 12,
+      "builtin": true
+    },
+    {
+      "name": "Azure",
+      "value": "#007BFF",
+      "tintStrength": 12,
+      "builtin": true
+    },
+    {
+      "name": "Purple",
+      "value": "#A991D4",
+      "tintStrength": 12,
+      "builtin": true
+    }
+  ],
+  "tabBarPosition": "top",
+  "wikiLinkAutocomplete": false,
+  "wikiLinkInsertMode": "wikilink",
+  "clickableFilePaths": true,
+  "readlineShortcuts": true
+}

@@ -36,6 +36,7 @@ declare module 'vue' {
     LC69MySqrt: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC69MySqrt.vue')['default']
     LC704BinarySearch: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC704BinarySearch.vue')['default']
     LC76MinWindow: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC76MinWindow.vue')['default']
+    LC852PeakIndex: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC852PeakIndex.vue')['default']
     LC904TotalFruit: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC904TotalFruit.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     QuickSortHoareVisualizer: typeof import('./components/algorithm/sort/QuickSortHoareVisualizer.vue')['default']

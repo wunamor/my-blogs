@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "343a86d85837a88c",
+        "id": "e52157b8a201c0f7",
         "type": "tabs",
         "children": [
           {
-            "id": "d89cdce979fef88b",
+            "id": "7e4408b8c9f0da8f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-27-二叉树.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "2025-07-27-二叉树"
             }
           }
         ]
@@ -39,7 +43,7 @@
                 "sortOrder": "alphabetical",
                 "autoReveal": false,
                 "showSearch": true,
-                "searchQuery": "index-tes"
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -179,10 +183,12 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
+      "surfing:surfing-bookmark-manager": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -192,34 +198,44 @@
       "bases:新建数据库": false,
       "obsidian-git:Open Git source control": false,
       "lean-terminal:Open terminal": false,
-      "reveal-hidden-files:Toggle hidden files visibility": false
+      "reveal-hidden-files:Toggle hidden files visibility": false,
+      "local-backup:Run local backup": false,
+      "remotely-save:Remotely Save": false
     }
   },
-  "active": "4f96f2cd88ee86e0",
+  "active": "7e4408b8c9f0da8f",
   "lastOpenFiles": [
-    "docs/.vitepress/config.mts.timestamp-1787755952444-fc0087b754a7e.mjs",
-    ".obsidian/surfing-bookmark.json",
-    "docs/.vitepress/config.mts.timestamp-1787755664223-3cf4cfcdf72de.mjs",
+    ".obsidian/plugins/remotely-save/.gitignore",
+    ".obsidian/plugins/remotely-save/data.json",
+    ".obsidian/plugins/remotely-save/styles.css",
+    ".obsidian/plugins/remotely-save/main.js",
+    ".obsidian/plugins/remotely-save/manifest.json",
+    ".obsidian/plugins/remotely-save",
+    ".obsidian/plugins/local-backup/data.json",
+    ".obsidian/plugins/local-backup/main.js",
+    ".obsidian/plugins/local-backup/manifest.json",
+    ".obsidian/plugins/local-backup",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-27-二叉树.md",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-19-泛型完+顺序表.md",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-18-复杂度+包装类+泛型.md",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/index.md",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2026-02-02-网络原理-TCP_IP.md",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/images/2025-07-18-泛型-其他问题-多继承-解决.png",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/2026-02-02-网络原理-TCP_IP-TCP-连接管理-四次挥手.svg",
+    "docs/00-学习技巧/01-导言-如何高效学习.md",
+    "未命名.base",
+    "未命名.canvas",
+    "2026-08-27.md",
     "docs/images.md",
-    ".obsidian/plugins/surfing/data.json",
     "docs/test/test.md",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-问题-确认应答与响应区别.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-UDP.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-TCP结构.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-TCP-连接管理.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-TCP-超时重传.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-TCP-连接管理-四次挥手.svg.bkp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/.$2026-02-02-网络原理-TCP_IP-TCP-确认应答.svg.bkp",
     "2026-08-26.md",
     "Excalidraw/Drawing 2026-08-26 22.13.35.excalidraw.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-31-排序.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/index.md",
     "docs/index.md",
-    "未命名.canvas",
     "docs/test/index.md",
     "docs/images/index-tes.png",
     "docs/images/index-test.png",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2026-02-02-网络原理-TCP_IP.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/10-测试/2025-11-20-自动化测试-基础概念.md",
     "Excalidraw/Drawing 2026-08-26 21.16.54.excalidraw.md",
     "Excalidraw/Drawing 2026-08-26 21.16.53.excalidraw.md",
@@ -237,11 +253,6 @@
     "未命名 1.canvas",
     "docs/test/index-{input}.png",
     "docs/test/index-1787732231880.webp",
-    "index-1787731896290.webp",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/03-MySQL数据库/index.md",
-    "docs/03-生活经验总结/01-工作经验/01-工作前.md",
-    "docs/03-生活经验总结/01-工作经验/index.md",
-    "node_modules/gray-matter/README.md",
-    "node_modules/debug/README.md"
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/03-MySQL数据库/index.md"
   ]
 }

@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "e52157b8a201c0f7",
+        "id": "1772373c738e5799",
         "type": "tabs",
         "children": [
           {
-            "id": "7e4408b8c9f0da8f",
+            "id": "538802b810b5b6a5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-27-二叉树.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2025-07-27-二叉树"
+              "title": "新标签页"
             }
           }
         ]
@@ -183,8 +179,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 436.29998779296875
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -203,19 +198,20 @@
       "remotely-save:Remotely Save": false
     }
   },
-  "active": "7e4408b8c9f0da8f",
+  "active": "4f96f2cd88ee86e0",
   "lastOpenFiles": [
+    "docs/.vitepress/config.mts.timestamp-1787816428670-c17ec5a34f6c1.mjs",
+    "docs/.vitepress/config.mts.timestamp-1787816393351-514a7a6fb7c68.mjs",
+    "docs/.vitepress/config.mts.timestamp-1787812272053-9caeed196ebff.mjs",
+    "docs/.vitepress/config.mts.timestamp-1787812209132-80140ca358162.mjs",
+    ".obsidian/hotkeys.json",
+    "docs/.vitepress/config.mts.timestamp-1787811808800-9dc93e7cb409c.mjs",
+    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-27-二叉树.md",
     ".obsidian/plugins/remotely-save/.gitignore",
     ".obsidian/plugins/remotely-save/data.json",
     ".obsidian/plugins/remotely-save/styles.css",
     ".obsidian/plugins/remotely-save/main.js",
     ".obsidian/plugins/remotely-save/manifest.json",
-    ".obsidian/plugins/remotely-save",
-    ".obsidian/plugins/local-backup/data.json",
-    ".obsidian/plugins/local-backup/main.js",
-    ".obsidian/plugins/local-backup/manifest.json",
-    ".obsidian/plugins/local-backup",
-    "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-27-二叉树.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-19-泛型完+顺序表.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/2025-07-18-复杂度+包装类+泛型.md",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/index.md",
@@ -223,7 +219,6 @@
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/02-Java数据结构/01-数据结构初阶/images/2025-07-18-泛型-其他问题-多继承-解决.png",
     "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/images/2026-02-02-网络原理-TCP_IP-TCP-连接管理-四次挥手.svg",
     "docs/00-学习技巧/01-导言-如何高效学习.md",
-    "未命名.base",
     "未命名.canvas",
     "2026-08-27.md",
     "docs/images.md",

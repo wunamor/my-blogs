@@ -1,9 +1,9 @@
 {
   "shellPath": "",
-  "shellPathWin": "",
+  "shellPathWin": "D:\\PortableApps\\PowerShell-7.6.5-win-x64\\pwsh.exe",
   "shellPathMac": "",
   "shellPathLinux": "",
-  "startupCommand": "npm run docs:dev",
+  "startupCommand": "",
   "fontSize": 15,
   "fontFamily": "Menlo, Monaco, 'Courier New', monospace",
   "lineHeight": 1,
@@ -14,7 +14,7 @@
   "copyOnSelect": true,
   "scrollback": 5000,
   "ribbonIcon": "terminal",
-  "defaultLocation": "bottom",
+  "defaultLocation": "right",
   "notifyOnCompletion": false,
   "notificationSound": "beep",
   "notificationVolume": 50,
@@ -22,6 +22,62 @@
   "persistBuffer": true,
   "recentSessionsMax": 10,
   "recentSessions": [
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "PS E:\\github\\my-notes> \u001b[?1004h",
+      "closedAt": 1787816469494
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "PS E:\\github\\my-notes> \u001b[93mnpm\u001b[0m \u001b[37mrun\u001b[0m \u001b[37mdocs:dev\r\n\r\n\u001b[0m> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[32A\u001b[0m\u001b[?1004h",
+      "closedAt": 1787816416946
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[0m: use --host\u001b[2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[0mh\u001b[2m to show help\r\n\r\n\u001b[0mFailed to spawn shell: Shell not found: %LOCALAPPDATA%\\Microsoft\\WindowsApps\\pwsh.exe\r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \u001b[93mpowershell\u001b[0m                              otes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\nPS E:\\github\\my-notes> \r\n\r\n\r\n\u001b[12A\u001b[33C\u001b[?1004h",
+      "closedAt": 1787816390762
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[0m: use --host\u001b[2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[0mh\u001b[2m to show help\r\n\r\n\u001b[0mFailed to spawn shell: Shell not found: %LOCALAPPDATA%\\Microsoft\\WindowsApps\\pwsh.exe\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[29A\u001b[?1004h",
+      "closedAt": 1787816377505
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[32A\u001b[0m\u001b[?1004h",
+      "closedAt": 1787815702373
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>cs:dev\r\nE:\\github\\my-notes>-index.mjs && vitepress dev docs\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\u001b[1C成完毕！(基于扫描器重构版)\r\nE:\\github\\my-notes>版本 10.0.26200.9168]\r\nE:\\github\\my-notes>ration。保留所有权利。\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes>\r\nE:\\github\\my-notes> \u001b[1D\u001b[?1004h",
+      "closedAt": 1787812268392
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\u001b[1B\u001b[46D\u001b[?1004h",
+      "closedAt": 1787812210354
+    },
+    {
+      "name": "Terminal 1",
+      "color": "",
+      "cwd": "E:\\github\\my-notes",
+      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\u001b[0m\u001b[?1004h",
+      "closedAt": 1787812147799
+    },
     {
       "name": "Terminal 1",
       "color": "",
@@ -35,62 +91,6 @@
       "cwd": "E:\\github\\my-notes\\",
       "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\u001b[1B\u001b[46D\u001b[?1004h",
       "closedAt": 1787797142373
-    },
-    {
-      "name": "Terminal 2",
-      "color": "",
-      "cwd": "E:\\github\\my-notes\\",
-      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\nPort 5173 is in use, trying another one...\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5174\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\u001b[0m\u001b[?1004h",
-      "closedAt": 1787796691342
-    },
-    {
-      "name": "Terminal 6",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n22:46:29\u001b[0m \u001b[36;1m[vitepress]\u001b[0m \u001b[32mhmr update \u001b[39;2m/images.md\r\n\r\n\u001b[0mE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n22:53:00\u001b[0m \u001b[36;1m[vitepress]\u001b[0m \u001b[32mhmr update \u001b[39;2m/index.md\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[37A\u001b[0m\u001b[?1004h",
-      "closedAt": 1787756024753
-    },
-    {
-      "name": "Terminal 5",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>npm run docs:dev\r\n\r\n> my-notes@1.0.0 docs:dev\r\n> node scripts/auto-index.mjs && vitepress dev docs\r\n\r\n✅ 文件夹导读页自动生成完毕！(基于扫描器重构版)\r\n\r\n  \u001b[32;1mvitepress\u001b[22m v1.6.4\r\n\r\n\u001b[0m  \u001b[32m➜\u001b[0m  \u001b[1mLocal\u001b[0m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\r\n\u001b[39;2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m: use \u001b[1;22m--host\u001b[22;2m to expose\r\n\u001b[32m  ➜\u001b[39m  press \u001b[1;22mh\u001b[22;2m to show help\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u001b[9A\u001b[0m\u001b[?1004h",
-      "closedAt": 1787755393472
-    },
-    {
-      "name": "Terminal 4",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "Microsoft Windows [版本 10.0.26200.9168]\r\n(c) Microsoft Corporation。保留所有权利。\r\n\r\nE:\\github\\my-notes>   \u001b[3D\u001b[?1004h",
-      "closedAt": 1787755387679
-    },
-    {
-      "name": "Terminal 3",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "\r\n\u001b[33mTerminal binaries not installed.\r\n\u001b[0mGo to Settings → Terminal to download them.\u001b[1B\u001b[43D",
-      "closedAt": 1787755387344
-    },
-    {
-      "name": "Terminal 2",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "\r\nFailed to spawn shell: Shell not found: pwsh.exe\r\n\r\nFailed to spawn shell: Shell not found: pwsh.exe\u001b[1B\u001b[48D",
-      "closedAt": 1787755386951
-    },
-    {
-      "name": "Terminal 1",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "\r\nFailed to spawn shell: Shell not found: pwsh.exe\u001b[1B\u001b[48D",
-      "closedAt": 1787755185040
-    },
-    {
-      "name": "Terminal 1",
-      "color": "",
-      "cwd": "E:\\github\\my-notes",
-      "bufferSerial": "e]133;Ae\\\r\ne]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[93mnotepad\u001b[0m \u001b[92m$PROFILE\r\n\u001b[0me]133;D;e\\e]133;Ae\\e]133;Be\\PS E:\\github\\my-notes> \u001b[?1004h",
-      "closedAt": 1787755157313
     }
   ],
   "enableClaudeIntegration": false,
@@ -146,5 +146,16 @@
   "wikiLinkAutocomplete": false,
   "wikiLinkInsertMode": "wikilink",
   "clickableFilePaths": true,
-  "readlineShortcuts": true
+  "readlineShortcuts": true,
+  "lastViewState": {
+    "tabs": [
+      {
+        "name": "Terminal 1",
+        "color": "",
+        "cwd": "E:\\github\\my-notes",
+        "bufferSerial": "PS E:\\github\\my-notes> \u001b[?1004h"
+      }
+    ],
+    "activeIndex": 0
+  }
 }

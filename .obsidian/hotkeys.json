@@ -1,0 +1,10 @@
+{
+  "lean-terminal:toggle-terminal": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "R"
+    }
+  ]
+}

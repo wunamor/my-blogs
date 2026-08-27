@@ -146,16 +146,5 @@
   "wikiLinkAutocomplete": false,
   "wikiLinkInsertMode": "wikilink",
   "clickableFilePaths": true,
-  "readlineShortcuts": true,
-  "lastViewState": {
-    "tabs": [
-      {
-        "name": "Terminal 1",
-        "color": "",
-        "cwd": "E:\\github\\my-notes",
-        "bufferSerial": "PS E:\\github\\my-notes> \u001b[?1004h"
-      }
-    ],
-    "activeIndex": 0
-  }
+  "readlineShortcuts": true
 }

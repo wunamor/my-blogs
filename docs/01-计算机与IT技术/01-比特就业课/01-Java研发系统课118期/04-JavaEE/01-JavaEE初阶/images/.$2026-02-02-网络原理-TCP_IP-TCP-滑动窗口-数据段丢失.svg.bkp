@@ -1,0 +1,152 @@
+<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="700" background="#121212" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ==================== 标题 ==================== -->
+    <mxCell id="title" value="TCP 丢包处理：数据包丢失 (快速重传 Fast Retransmit)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontColor=#e5e7eb;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="200" y="30" width="550" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 节点头部 ==================== -->
+    <mxCell id="host_a" value="主机 A (发送方)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#d1d5db;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="170" y="80" width="120" height="30" as="geometry" />
+    </mxCell>
+
+    <mxCell id="host_b" value="主机 B (接收方)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontColor=#d1d5db;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="660" y="80" width="120" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== 时间轴 ==================== -->
+    <mxCell id="timeline_a" style="endArrow=none;html=1;strokeColor=#4b5563;strokeWidth=1.5;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="120" as="sourcePoint" />
+        <mxPoint x="230" y="650" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="timeline_b" style="endArrow=none;html=1;strokeColor=#4b5563;strokeWidth=1.5;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="720" y="120" as="sourcePoint" />
+        <mxPoint x="720" y="650" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+
+    <!-- ==================== 动态数据交互流程 ==================== -->
+
+    <!-- D1: 发送 Seq 1-1000 (丢失) -->
+    <mxCell id="d1_text" value="发送 [Seq = 1 ~ 1000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#93c5fd;" vertex="1" parent="1">
+      <mxGeometry x="40" y="150" width="180" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="d1_line" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=1.5;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="160" as="sourcePoint" />
+        <mxPoint x="450" y="186" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lost_icon" value="✖ 丢失" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#ef4444;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="455" y="176" width="60" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- D2: 发送 Seq 1001-2000 -->
+    <mxCell id="d2_text" value="发送 [Seq = 1001 ~ 2000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#93c5fd;" vertex="1" parent="1">
+      <mxGeometry x="40" y="190" width="180" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="d2_line" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=1.5;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="200" as="sourcePoint" />
+        <mxPoint x="720" y="260" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- A1: ACK 1 (收到 D2) -->
+    <mxCell id="a1_text" value="期待 Seq=1 [ACK=1]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#6ee7b7;" vertex="1" parent="1">
+      <mxGeometry x="730" y="260" width="200" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="a1_line" style="edgeStyle=none;html=1;strokeColor=#34d399;strokeWidth=1.5;dashed=1;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="720" y="270" as="sourcePoint" />
+        <mxPoint x="230" y="330" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- D3: 发送 Seq 2001-3000 -->
+    <mxCell id="d3_text" value="发送 [Seq = 2001 ~ 3000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#93c5fd;" vertex="1" parent="1">
+      <mxGeometry x="40" y="230" width="180" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="d3_line" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=1.5;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="240" as="sourcePoint" />
+        <mxPoint x="720" y="300" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- A2: ACK 1 (冗余 1) -->
+    <mxCell id="a2_text" value="冗余① [ACK=1]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#6ee7b7;" vertex="1" parent="1">
+      <mxGeometry x="730" y="300" width="200" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="a2_line" style="edgeStyle=none;html=1;strokeColor=#34d399;strokeWidth=1.5;dashed=1;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="720" y="310" as="sourcePoint" />
+        <mxPoint x="230" y="370" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- D4: 发送 Seq 3001-4000 -->
+    <mxCell id="d4_text" value="发送 [Seq = 3001 ~ 4000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#93c5fd;" vertex="1" parent="1">
+      <mxGeometry x="40" y="270" width="180" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="d4_line" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=1.5;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="280" as="sourcePoint" />
+        <mxPoint x="720" y="340" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- A3: ACK 1 (冗余 2) -->
+    <mxCell id="a3_text" value="冗余② [ACK=1]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#6ee7b7;" vertex="1" parent="1">
+      <mxGeometry x="730" y="340" width="200" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="a3_line" style="edgeStyle=none;html=1;strokeColor=#34d399;strokeWidth=1.5;dashed=1;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="720" y="350" as="sourcePoint" />
+        <mxPoint x="230" y="410" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- D5: 发送 Seq 4001-5000 -->
+    <mxCell id="d5_text" value="发送 [Seq = 4001 ~ 5000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#93c5fd;" vertex="1" parent="1">
+      <mxGeometry x="40" y="310" width="180" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="d5_line" style="edgeStyle=none;html=1;strokeColor=#60a5fa;strokeWidth=1.5;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="320" as="sourcePoint" />
+        <mxPoint x="720" y="380" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- A4: ACK 1 (冗余 3) -->
+    <mxCell id="a4_text" value="冗余③ [ACK=1]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#6ee7b7;" vertex="1" parent="1">
+      <mxGeometry x="730" y="380" width="200" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="a4_line" style="edgeStyle=none;html=1;strokeColor=#34d399;strokeWidth=1.5;dashed=1;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="720" y="390" as="sourcePoint" />
+        <mxPoint x="230" y="450" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 触发重传 -->
+    <mxCell id="ret_text" value="收到 3 次相同重复应答&#xa;快速重传 [Seq = 1 ~ 1000]" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#fcd34d;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="10" y="460" width="210" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="ret_line" style="edgeStyle=none;html=1;strokeColor=#f59e0b;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="230" y="480" as="sourcePoint" />
+        <mxPoint x="720" y="540" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

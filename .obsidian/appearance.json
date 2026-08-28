@@ -5,5 +5,7 @@
   "baseFontSizeAction": true,
   "enabledCssSnippets": [
     "nav-font"
-  ]
+  ],
+  "showRibbon": true,
+  "showViewHeader": true
 }

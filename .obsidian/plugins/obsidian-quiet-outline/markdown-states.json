@@ -18,7 +18,7 @@
         "ch": 4
       }
     },
-    "scroll": 381.8497754955723
+    "scroll": 377.39353172867385
   },
   "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2025-11-03-多线程-初阶.md": {
     "expandedKeys": [
@@ -72,5 +72,68 @@
       "item-1-0"
     ],
     "scroll": 0
+  },
+  "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/未命名.md": {
+    "expandedKeys": [],
+    "scroll": 0
+  },
+  "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2026-02-11-http_https.md": {
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 0
+      },
+      "to": {
+        "line": 2,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2026-02-11-网络原理-http_https.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 21
+      },
+      "to": {
+        "line": 0,
+        "ch": 21
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
+  },
+  "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/__temp__2026-02-11-网络原理-HTTP_HTTPS.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 18
+      },
+      "to": {
+        "line": 0,
+        "ch": 28
+      }
+    }
+  },
+  "docs/01-计算机与IT技术/01-比特就业课/01-Java研发系统课118期/04-JavaEE/01-JavaEE初阶/2026-02-11-网络原理-HTTP_HTTPS.md": {
+    "cursor": {
+      "from": {
+        "line": 10,
+        "ch": 78
+      },
+      "to": {
+        "line": 10,
+        "ch": 78
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-2-4",
+      "item-2-1",
+      "item-3-5"
+    ],
+    "scroll": 16.965761256613522
   }
 }

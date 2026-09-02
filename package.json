@@ -18,7 +18,7 @@
     "micromatch": "^4.0.8",
     "unplugin-vue-components": "^30.0.0",
     "vitepress": "^1.6.4",
-    "vitepress-sidebar": "^1.33.2"
+    "vitepress-sidebar": "^1.39.0"
   },
   "dependencies": {
     "viewerjs": "^1.11.7"

@@ -30,7 +30,7 @@ export const imageCaptionPlugin = (md: any) => {
 		}
 	})
 
-	// 📸 2. 原本的图片劫持渲染逻辑（保持不变）
+	// 📸 2. 修复后的图片劫持渲染逻辑
 	md.renderer.rules.image = (tokens: any, idx: number, options: any, env: any, self: any) => {
 		const token = tokens[idx]
 		let src = token.attrGet('src') || ''
@@ -40,20 +40,27 @@ export const imageCaptionPlugin = (md: any) => {
 			src = './' + src
 		}
 
-		let alt = token.content || ''
+		// 1. 获取 alt（Obsidian 会默认填入带前缀的文件名，若没有则从 src 提取）
+		let alt = token.content || src.split('/').pop() || ''
+		try { alt = decodeURIComponent(alt) } catch (e) {}
 
-		if (!alt) {
-			// 提取并解码文件名
-			let filename = src.split('/').pop() || ''
-			try {
-				filename = decodeURIComponent(filename)
-			} catch (e) {
-				console.warn('图片路径解码失败:', filename)
-			}
+		// 2. 无论 alt 来源，统一先清理后缀名
+		alt = alt.replace(/\.(drawio\.svg|svg|png|jpg|jpeg|gif|webp)$/i, '')
 
-			// 剥离后缀与日期前缀
-			filename = filename.replace(/\.(drawio\.svg|svg|png|jpg|jpeg|gif|webp)$/i, '')
-			alt = filename.replace(/^\d{4}-\d{2}-\d{2}-.*?-/, '')
+		// 3. 🎯 核心修复：获取当前 Markdown 文件的绝对名称
+		let mdFileName = ''
+		if (env && env.relativePath) {
+			// 例如提取出：2026-02-11-网络原理-HTTP_HTTPS
+			mdFileName = env.relativePath.split('/').pop().replace(/\.md$/i, '')
+		}
+
+		// 4. 精准剔除前缀：只要图片名是以 "当前文档名-" 开头，就精准删掉这部分
+		if (mdFileName && alt.startsWith(mdFileName + '-')) {
+			// 直接截掉 "文件名 + 一个横杠" 的长度
+			alt = alt.substring(mdFileName.length + 1)
+		} else {
+			// 兜底逻辑：如果图片没按规范命名，仅剔除开头的日期（如 2026-02-11-）
+			alt = alt.replace(/^\d{4}-\d{2}-\d{2}-/, '')
 		}
 
 		return `

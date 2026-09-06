@@ -1,11 +1,15 @@
 {
   "theme": "system",
   "cssTheme": "Things",
-  "baseFontSize": 18,
+  "baseFontSize": 17,
   "baseFontSizeAction": true,
   "enabledCssSnippets": [
     "nav-font"
   ],
   "showRibbon": true,
-  "showViewHeader": true
+  "showViewHeader": true,
+  "interfaceFontFamily": "system-ui",
+  "textFontFamily": "霞鹜文楷",
+  "monospaceFontFamily": "Fira Code,JetBrains Mono",
+  "nativeMenus": false
 }

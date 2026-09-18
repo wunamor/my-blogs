@@ -40,6 +40,7 @@ declare module 'vue' {
     LC76MinWindow: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC76MinWindow.vue')['default']
     LC852PeakIndex: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LC852PeakIndex.vue')['default']
     LC904TotalFruit: typeof import('./components/oj/leetcode/optimal-algorithm/sliding-window/LC904TotalFruit.vue')['default']
+    LCR122TakeAttendance: typeof import('./components/oj/leetcode/optimal-algorithm/binary-search/LCR122TakeAttendance.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     QuickSortHoareVisualizer: typeof import('./components/algorithm/sort/QuickSortHoareVisualizer.vue')['default']
     QuickSortHoleVisualizer: typeof import('./components/algorithm/sort/QuickSortHoleVisualizer.vue')['default']

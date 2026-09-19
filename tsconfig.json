@@ -1,28 +1,32 @@
 {
-	"compilerOptions": {
-		"baseUrl": ".",
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
-		"lib": ["ESNext", "DOM"],
-		"isolatedModules": true,
-		"allowJs": true,
-		"paths": {
-			"@components/*": ["docs/.vitepress/components/*"]
-		}
-	},
-	"include": [
-		// 💡 核心修复：必须显式地把 .vitepress 写出来，TS 才会进去扫描！
-		"docs/.vitepress/**/*.ts",
-		"docs/.vitepress/**/*.mts",
-		"docs/.vitepress/**/*.vue",
-		"docs/**/*.md",
-		"*.mts",
-		"docs/.vitepress/components.d.ts"
-	],
-	"exclude": ["node_modules", "docs/.vitepress/dist"],
-	"vueCompilerOptions": {
-		"extensions": [".vue", ".md"]
-	}
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "lib": ["ESNext", "DOM"],
+    "isolatedModules": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@components/*": ["./docs/.vitepress/components/*"]
+    }
+  },
+  "include": [
+    "docs/.vitepress/**/*.ts",
+    "docs/.vitepress/**/*.mts",
+    "docs/.vitepress/**/*.vue",
+    "*.mts",
+    "docs/.vitepress/components.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "docs/.vitepress/dist",
+    "docs/.vitepress/cache",
+    "**/*.md"
+  ],
+  "vueCompilerOptions": {
+    "extensions": [".vue"]
+  }
 }

@@ -5,7 +5,7 @@ import Components from 'unplugin-vue-components/vite'
 export const vitePlugins = [
 	Components({
 		// 告诉插件，哪些目录下的组件需要自动按需注册
-		dirs: ['.vitepress/components/algorithm/sort', '.vitepress/components/oj/leetcode'],
+		dirs: ['.vitepress/components/algorithm/sort', '.vitepress/components/oj'],
 		// 允许在 Vue 文件和 Markdown 文件中生效
 		include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
 		// 自动生成类型声明文件

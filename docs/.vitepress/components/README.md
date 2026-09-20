@@ -17,6 +17,7 @@
     *   `LC` = LeetCode (例: `LC30FindSubstring.vue`)
     *   `NC` = 牛客 Nowcoder (例: `NCDP32PrefixSum.vue`)
     *   `LCR` = 剑指 Offer (例: `LCR122TakeAttendance.vue`)
+*   **笔记引入规范**: 每次新生成业务组件后，须在对应算法笔记（如 `04-前缀和.md`）的相应题目小节中自动插入组件标签 `<组件文件名去掉 .vue />`（独占一行，前后留空行）。插入位置：小节标题/思路解析之后、Java 代码块之前。除该行外，严禁改动笔记原有正文。
 
 ## 二、 核心架构：状态快照驱动 (Snapshot-Driven Architecture)
 
@@ -88,7 +89,3 @@ const getWindowStyle = (step) => {
 * `.is-mismatch` : 不满足条件、判定失败、错位警示（红色背景与边框）。
 * `.is-match` : 找到目标、极值或完成最终结果锁定（绿色放大，发光阴影）。
 * `.ptr-left` / `.ptr-right` / `.ptr-mid` : 底部指针徽章的固定底色类。
-
-```
-
-```

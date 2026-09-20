@@ -43,6 +43,7 @@ declare module 'vue' {
     LCR122TakeAttendance: typeof import('./components/oj/optimal-algorithm/binary-search/LCR122TakeAttendance.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     NCDP32PrefixSum: typeof import('./components/oj/optimal-algorithm/prefix-sum/NCDP32PrefixSum.vue')['default']
+    NCDP35PrefixSum2D: typeof import('./components/oj/optimal-algorithm/prefix-sum/NCDP35PrefixSum2D.vue')['default']
     QuickSortHoareVisualizer: typeof import('./components/algorithm/sort/QuickSortHoareVisualizer.vue')['default']
     QuickSortHoleVisualizer: typeof import('./components/algorithm/sort/QuickSortHoleVisualizer.vue')['default']
     QuickSortPointersVisualizer: typeof import('./components/algorithm/sort/QuickSortPointersVisualizer.vue')['default']

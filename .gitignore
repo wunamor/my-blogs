@@ -42,3 +42,8 @@ test/
 *.$*.bkp
 *.bkp
 .obsidian/plugins/obsidian-quiet-outline/
+
+# =========================
+# 5. 保留 VitePress 目录
+# =========================
+!.vitepress

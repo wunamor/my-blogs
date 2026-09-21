@@ -9,7 +9,7 @@ import 'viewerjs/dist/viewer.css'
 
 // 2. 引入抽离出来的数学公式交互逻辑
 import { initMathCopy } from './math-interaction'
-import { initCodeTools } from './code-interaction' // 你的实际路径
+import { initCodeTools } from './code-interaction'
 
 // 3. 引入全局样式
 import './style.css'

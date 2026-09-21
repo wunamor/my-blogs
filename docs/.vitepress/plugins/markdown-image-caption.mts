@@ -1,8 +1,9 @@
 // docs/.vitepress/plugins/markdown-image-caption.mts
+import type MarkdownIt from 'markdown-it'
 
-export const imageCaptionPlugin = (md: any) => {
+export const imageCaptionPlugin = (md: MarkdownIt) => {
 	// 💡 1. 核心修复：注入底层规则，拦截并替换非法的 <p> 标签
-	md.core.ruler.push('replace_p_with_div_for_figure', (state: any) => {
+	md.core.ruler.push('replace_p_with_div_for_figure', (state: MarkdownIt.StateCore) => {
 		// 遍历所有解析生成的 token 节点
 		for (let i = 0; i < state.tokens.length; i++) {
 			const token = state.tokens[i]
@@ -12,7 +13,7 @@ export const imageCaptionPlugin = (md: any) => {
 				const inlineToken = state.tokens[i + 1]
 
 				// 检查这个段落内部是否包含 image (图片)
-				const hasImage = inlineToken.children?.some((child: any) => child.type === 'image')
+				const hasImage = inlineToken.children?.some((child) => child.type === 'image')
 
 				if (hasImage) {
 					// 如果包含图片，将开头的 <p> 强制改为 <div>
@@ -31,7 +32,7 @@ export const imageCaptionPlugin = (md: any) => {
 	})
 
 	// 📸 2. 修复后的图片劫持渲染逻辑
-	md.renderer.rules.image = (tokens: any, idx: number, options: any, env: any, self: any) => {
+	md.renderer.rules.image = (tokens, idx, options, env) => {
 		const token = tokens[idx]
 		let src = token.attrGet('src') || ''
 

@@ -38,6 +38,15 @@ export function scanDir(dirPath, patterns = ['*']) {
 }
 
 /**
+ * 脱马甲：剔除名称开头的数字排序前缀（如 "01-"、"2025-07-31-" 中的序号部分）
+ * @param {string} name - 原始文件/文件夹名
+ * @returns {string}
+ */
+export function stripNumericPrefix(name) {
+  return name.replace(/^(\d+-)+/, '');
+}
+
+/**
  * 创建一个当前层级的“防撞车”名称解析器
  * @param {string[]} existingNamesArray - 当前层级所有真实的物理名称列表
  */
@@ -53,7 +62,7 @@ export function createNameResolver(existingNamesArray) {
    */
   return function resolve(originalName, candidateName = null) {
     let targetName = candidateName || originalName;
-    let displayName = targetName.replace(/^(\d+-)+/, ''); // 尝试脱马甲
+    let displayName = stripNumericPrefix(targetName); // 尝试脱马甲
 
     // 智能避让逻辑：
     // 如果脱马甲后的名字和别人真实存在的物理名字撞了，或者已经被前面的兄弟抢注了

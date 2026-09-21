@@ -8,6 +8,9 @@ node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 
+# VitePress 加载 config 时 esbuild 生成的临时打包产物
+docs/.vitepress/*.timestamp-*.mjs
+
 # =========================
 # 2. 动态 UI 状态缓存 (Obsidian)
 # =========================

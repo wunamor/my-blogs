@@ -318,3 +318,11 @@ code {
 	border-bottom-left-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
 }
+
+/* =======================================
+   术语词典自动链接样式 (markdown-glossary 插件生成)
+====================================== */
+.vp-doc a.glossary-link {
+	color: var(--vp-c-brand);
+	font-weight: 500;
+}

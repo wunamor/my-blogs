@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scanDir, createNameResolver } from './scanner.mjs';
+import { scanDir, createNameResolver, stripNumericPrefix } from './scanner.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.resolve(__dirname, '../docs');
@@ -24,7 +24,7 @@ function slugify(text) {
 
 function generateIndexForDir(dir) {
   const { directories, files } = scanDir(dir, ignorePatterns);
-  const cleanName = path.basename(dir).replace(/^(\d+-)+/, '');
+  const cleanName = stripNumericPrefix(path.basename(dir));
 
   // 👉 【修改这里】：不再只看当前层，而是调用我们刚写的深层扫描器！
   const { totalFiles, totalDirs } = getDeepStats(dir);

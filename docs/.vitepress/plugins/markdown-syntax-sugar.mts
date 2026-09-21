@@ -1,7 +1,8 @@
 // docs/.vitepress/plugins/markdown-syntax-sugar.mts
+import type MarkdownIt from 'markdown-it'
 
-export const syntaxSugarPlugin = (md: any) => {
-	md.core.ruler.before('normalize', 'spoiler_global_replace', (state: any) => {
+export const syntaxSugarPlugin = (md: MarkdownIt) => {
+	md.core.ruler.before('normalize', 'spoiler_global_replace', (state: MarkdownIt.StateCore) => {
 		const store: string[] = []
 
 		// 🛡️ 1. 提取并保护所有的 多行代码块、行内代码、公式，防止被错误的正则破坏
@@ -12,12 +13,6 @@ export const syntaxSugarPlugin = (md: any) => {
 
 		// 🧱 2. 匹配块级 Spoiler（独占一行的 ||）
 		// 匹配规则：行首的 || 加上换行，中间任意内容，最后又是行首的 ||
-		// tempSrc = tempSrc.replace(
-		// 	/^\|\|[ \t]*\r?\n([\s\S]*?)^\|\|[ \t]*(?:\r?\n|$)/gm,
-		// 	(match: string, content: string) => {
-		// 		return `\n\n<Spoiler mode="block">\n\n${content}\n\n</Spoiler>\n\n`
-		// 	},
-		// )
     tempSrc = tempSrc.replace(/^([ \t>]*)\|\|[ \t]*\r?\n([\s\S]*?)^[ \t>]*\|\|[ \t]*(?:\r?\n|$)/gm, (match: string, prefix: string, content: string) => {
       // 动态生成带有正确前缀的空行（比如 "> \n"），确保外部的引用块不断层
       const blank = `${prefix}\n`;

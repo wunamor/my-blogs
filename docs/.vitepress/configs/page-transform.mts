@@ -1,7 +1,7 @@
 // docs/.vitepress/configs/page-transform.mts
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath, URL } from 'url'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type { PageData } from 'vitepress'
 
 export function transformPageData(pageData: PageData) {
@@ -15,9 +15,7 @@ export function transformPageData(pageData: PageData) {
 
 	// 1. 暴力清洗：提前剔除大块的非阅读区域，防止里面的单词被误算
 	content = content
-		.replace(/---[\s\S]*?---/, '') // 移除 Frontmatter 头部配置
-		// .replace(/```[\s\S]*?```/g, '')    // 移除大块的代码块
-		// .replace(/`.*?`/g, '')             // 移除行内代码
+		.replace(/^---\r?\n[\s\S]*?\r?\n---(\r?\n|$)/, '') // 仅移除文件开头的 Frontmatter 头部配置
 		.replace(/\$\$[\s\S]*?\$\$/g, '') // 移除 LaTeX 块级公式
 		.replace(/\$.*?\$/g, '') // 移除 LaTeX 行内公式
 		.replace(/<[^>]+>/g, '') // 移除 HTML 标签 (比如 <Spoiler>)

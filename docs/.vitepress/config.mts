@@ -1,6 +1,6 @@
 // .vitepress/config.mts
 import { defineConfig } from 'vitepress'
-import { fileURLToPath, URL } from 'url'
+import { fileURLToPath } from 'node:url'
 
 // 💡 导入各种抽离出来的配置和逻辑
 import { vitePlugins } from './configs/vite-plugins.mts'

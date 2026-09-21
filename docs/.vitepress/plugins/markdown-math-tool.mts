@@ -1,10 +1,12 @@
 // .vitepress/plugins/markdown-math-tool.mts
-export const mathToolPlugin = (md: any) => {
+import type MarkdownIt from 'markdown-it'
+
+export const mathToolPlugin = (md: MarkdownIt) => {
   // 劫持默认的块级数学公式渲染器
-  const defaultMathBlockRenderer = md.renderer.rules.math_block;
+  const defaultMathBlockRenderer: MarkdownIt.Renderer.RenderRule | undefined = md.renderer.rules.math_block;
 
   if (defaultMathBlockRenderer) {
-    md.renderer.rules.math_block = (tokens: any, idx: number, options: any, env: any, self: any) => {
+    md.renderer.rules.math_block = (tokens, idx, options, env, self) => {
       // 获取原始的 LaTeX 代码
       const rawTex = tokens[idx].content;
       // 获取渲染后的 HTML (SVG 或 MathML)
@@ -16,9 +18,9 @@ export const mathToolPlugin = (md: any) => {
   }
 
   // --- 2. 新增：处理行内公式 ---
-  const defaultMathInlineRenderer = md.renderer.rules.math_inline;
+  const defaultMathInlineRenderer: MarkdownIt.Renderer.RenderRule | undefined = md.renderer.rules.math_inline;
   if (defaultMathInlineRenderer) {
-    md.renderer.rules.math_inline = (tokens: any, idx: number, options: any, env: any, self: any) => {
+    md.renderer.rules.math_inline = (tokens, idx, options, env, self) => {
       const rawTex = tokens[idx].content;
       const renderedHtml = defaultMathInlineRenderer(tokens, idx, options, env, self);
       

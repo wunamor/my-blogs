@@ -1,12 +1,13 @@
 // docs/.vitepress/plugins/markdown-code-tool.mts
+import type MarkdownIt from 'markdown-it'
 
 const LINE_COUNT_THRESHOLD = 7 // 超过多少行的代码块才会折叠
 
-export const codeToolPlugin = (md: any) => {
+export const codeToolPlugin = (md: MarkdownIt) => {
 	// 保存 VitePress 默认的代码块渲染逻辑
-	const defaultFence = md.renderer.rules.fence
+	const defaultFence = md.renderer.rules.fence!
 
-	md.renderer.rules.fence = (tokens: any, idx: number, options: any, env: any, self: any) => {
+	md.renderer.rules.fence = (tokens, idx, options, env, self) => {
 		// 1. 获取基础信息
 		const token = tokens[idx]
 		const rawCode = token.content

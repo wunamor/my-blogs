@@ -1,8 +1,8 @@
-// .vitepress/configs/theme.mts
+// docs/.vitepress/configs/theme-config.mts
 import type { DefaultTheme } from 'vitepress'
 import { generateSidebar } from 'vitepress-sidebar'
 // ⚠️ 注意这里的路径变成了三个 ../
-import { scanDir, createNameResolver } from '../../../scripts/scanner.mjs'
+import { scanDir, createNameResolver, stripNumericPrefix } from '../../../scripts/scanner.mjs'
 
 // 👇 自动生成导航栏的函数
 function autoGetNavs() {
@@ -11,25 +11,29 @@ function autoGetNavs() {
   return [
     { text: '首页', link: '/' },
     ...directories.map(dir => ({
-      text: dir.replace(/^(\d+-)+/, ''),
+      text: stripNumericPrefix(dir),
       link: `/${dir}/`
     }))
   ];
 }
 
 // 👇 共用引擎的侧边栏清洗器
-function cleanSidebar(sidebarItems: any) {
+function cleanSidebar(sidebarItems: DefaultTheme.Sidebar): DefaultTheme.Sidebar {
   if (!Array.isArray(sidebarItems)) return sidebarItems;
-  const currentLevelNames = sidebarItems.map(item => item.text).filter(Boolean);
+  return cleanSidebarItems(sidebarItems);
+}
+
+function cleanSidebarItems(items: DefaultTheme.SidebarItem[]): DefaultTheme.SidebarItem[] {
+  const currentLevelNames = items.map(item => item.text).filter(Boolean);
   const resolver = createNameResolver(currentLevelNames);
 
-  return sidebarItems.map(item => {
+  return items.map(item => {
     const newItem = { ...item };
     if (newItem.text) {
       newItem.text = resolver(newItem.text);
     }
     if (newItem.items) {
-      newItem.items = cleanSidebar(newItem.items);
+      newItem.items = cleanSidebarItems(newItem.items);
     }
     return newItem;
   });

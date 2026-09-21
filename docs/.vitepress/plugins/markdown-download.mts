@@ -1,4 +1,5 @@
 // .vitepress/plugins/markdown-download.mts
+import type MarkdownIt from 'markdown-it'
 
 // 🎯 【集中配置区】：在这里以数组形式管理所有需要触发下载的文件后缀
 const DOWNLOADABLE_EXTENSIONS = [
@@ -13,14 +14,14 @@ const DOWNLOADABLE_EXTENSIONS = [
 // ⚙️ 引擎自动将数组拼接为正则表达式 (例如: /\.(xlsx|xls|csv...)$/i )
 const extPattern = new RegExp(`\\.(${DOWNLOADABLE_EXTENSIONS.join('|')})$`, 'i');
 
-export const autoDownloadPlugin = (md: any) => {
+export const autoDownloadPlugin = (md: MarkdownIt) => {
   // 记住默认的超链接渲染规则
-  const defaultRender = md.renderer.rules.link_open || function(tokens: any, idx: number, options: any, env: any, self: any) {
+  const defaultRender: MarkdownIt.Renderer.RenderRule = md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
   };
 
   // 劫持超链接的打开标签 <a>
-  md.renderer.rules.link_open = function (tokens: any, idx: number, options: any, env: any, self: any) {
+  md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     const token = tokens[idx];
     const hrefIndex = token.attrIndex('href');
 

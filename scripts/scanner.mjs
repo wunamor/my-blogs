@@ -47,6 +47,40 @@ export function stripNumericPrefix(name) {
 }
 
 /**
+ * 判断一个文件/文件夹名是否命中 glob 规则列表中的任意一条
+ * @param {string} name - 文件/文件夹的 basename
+ * @param {string[]} patterns - micromatch glob 规则列表
+ * @returns {boolean}
+ */
+export function matchAnyGlob(name, patterns = []) {
+  if (!patterns.length) return false;
+  return micromatch.any(name, patterns);
+}
+
+// VitePress 1.6 标题锚点的真实算法（逐字复刻自 vitepress/dist/node 内联实现），
+// 用于让扫描器生成的 "#锚点" 与页面实际渲染出的 heading id 完全一致。
+const rControl = /[\u0000-\u001f]/g;
+const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g;
+const rCombining = /[\u0300-\u036F]/g;
+
+/**
+ * 与 VitePress 渲染端一致的标题转锚点函数
+ * @param {string} str - 标题纯文本
+ * @returns {string}
+ */
+export function vitepressSlugify(str) {
+  return str
+    .normalize('NFKD')
+    .replace(rCombining, '')
+    .replace(rControl, '')
+    .replace(rSpecial, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/^(\d)/, '_$1')
+    .toLowerCase();
+}
+
+/**
  * 创建一个当前层级的“防撞车”名称解析器
  * @param {string[]} existingNamesArray - 当前层级所有真实的物理名称列表
  */

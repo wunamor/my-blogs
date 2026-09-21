@@ -8,7 +8,7 @@ import { themeConfig } from './configs/theme-config.mts'
 import { transformPageData } from './configs/page-transform.mts'
 
 // 导入自己写的 Markdown 插件
-import { autoLinkKeywordsPlugin } from './plugins/markdown-glossary.mts'
+import { autoLinkKeywordsPlugin } from './plugins/glossary/markdown-glossary.mts'
 import { autoDownloadPlugin } from './plugins/markdown-download.mts'
 import { mathToolPlugin } from './plugins/markdown-math-tool.mts'
 // 💡 从统一的插件文件中引入语法糖合集

@@ -37,6 +37,8 @@ declare module 'vue' {
     LC611ValidTriangleNumber: typeof import('./components/oj/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
     LC69MySqrt: typeof import('./components/oj/optimal-algorithm/binary-search/LC69MySqrt.vue')['default']
     LC704BinarySearch: typeof import('./components/oj/optimal-algorithm/binary-search/LC704BinarySearch.vue')['default']
+    LC724PivotIndex: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC724PivotIndex.vue')['default']
+    LC724PivotIndexTotalSum: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC724PivotIndexTotalSum.vue')['default']
     LC76MinWindow: typeof import('./components/oj/optimal-algorithm/sliding-window/LC76MinWindow.vue')['default']
     LC852PeakIndex: typeof import('./components/oj/optimal-algorithm/binary-search/LC852PeakIndex.vue')['default']
     LC904TotalFruit: typeof import('./components/oj/optimal-algorithm/sliding-window/LC904TotalFruit.vue')['default']

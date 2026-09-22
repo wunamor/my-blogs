@@ -28,6 +28,7 @@ declare module 'vue' {
     LC18FourSum: typeof import('./components/oj/optimal-algorithm/two-pointers/LC18FourSum.vue')['default']
     LC202HappyNumber: typeof import('./components/oj/optimal-algorithm/two-pointers/LC202HappyNumber.vue')['default']
     LC209MinSubArrayLen: typeof import('./components/oj/optimal-algorithm/sliding-window/LC209MinSubArrayLen.vue')['default']
+    LC238ProductExceptSelf: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC238ProductExceptSelf.vue')['default']
     LC283MoveZeroes: typeof import('./components/oj/optimal-algorithm/two-pointers/LC283MoveZeroes.vue')['default']
     LC30FindSubstring: typeof import('./components/oj/optimal-algorithm/sliding-window/LC30FindSubstring.vue')['default']
     LC34SearchRange: typeof import('./components/oj/optimal-algorithm/binary-search/LC34SearchRange.vue')['default']

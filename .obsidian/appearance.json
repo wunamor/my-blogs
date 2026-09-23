@@ -1,7 +1,7 @@
 {
   "theme": "system",
   "cssTheme": "Things",
-  "baseFontSize": 20,
+  "baseFontSize": 19,
   "baseFontSizeAction": true,
   "enabledCssSnippets": [
     "nav-font"

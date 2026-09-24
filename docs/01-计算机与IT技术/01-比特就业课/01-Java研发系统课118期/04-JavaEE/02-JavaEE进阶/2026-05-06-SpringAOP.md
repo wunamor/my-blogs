@@ -57,6 +57,12 @@ public class TimeAspect {
 
 `TimeAspect` 就是一个切面类，一个切面类可以有多个切面
 
+## SpringAOP 原理
+SpringAOP 是基于代理模式中的动态代理来实现的
+
+它里面**分为JDK动态代理和CGLIB动态代理**，这个了解即可
+
+
 
 ## 面试题
 ### SpringAOP 是如何实现呢？

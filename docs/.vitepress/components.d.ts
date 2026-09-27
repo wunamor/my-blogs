@@ -44,6 +44,7 @@ declare module 'vue' {
     LC76MinWindow: typeof import('./components/oj/optimal-algorithm/sliding-window/LC76MinWindow.vue')['default']
     LC852PeakIndex: typeof import('./components/oj/optimal-algorithm/binary-search/LC852PeakIndex.vue')['default']
     LC904TotalFruit: typeof import('./components/oj/optimal-algorithm/sliding-window/LC904TotalFruit.vue')['default']
+    LC974SubarraysDivByK: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC974SubarraysDivByK.vue')['default']
     LCR122TakeAttendance: typeof import('./components/oj/optimal-algorithm/binary-search/LCR122TakeAttendance.vue')['default']
     MergeSortVisualizer: typeof import('./components/algorithm/sort/MergeSortVisualizer.vue')['default']
     NCDP32PrefixSum: typeof import('./components/oj/optimal-algorithm/prefix-sum/NCDP32PrefixSum.vue')['default']

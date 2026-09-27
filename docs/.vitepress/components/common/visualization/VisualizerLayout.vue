@@ -12,13 +12,30 @@
     >×</button>
 
     <div class="controls-header">
-      <div class="array-input">
-        <label>{{ config.labels.inputLabel }}</label>
-        <input
-          v-model="inputRaw"
-          @change="onMainArrayChange"
-          :placeholder="config.labels.inputPlaceholder"
-        />
+      <div class="case-control">
+        <div class="case-nav">
+          <button
+            class="nav-btn"
+            :disabled="config.activeCase <= 0"
+            @click="switchCase(-1)"
+            title="上一个用例"
+          >◀</button>
+          <span class="case-counter">用例 {{ config.activeCase + 1 }}/{{ config.cases.length }}</span>
+          <button
+            class="nav-btn"
+            :disabled="config.activeCase >= config.cases.length - 1"
+            @click="switchCase(1)"
+            title="下一个用例"
+          >▶</button>
+        </div>
+        <button
+          class="header-btn case-edit-btn"
+          @click="openEditor"
+          title="编辑测试用例（支持添加 / 修改 / 删除 / 运行）"
+        >
+          <span class="case-summary">{{ currentCaseSummary }}</span>
+          <span class="pencil">✎</span>
+        </button>
       </div>
 
       <div class="header-actions">
@@ -105,7 +122,13 @@
 
             <div class="config-section">
               <h4>基本参数</h4>
-              <label>默认数据: <input v-model="tempConfig.defaultData" /></label>
+              <div class="tc-entry-row">
+                <span>测试用例（{{ config.cases.length }} 个）：</span>
+                <button
+                  class="header-btn"
+                  @click="openEditor"
+                >✎ 编辑测试用例…</button>
+              </div>
               <label>动画间隔 (毫秒): <input
                   type="number"
                   v-model="tempConfig.playIntervalMs"
@@ -260,6 +283,16 @@
       </Transition>
     </Teleport>
 
+    <TestCaseEditor
+      :visible="isEditorOpen"
+      :inputs="inputDefs"
+      :cases="config.cases"
+      :active-index="config.activeCase"
+      :default-case="defaultCaseObj"
+      @close="isEditorOpen = false"
+      @apply="onEditorApply"
+    />
+
     <ActionConfirm ref="confirmModal" />
     <MessageToast ref="messageToast" />
   </div>
@@ -270,6 +303,7 @@
   import { ref, computed, onUnmounted, reactive, onMounted } from 'vue'
   import ActionConfirm from '../feedback/ActionConfirm.vue'
   import MessageToast from '../feedback/MessageToast.vue'
+  import TestCaseEditor from './TestCaseEditor.vue'
 
   // ================= 1. 内置极简 SVG 图标库 =================
   const iconLib = {
@@ -298,6 +332,8 @@
     // 【新增】：业务组件默认的动画速度
     defaultInterval: { type: Number, default: 800 },
     defaultData: { type: String, default: '64, 25, 12, 22, 11' },
+    // 【新增】：多输入声明 [{ id, label, placeholder, width }]；不传则为旧版单输入模式
+    inputs: { type: Array, default: null },
     actionButtons: {
       type: Array,
       default: () => [
@@ -332,13 +368,39 @@
     }
   }
 
+  // ================= 🌟 多输入与用例管理核心 =================
+  // 未声明 inputs 的旧组件 → 单伪字段 'data'，defaultData 原样进出，行为与旧版完全一致
+  const inputDefs = (props.inputs && props.inputs.length)
+    ? props.inputs
+    : [{ id: 'data', label: '输入数据', placeholder: LAYOUT_BASE_CONFIG.labels.inputPlaceholder, width: 420 }]
+
+  // 字符串 → 用例对象：多输入按 " | " 顺序切分；旧模式整串归入 data
+  const parseCaseFromString = (str) => {
+    if (!(props.inputs && props.inputs.length)) return { data: String(str ?? '') }
+    const parts = String(str ?? '').split(/\s*\|\s*/)
+    const obj = {}
+    props.inputs.forEach((def, i) => { obj[def.id] = String(parts[i] ?? def.default ?? '').trim() })
+    return obj
+  }
+
+  // 用例对象 → 回传给业务组件 calculateSteps 的字符串（契约不变，仍是 "a | b" 形式）
+  const caseToString = (c) => {
+    if (!(props.inputs && props.inputs.length)) return String(c?.data ?? '')
+    return props.inputs.map(def => c?.[def.id] ?? '').join(' | ')
+  }
+
+  const defaultCaseObj = computed(() => parseCaseFromString(props.defaultData))
+
   // 💡 生成器：根据策略，决定基本参数的来源
   const generateInitialConfig = (strategy = 'algorithm') => {
     const base = JSON.parse(JSON.stringify(LAYOUT_BASE_CONFIG))
+    const defaultData = strategy === 'algorithm' ? props.defaultData : base.defaultData
     return {
       ...base,
       // 基本参数根据策略分配
-      defaultData: strategy === 'algorithm' ? props.defaultData : base.defaultData,
+      defaultData,
+      cases: [parseCaseFromString(defaultData)],
+      activeCase: 0,
       playIntervalMs: strategy === 'algorithm' ? props.defaultInterval : base.playIntervalMs,
       // 按钮配置：无视策略，永远锁定为调用方的最佳排列
       actionButtons: JSON.parse(JSON.stringify(props.actionButtons))
@@ -350,7 +412,42 @@
   const isConfigOpen = ref(false)
   const vFocus = { mounted: (el) => el.focus() }
 
-  const inputRaw = ref(config.defaultData)
+  // 当前选中用例（回传给业务组件的唯一字符串，保持旧契约）
+  const currentCaseString = computed(() => caseToString(config.cases[config.activeCase] ?? config.cases[0]))
+  const currentCaseSummary = computed(() => {
+    const s = currentCaseString.value
+    return s.length > 42 ? s.slice(0, 42) + '…' : s
+  })
+
+  // 用例编辑器弹窗状态
+  const isEditorOpen = ref(false)
+  const openEditor = () => { isEditorOpen.value = true }
+
+  const persistConfig = () => {
+    if (typeof window !== 'undefined') localStorage.setItem(props.storageKey, JSON.stringify(config))
+  }
+
+  const onEditorApply = ({ cases, activeIndex }) => {
+    config.cases = cases
+    config.activeCase = Math.min(Math.max(activeIndex ?? 0, 0), cases.length - 1)
+    config.defaultData = currentCaseString.value
+    Object.assign(tempConfig, JSON.parse(JSON.stringify(config)))
+    persistConfig()
+    isEditorOpen.value = false
+    messageToast.value?.show('用例已更新', 'success')
+    reset()
+  }
+
+  const switchCase = (delta) => {
+    const next = config.activeCase + delta
+    if (next < 0 || next >= config.cases.length) return
+    config.activeCase = next
+    config.defaultData = currentCaseString.value
+    Object.assign(tempConfig, JSON.parse(JSON.stringify(config)))
+    persistConfig()
+    reset()
+  }
+
   const currentStepIndex = ref(0)
   const isPlaying = ref(false)
   let playTimer = null
@@ -395,8 +492,15 @@
         } catch (e) { console.error("加载本地配置失败", e) }
       }
     }
-    inputRaw.value = config.defaultData
-    emit('calculate', inputRaw.value)
+    // 旧缓存迁移：无 cases 字段时由 defaultData 构造单用例（零迁移兼容）
+    if (!Array.isArray(config.cases) || config.cases.length === 0) {
+      config.cases = [parseCaseFromString(config.defaultData)]
+    }
+    if (typeof config.activeCase !== 'number' || config.activeCase < 0 || config.activeCase >= config.cases.length) {
+      config.activeCase = 0
+    }
+    Object.assign(tempConfig, JSON.parse(JSON.stringify(config)))
+    emit('calculate', currentCaseString.value)
   })
 
   const isDirty = computed(() => JSON.stringify(config) !== JSON.stringify(tempConfig))
@@ -423,7 +527,6 @@
   const saveConfig = () => {
     Object.assign(config, JSON.parse(JSON.stringify(tempConfig)))
     if (typeof window !== 'undefined') localStorage.setItem(props.storageKey, JSON.stringify(config))
-    inputRaw.value = config.defaultData
     isConfigOpen.value = false
     messageToast.value.show('配置保存成功！', 'success')
     reset()
@@ -444,17 +547,9 @@
     // 覆盖 localStorage 状态
     if (typeof window !== 'undefined') localStorage.setItem(props.storageKey, JSON.stringify(config))
 
-    inputRaw.value = config.defaultData
     showResetDialog.value = false
     isConfigOpen.value = false
     messageToast.value.show('已按策略恢复出厂配置', 'info')
-    reset()
-  }
-
-  const onMainArrayChange = () => {
-    config.defaultData = inputRaw.value
-    Object.assign(tempConfig, JSON.parse(JSON.stringify(config)))
-    if (typeof window !== 'undefined') localStorage.setItem(props.storageKey, JSON.stringify(config))
     reset()
   }
 
@@ -473,7 +568,7 @@
   const prevStep = () => { if (currentStepIndex.value > 0) currentStepIndex.value-- }
   const reset = () => {
     if (isPlaying.value) togglePlay()
-    emit('calculate', inputRaw.value)
+    emit('calculate', currentCaseString.value)
     currentStepIndex.value = 0
   }
 
@@ -577,14 +672,77 @@
     gap: 10px;
   }
 
-  .array-input input {
-    background: var(--vp-c-bg-elv);
+  /* 🌟 用例控制区（替代旧版单输入框） */
+  .case-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .case-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-btn {
+    width: 22px;
+    height: 24px;
+    background: transparent;
     border: 1px solid var(--vp-c-border);
-    color: var(--vp-c-text-1);
-    padding: 4px 8px;
     border-radius: 4px;
-    margin-left: 8px;
-    width: 160px;
+    color: var(--vp-c-text-2);
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    color: var(--vp-c-text-1);
+    border-color: var(--vp-c-text-3);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .case-counter {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--vp-c-text-2);
+    white-space: nowrap;
+  }
+
+  .case-edit-btn {
+    max-width: 420px;
+  }
+
+  .case-summary {
+    font-family: monospace;
+    font-size: 12px;
+    max-width: 340px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .case-edit-btn .pencil {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .tc-entry-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--vp-c-text-1);
   }
 
   .header-actions {

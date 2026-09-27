@@ -89,3 +89,20 @@ const getWindowStyle = (step) => {
 * `.is-mismatch` : 不满足条件、判定失败、错位警示（红色背景与边框）。
 * `.is-match` : 找到目标、极值或完成最终结果锁定（绿色放大，发光阴影）。
 * `.ptr-left` / `.ptr-right` / `.ptr-mid` : 底部指针徽章的固定底色类。
+
+## 六、多输入与测试用例管理 (Multi-Input & Test Cases)
+
+`VisualizerLayout` 支持力扣风格的**多参数、多用例**输入，由头部 `◀ 用例 n/N ▶` 切换条与 `✎` 编辑按钮（或“配置管理”中的同款按钮）唤起的 `TestCaseEditor` 弹窗统一管理（添加 / 删除 / 上移下移 / 运行此用例 / 恢复默认）。
+
+* **声明方式**（业务组件内）：
+  ```javascript
+  const visualizerInputs = [
+    { id: 'arr', label: '数组 arr', placeholder: '4, 5, 0, -7' },
+    { id: 'k', label: 'k', placeholder: '5', width: 70 }
+  ]
+  ```
+  并传入 `<VisualizerLayout :inputs="visualizerInputs" defaultData="4, 5, 0, -7 | 5" ... />`。
+* **存储结构**：localStorage 的 config 中新增 `cases: [{ [inputId]: string }]` 与 `activeCase: number`；字段值存用户原始输入文本，不做类型解析。
+* **回传契约（不变）**：`@calculate` 始终收到**当前用例**的 `"值1 | 值2"` 单行字符串，业务侧继续 `split('|')` 解析即可。
+* **向后兼容**：未声明 `inputs` 的旧组件视为单伪字段 `{ data: 原字符串 }`，`defaultData` 原样进出；旧缓存无 `cases` 字段时自动由 `defaultData` 迁移为单用例。存量组件**零改动**。
+* 示范组件：`LC974SubarraysDivByK.vue`（arr + k 双输入）。

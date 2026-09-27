@@ -9,7 +9,7 @@ title: JavaEE进阶
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>6</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>7</b> 篇笔记
 </div>
 
 - 📄 [SpringMVC](./2026-03-26-SpringMVC.md#2026-03-26-springmvc)
@@ -18,3 +18,4 @@ title: JavaEE进阶
 - 📄 [统一功能处理](./2026-04-27-%E7%BB%9F%E4%B8%80%E5%8A%9F%E8%83%BD%E5%A4%84%E7%90%86.md#2026-04-27-统一功能处理)
 - 📄 [SpringAOP](./2026-05-06-SpringAOP.md#2026-05-06-springaop)
 - 📄 [事务](./2026-05-09-%E4%BA%8B%E5%8A%A1.md#2026-05-09-事务)
+- 📄 [博客项目](./2026-05-13-%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE.md#2026-05-13-博客项目)

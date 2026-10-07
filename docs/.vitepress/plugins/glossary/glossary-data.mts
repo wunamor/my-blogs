@@ -11,7 +11,7 @@ import { scannedGlossary } from './glossary-scanner.mts'
 // 已能被 glossary-scan.config.mts 中的扫描配置完整复现，故已删除。
 const manualGlossary: Record<string, string> = {
   // 'RAG' 这个关键词既不是文件名也不是目标页的标题，只能手写登记：
-  'RAG': '/01-计算机与IT技术/01-比特就业课/03-LangChain&LangGraph-AI应用开发框架精品课/01-LangChain-AI应用开发框架精品课/02-嵌入式模型#应用场景',
+  'RAG': '/01-计算机与IT技术/01-比特就业课/200-LangChain&LangGraph-AI应用开发框架精品课/01-LangChain-AI应用开发框架精品课/02-嵌入式模型#应用场景',
   // '科目一': '/驾考交规/01-科目一/index',
 }
 

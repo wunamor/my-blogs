@@ -35,6 +35,7 @@ declare module 'vue' {
     LC35SearchInsert: typeof import('./components/oj/optimal-algorithm/binary-search/LC35SearchInsert.vue')['default']
     LC3LongestSubstring: typeof import('./components/oj/optimal-algorithm/sliding-window/LC3LongestSubstring.vue')['default']
     LC438FindAnagrams: typeof import('./components/oj/optimal-algorithm/sliding-window/LC438FindAnagrams.vue')['default']
+    LC525FindMaxLength: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC525FindMaxLength.vue')['default']
     LC560SubarraySumK: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC560SubarraySumK.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
     LC69MySqrt: typeof import('./components/oj/optimal-algorithm/binary-search/LC69MySqrt.vue')['default']

@@ -1,8 +1,9 @@
 <template>
   <VisualizerLayout
-    title="和为 K 的子数组 / 前缀和 + 哈希表 (LeetCode 560)"
-    storageKey="lc560-subarray-sum-k-config"
-    defaultData="1, 2, 3, -3, 1, 1 | 3"
+    title="连续数组 / 0→-1 转化 + 前缀和首次下标 (LeetCode 525)"
+    storageKey="lc525-find-max-length-config"
+    defaultData="0, 1, 1, 0, 1, 0"
+    :inputs="visualizerInputs"
     :defaultInterval="1000"
     :actionButtons="visualizerButtons"
     :steps="steps"
@@ -10,23 +11,23 @@
   >
     <template #visualization="{ step }">
       <div
-        class="subarray-container"
+        class="contiguous-container"
         v-if="step && step.nums"
       >
 
-        <!-- 顶部：目标值 k + 核心判定公式 -->
+        <!-- 顶部：sum / 长度 / 最长 + 核心判定公式 -->
         <div class="dashboard-minimal">
-          <div class="stat-box k-box">
-            <span class="label">目标值 k</span>
-            <div class="value expr-value">{{ step.k }}</div>
-          </div>
           <div class="stat-box sum-box">
             <span class="label">sum [0, i]</span>
             <div class="value expr-value">{{ step.phase === 'init' ? '?' : step.sum }}</div>
           </div>
-          <div class="stat-box need-box">
-            <span class="label">sum - k</span>
-            <div class="value expr-value">{{ step.need !== null ? step.need : '?' }}</div>
+          <div class="stat-box len-box">
+            <span class="label">当前长度</span>
+            <div class="value expr-value">{{ step.len !== null ? step.len : '?' }}</div>
+          </div>
+          <div class="stat-box res-box">
+            <span class="label">最长 result</span>
+            <div class="value expr-value">{{ step.result }}</div>
           </div>
           <div
             class="stat-box target-box"
@@ -35,31 +36,34 @@
             <span class="label">核心判定公式</span>
             <div class="value expr-value">
               <template v-if="step.phase === 'accumulate'">
-                sum += nums[{{ step.ci }}]
+                sum += v[{{ step.ci }}]
                 <span class="calc-part">
-                  => {{ step.sum - step.nums[step.ci].val }} + {{ step.nums[step.ci].val }} =
+                  => {{ step.sum - step.conv[step.ci].val }} + ({{ step.conv[step.ci].val }}) =
                   <strong>{{ step.sum }}</strong>
                 </span>
               </template>
-              <template v-else-if="step.phase === 'find'">
-                result += hash[sum - k]
+              <template v-else-if="step.phase === 'match'">
+                len = i - hash[sum]
                 <span class="calc-part">
-                  => hash[{{ step.need }}] = {{ step.foundCount }} → result
-                  {{ step.result - step.foundCount }} + {{ step.foundCount }} =
-                  <strong :class="step.foundCount > 0 ? 'text-ok' : 'text-no'">{{ step.result }}</strong>
+                  =>
+                  <template v-if="step.j !== null">{{ step.ci }} - ({{ step.j }}) = {{ step.len }}</template>
+                  <template v-else>{{ step.ci }} - {{ step.ci }} = 0（首次出现）</template>
+                  → result
+                  <strong :class="step.updated ? 'text-ok' : ''">{{ step.result }}</strong>
+                  <span v-if="step.updated" class="upd">↑ 刷新最长</span>
                 </span>
               </template>
               <template v-else-if="step.phase === 'store'">
-                hash[{{ step.storeKey }}] ++
+                hash[{{ step.sum }}] = {{ step.storeIdx !== null ? step.storeIdx : step.hashIdx }}
                 <span class="calc-part">
-                  => 出现次数变为 <strong>{{ step.storedCount }}</strong>
+                  {{ step.storeIdx !== null ? '→ 首次记录，存入' : '→ 已存在，忽略（保留最早下标）' }}
                 </span>
               </template>
               <template v-else-if="step.phase === 'done'">
-                和为 {{ step.k }} 的子数组共 <strong class="text-ok">{{ step.result }}</strong> 个
+                最长的连续数组 = <strong class="text-ok">{{ step.result }}</strong>
               </template>
               <template v-else>
-                <span class="empty-hint">哈希表放入哨兵 (0 → 1)，准备开始扫描...</span>
+                <span class="empty-hint">准备把 0 转为 -1，并放入哨兵 (0 → 下标 -1)...</span>
               </template>
             </div>
           </div>
@@ -68,7 +72,34 @@
         <!-- 行 1：原始数组 nums -->
         <div class="array-row">
           <div class="divider">
-            <span class="arrow-down">原始数组 nums (0-based)</span>
+            <span class="arrow-down">原始数组 nums</span>
+          </div>
+
+          <div class="array-wrapper">
+            <div class="array-track">
+              <div
+                class="array-item-group"
+                v-for="(item, idx) in step.nums"
+                :key="item.id"
+              >
+                <div
+                  class="array-box-minimal"
+                  :class="getOrigCellClass(step, idx)"
+                >
+                  {{ item.val }}
+                </div>
+                <div class="pointer-track ptr-tight">
+                  <span class="idx">{{ idx }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 行 2：转换数组 v（0 → -1），承载线框 -->
+        <div class="array-row">
+          <div class="divider">
+            <span class="arrow-down">转换数组 v (0 → -1)</span>
           </div>
 
           <div class="array-wrapper">
@@ -80,29 +111,22 @@
                 :style="getFrameStyle(step, 0, step.ci)"
                 v-if="oneLine"
               ></div>
-              <!-- 🌟 sum-k 范围框 [0, j]（仅单行时显示） -->
+              <!-- 🌟 候选区间框 [j+1, i]：和为 0 的子数组（仅命中时显示） -->
               <div
-                class="window-frame-minimal frame-sumk"
-                :class="{ 'is-hidden': !showSplitFrame(step) }"
-                :style="getFrameStyle(step, 0, step.j)"
-                v-if="oneLine"
-              ></div>
-              <!-- 🌟 k 范围框 [j+1, i]：命中的子数组（仅单行时显示） -->
-              <div
-                class="window-frame-minimal frame-k"
-                :class="{ 'is-hidden': !showSplitFrame(step) }"
-                :style="getFrameStyle(step, step.kL, step.ci)"
+                class="window-frame-minimal frame-cand"
+                :class="{ 'is-hidden': !showCandFrame(step), 'is-valid-frame': showCandFrame(step) && step.updated }"
+                :style="getCandFrameStyle(step)"
                 v-if="oneLine"
               ></div>
 
               <div
                 class="array-item-group"
-                v-for="(item, idx) in step.nums"
+                v-for="(item, idx) in step.conv"
                 :key="item.id"
               >
                 <div
                   class="array-box-minimal"
-                  :class="getNumsCellClass(step, idx)"
+                  :class="getConvCellClass(step, idx)"
                 >
                   {{ item.val }}
                 </div>
@@ -113,6 +137,10 @@
                       v-if="step.ci === idx && step.phase !== 'done'"
                       class="ptr ptr-mid"
                     >i</span>
+                    <span
+                      v-if="step.phase === 'match' && step.j === idx"
+                      class="ptr ptr-left"
+                    >j</span>
                   </div>
                 </div>
               </div>
@@ -120,10 +148,10 @@
           </div>
         </div>
 
-        <!-- 行 2：哈希表 -->
+        <!-- 行 3：哈希表（前缀和 → 最早下标） -->
         <div class="array-row">
           <div class="divider">
-            <span class="arrow-down">哈希表 hash (前缀和 → 次数)</span>
+            <span class="arrow-down">哈希表 hash (前缀和 → 最早下标)</span>
           </div>
 
           <div class="array-wrapper">
@@ -136,17 +164,7 @@
               >
                 <span class="map-key">{{ entry.key }}</span>
                 <span class="map-arrow">→</span>
-                <span class="map-count">出现 {{ entry.count }} 次</span>
-              </div>
-
-              <!-- 查询未命中时的幽灵格 -->
-              <div
-                class="map-chip ghost is-mismatch"
-                v-if="step.phase === 'find' && step.foundCount === 0"
-              >
-                <span class="map-key">{{ step.need }}</span>
-                <span class="map-arrow">→</span>
-                <span class="map-count">出现 0 次</span>
+                <span class="map-count">下标 {{ entry.idx }}</span>
               </div>
             </div>
           </div>
@@ -161,6 +179,10 @@
   import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue'
   import VisualizerLayout from '@components/common/visualization/VisualizerLayout.vue'
 
+  const visualizerInputs = [
+    { id: 'nums', label: '数组 nums (0/1)', placeholder: '0, 1, 1, 0, 1, 0' }
+  ]
+
   const visualizerButtons = [
     { id: 'prev', label: '上一步', icon: 'prev' },
     { id: 'play', label: '自动播放', labelPause: '暂停', icon: 'play', iconPause: 'pause' },
@@ -169,7 +191,7 @@
 
   const steps = ref([])
 
-  // 🌟 动态检测 nums 轨道是否放得下（放不下则换行，绝对定位线框随之隐藏）
+  // 🌟 动态检测轨道是否放得下（换行时线框隐藏，改用底色标识）
   const numsTrackRef = ref(null)
   const oneLine = ref(true)
   let resizeObserver = null
@@ -179,7 +201,7 @@
     if (!el) return
     const count = el.querySelectorAll('.array-item-group').length
     if (!count) { oneLine.value = true; return }
-    const available = el.clientWidth - 12 // 扣除轨道左右各 6px 内边距
+    const available = el.clientWidth - 12
     oneLine.value = (count * 36 - 8) <= available
   }
 
@@ -202,25 +224,31 @@
 
   const getPhaseClass = (phase) => {
     if (phase === 'accumulate' || phase === 'store') return 'is-warning';
-    if (phase === 'find') return 'is-low-zone';
+    if (phase === 'match') return 'is-low-zone';
     if (phase === 'done') return 'is-success';
     return '';
   }
 
-  // 🌟 sum 框：扫描期间始终显示 [0, i]
+  // 🌟 sum 框：扫描期间显示 [0, i]
   const showSumFrame = (step) => {
-    return (step.phase === 'accumulate' || step.phase === 'find' || step.phase === 'store') && step.ci >= 0;
+    return (step.phase === 'accumulate' || step.phase === 'match' || step.phase === 'store') && step.ci >= 0;
   }
 
-  // 🌟 sum-k / k 拆分框：仅在查询命中时显示
-  const showSplitFrame = (step) => {
-    return step.phase === 'find' && step.foundCount > 0;
+  // 🌟 候选区间框：配对命中且长度 > 0 时显示 [j+1, i]
+  const showCandFrame = (step) => {
+    return step.phase === 'match' && step.j !== null && step.len > 0;
   }
 
-  // 🌟 区间线框计算（l, r 为闭区间下标，l > r 时隐藏；+6 为轨道左内边距，避免负偏移被裁切）
+  // 🌟 候选区间框样式：非命中阶段直接隐藏（防止 null + 1 被强转为 1 绕过守卫）
+  const getCandFrameStyle = (step) => {
+    if (!showCandFrame(step)) return { width: '0px', opacity: 0 }
+    return getFrameStyle(step, step.j + 1, step.ci)
+  }
+
+  // 🌟 区间线框计算（+6 为轨道左内边距，避免负偏移被裁切）
   const getFrameStyle = (step, l, r) => {
     if (l == null || r == null || l > r) return { width: '0px', opacity: 0 }
-    const STRIDE = 36; // 紧凑模式：宽28 + 间距8
+    const STRIDE = 36;
     const PADDING = 4;
     const TRACK_PAD = 6;
     const leftPos = TRACK_PAD + l * STRIDE - PADDING;
@@ -233,15 +261,24 @@
     }
   }
 
-  // nums 单元格状态
-  const getNumsCellClass = (step, idx) => {
+  // 原始数组单元格状态
+  const getOrigCellClass = (step, idx) => {
     const cls = {};
+    if (step.phase !== 'done' && idx > step.ci) cls['is-discarded'] = true;
+    return cls;
+  }
+
+  // 转换数组单元格状态
+  const getConvCellClass = (step, idx) => {
+    const cls = {};
+    if (step.conv[idx].val === -1) cls['is-converted'] = true;
     if (idx === step.ci && step.phase !== 'init' && step.phase !== 'done') cls['is-mid'] = true;
     if (step.phase !== 'done' && idx > step.ci) cls['is-discarded'] = true;
-    if (step.phase === 'done' && idx <= step.nums.length - 1) cls['is-in-window'] = true;
-    if (showSplitFrame(step) && idx >= step.kL && idx <= step.ci) cls['is-in-k'] = true;
-    // 换行时线框隐藏，改用单元格底色区分 sum-k 区间
-    if (!oneLine.value && showSplitFrame(step) && idx >= 0 && idx <= step.j) cls['in-sumk'] = true;
+    if (showCandFrame(step) && idx >= step.j + 1 && idx <= step.ci) {
+      cls[step.updated ? 'is-match' : 'is-in-cand'] = true;
+    }
+    if (step.phase === 'done' && idx >= step.bestL && idx <= step.bestR && step.bestL !== -1) cls['is-match'] = true;
+    if (!oneLine.value && showCandFrame(step) && idx >= step.j + 1 && idx <= step.ci) cls['is-in-cand'] = true;
     return cls;
   }
 
@@ -249,91 +286,88 @@
   const getMapEntryClass = (step, entry) => {
     const cls = {};
     if (step.phase === 'init' && entry.key === 0) cls['is-anchor'] = true;
-    if (step.phase === 'find') {
-      if (entry.key === step.need) cls[step.foundCount > 0 ? 'is-match' : 'is-mismatch'] = true;
-      else cls['is-discarded'] = true;
-    }
-    if (step.phase === 'store' && entry.key === step.storeKey) cls['is-mid'] = true;
+    if (step.phase === 'match' && step.j !== null && entry.key === step.sum) cls['is-match'] = true;
+    if (step.phase === 'store' && entry.key === step.sum) cls['is-mid'] = true;
+    if ((step.phase === 'match' || step.phase === 'store') && entry.key !== step.sum) cls['is-discarded'] = true;
     return cls;
   }
 
   const calculateSteps = (inputRaw) => {
-    // 解析格式： nums 逗号分隔 | k，如 1, 2, 3, -3, 1, 1 | 3
+    // 解析格式： nums 逗号分隔（0/1），如 0, 1, 1, 0, 1, 0
     steps.value = [];
-    const parts = inputRaw.split('|').map(s => s.trim());
-    if (parts.length < 2) return;
-
-    const nums = parts[0].split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
-    const k = parseInt(parts[1]);
-    if (nums.length === 0 || isNaN(k)) return;
+    const nums = String(inputRaw ?? '').split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+    if (nums.length === 0) return;
 
     const n = nums.length;
+    const conv = nums.map(x => (x === 0 ? -1 : x));
     let passNum = 0;
 
     const numsObj = nums.map((val, idx) => ({ id: `nums-${idx}`, val }));
-    // JS Map 保持插入序，与 Java HashMap 遍历序无关（本题逻辑不依赖遍历序）
-    // lastIdx 仅用于可视化：记录该前缀和最近一次出现的下标 j，以便画出 (j, i] 命中区间
-    let mapEntries = [{ key: 0, count: 1, lastIdx: -1 }];
+    const convObj = conv.map((val, idx) => ({ id: `conv-${idx}`, val }));
+    // lastIdx 语义：前缀和 → 最早出现下标；哨兵 (0, -1)
+    let mapEntries = [{ key: 0, idx: -1 }];
 
     const pushState = (desc, phase, opts = {}) => {
       steps.value.push({
         nums: JSON.parse(JSON.stringify(numsObj)),
+        conv: JSON.parse(JSON.stringify(convObj)),
         mapEntries: JSON.parse(JSON.stringify(mapEntries)),
-        k,
-        phase: phase, // 'init', 'accumulate', 'find', 'store', 'done'
+        phase: phase, // 'init', 'accumulate', 'match', 'store', 'done'
         ci: opts.ci ?? -1,
         sum: opts.sum ?? 0,
-        need: opts.need ?? null,
-        foundCount: opts.foundCount ?? 0,
         j: opts.j ?? null,
-        kL: opts.kL ?? null,
-        storeKey: opts.storeKey ?? null,
-        storedCount: opts.storedCount ?? null,
+        len: opts.len ?? null,
+        updated: opts.updated ?? false,
+        storeIdx: opts.storeIdx ?? null,
+        hashIdx: opts.hashIdx ?? null,
         result: opts.result ?? 0,
+        bestL: opts.bestL ?? -1,
+        bestR: opts.bestR ?? -1,
         description: desc,
         passId: passNum++
       });
     }
 
-    pushState(`【初始化】哈希表先放入哨兵 ( 0 → 出现 1 次 )：当 [0, i] 的前缀和 sum 恰好等于 k 时，sum - k = 0 正好命中这个 1，覆盖「整个前缀本身就是合法子数组」的情况。`, 'init', { sum: 0, result: 0 });
+    pushState(`【预处理】把 0 视为 -1（见第二行转换数组），问题转化为「求和为 0 的最长子数组」。哈希表放入哨兵 ( 0 → 下标 -1 )：表示前缀和 0 最早"出现"在 -1 处，覆盖 [0, i] 整体恰好合法的情况（如 nums = [0, 1]）。`, 'init', { result: 0 });
 
     // ================= 主循环：复刻 Java =================
-    let sum = 0, result = 0;
+    let sum = 0, result = 0, bestL = -1, bestR = -1;
     for (let i = 0; i < n; i++) {
-      // sum += nums[i]
-      sum += nums[i];
-      pushState(`【累加前缀和】sum += nums[${i}]，sum = ${sum}，它代表 [0, ${i}] 区间的总和。`, 'accumulate', { ci: i, sum, result });
+      // sum += nums[i]（已转换）
+      sum += conv[i];
+      pushState(`【累加前缀和】sum += v[${i}]，sum = ${sum}。sum > 0 说明 1 偏多，sum < 0 说明 0 偏多，sum = 0 说明 [0, ${i}] 内 0 和 1 数量相等。`, 'accumulate', { ci: i, sum, result, bestL, bestR });
 
-      // result += hash.getOrDefault(sum - k, 0)
-      const need = sum - k;
-      const hit = mapEntries.find(e => e.key === need);
-      const foundCount = hit ? hit.count : 0;
-      result += foundCount;
-      if (foundCount > 0) {
-        const j = hit.lastIdx;
-        pushState(`【查询哈希表】以 ${i} 结尾、和为 ${k} 的子数组 ⇔ 找之前值为 sum - k = ${need} 的前缀和。hash[${need}] 出现过 ${foundCount} 次（最近一次在下标 ${j}），因此绿框 [0, ${i}] 减去紫框 [0, ${j}]，剩下的橙框 [${j + 1}, ${i}] 这段的和恰好就是 ${k} ✓。result += ${foundCount} → ${result}。`, 'find', { ci: i, sum, need, foundCount, j, kL: j + 1, result });
+      // result = Math.max(i - hash.getOrDefault(sum, i), result)
+      const hit = mapEntries.find(e => e.key === sum);
+      const j = hit ? hit.idx : null;
+      const len = hit ? i - hit.idx : 0;
+      const updated = len > result;
+      if (updated) {
+        result = len;
+        bestL = j + 1;
+        bestR = i;
+      }
+      if (hit) {
+        pushState(`【计算长度】前缀和 ${sum} 最早出现在下标 ${j}，说明 (${j}, ${i}] 这段的和为 0（橙框区间），长度 = ${i} - (${j}) = ${len}。result = max(旧值, ${len}) = ${result}${updated ? '，刷新最长！' : '，未刷新。'}`, 'match', { ci: i, sum, j, len, updated, result, bestL, bestR });
       } else {
-        pushState(`【查询哈希表】需要前缀和 sum - k = ${need}，哈希表中查无此项，result 不增加。`, 'find', { ci: i, sum, need, foundCount: 0, result });
+        pushState(`【计算长度】前缀和 ${sum} 首次出现，无可配对的下标（getOrDefault 返回 i 本身），长度按 ${i} - ${i} = 0 计，result 保持 ${result}。`, 'match', { ci: i, sum, j: null, len: 0, updated: false, result, bestL, bestR });
       }
 
-      // hash.put(sum, getOrDefault(sum,0)+1)
-      const cur = mapEntries.find(e => e.key === sum);
-      if (cur) {
-        cur.count += 1;
-        cur.lastIdx = i;
-        pushState(`【记录前缀和】把当前前缀和 ${sum} 放入哈希表：出现次数变为 ${cur.count} 次，供后面的位置查询（注意：必须查完再存，否则会重复计数）。`, 'store', { ci: i, sum, storeKey: sum, storedCount: cur.count, result });
+      // if (!hash.containsKey(sum)) hash.put(sum, i)
+      if (!hit) {
+        mapEntries.push({ key: sum, idx: i });
+        pushState(`【记录】首次见到前缀和 ${sum}，存入 hash[${sum}] = ${i}。只有保留最早下标，将来配对时区间才可能最长。`, 'store', { ci: i, sum, storeIdx: i, result, bestL, bestR });
       } else {
-        mapEntries.push({ key: sum, count: 1, lastIdx: i });
-        pushState(`【记录前缀和】前缀和 ${sum} 首次出现，哈希表新增 ( ${sum} → 出现 1 次 )，供后面的位置查询（注意：必须查完再存，否则会重复计数）。`, 'store', { ci: i, sum, storeKey: sum, storedCount: 1, result });
+        pushState(`【记录】前缀和 ${sum} 已记录在最早下标 ${hit.idx}，跳过更新——重复的 K 直接忽略，保留最早下标才能取到最长长度。`, 'store', { ci: i, sum, hashIdx: hit.idx, result, bestL, bestR });
       }
     }
 
-    pushState(`【✅ 完成】扫描结束，和为 ${k} 的子数组共有 ${result} 个。时间复杂度 O(n)，空间复杂度 O(n)。`, 'done', { ci: n - 1, sum, result });
+    pushState(`【✅ 完成】扫描结束，含相同数量 0 和 1 的最长连续数组长度为 ${result}（绿色区间 [${bestL}, ${bestR}]）。时间复杂度 O(n)，空间复杂度 O(n)。`, 'done', { ci: n - 1, sum, result, bestL, bestR });
   }
 </script>
 
 <style scoped>
-  .subarray-container {
+  .contiguous-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -363,28 +397,28 @@
     transition: all 0.3s;
   }
 
-  .stat-box.k-box {
-    min-width: 110px;
-  }
-
-  .stat-box.k-box .value {
-    color: #f97316;
-  }
-
   .stat-box.sum-box {
-    min-width: 130px;
+    min-width: 120px;
   }
 
   .stat-box.sum-box .value {
     color: #10b981;
   }
 
-  .stat-box.need-box {
+  .stat-box.len-box {
+    min-width: 120px;
+  }
+
+  .stat-box.len-box .value {
+    color: #f97316;
+  }
+
+  .stat-box.res-box {
     min-width: 130px;
   }
 
-  .stat-box.need-box .value {
-    color: #8b5cf6;
+  .stat-box.res-box .value {
+    color: #0ea5e9;
   }
 
   .stat-box.target-box {
@@ -433,8 +467,11 @@
     color: #10b981;
   }
 
-  .text-no {
-    color: #ef4444;
+  .upd {
+    color: #10b981;
+    font-size: 12px;
+    margin-left: 6px;
+    animation: popIn 0.3s ease-out;
   }
 
   .empty-hint {
@@ -444,10 +481,7 @@
     font-weight: normal;
   }
 
-  /* ================= 行容器 =================
-     移动端：纵向堆叠（分隔线在上）
-     桌面端：横向紧凑（标签在左、内容在右，整块居中）
-  ========================================== */
+  /* ================= 行容器 ================= */
   .array-row {
     display: flex;
     flex-direction: column;
@@ -490,24 +524,21 @@
     display: flex;
     gap: 8px;
     position: relative;
-    padding-top: 26px; /* 顶部预留线框带，避免与下标/数值重叠 */
+    padding-top: 26px;
     flex-wrap: nowrap;
   }
 
-  /* 哈希表轨道：超宽自动换行 */
   .array-track.map-track {
     flex-wrap: wrap;
   }
 
-  /* nums 轨道：左右留 6px 内边距供线框呼吸；放不下时自动换行（换行时线框隐藏） */
   .array-track.nums-track {
     padding-left: 6px;
     padding-right: 6px;
     flex-wrap: wrap;
   }
 
-  /* 🌟 三层区间线框：sum(绿) 套 sum-k(紫) + k(橙)
-       方块占 y:26~62；外框 18~70，内框 22~66，下标区从 y:74 开始 */
+  /* 🌟 区间线框：sum(绿) + 候选区间(橙/绿) */
   .window-frame-minimal {
     position: absolute;
     border-radius: 6px;
@@ -523,18 +554,16 @@
     background: rgba(16, 185, 129, 0.04);
   }
 
-  .window-frame-minimal.frame-sumk {
-    top: 22px;
-    height: 44px;
-    border: 1.5px solid #8b5cf6;
-    background: rgba(139, 92, 246, 0.05);
-  }
-
-  .window-frame-minimal.frame-k {
+  .window-frame-minimal.frame-cand {
     top: 22px;
     height: 44px;
     border: 1.5px solid #f97316;
     background: rgba(249, 115, 22, 0.06);
+  }
+
+  .window-frame-minimal.frame-cand.is-valid-frame {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.08);
   }
 
   .window-frame-minimal.is-hidden {
@@ -598,16 +627,7 @@
     color: #0ea5e9;
   }
 
-  .map-chip.ghost {
-    border-style: dashed;
-  }
-
   /* 视觉特效 (状态语义字典) */
-  .is-empty {
-    border-style: dashed;
-    color: var(--vp-c-text-3);
-  }
-
   .is-anchor {
     border-color: #f97316;
     color: #f97316;
@@ -628,34 +648,20 @@
     transform: scale(0.9);
   }
 
-  .is-checking {
-    border-color: #8b5cf6;
-    color: #8b5cf6;
-    animation: pulseCheck 0.9s ease-in-out infinite;
-  }
-
   .is-mid {
     border-color: #8b5cf6;
     border-width: 2px;
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
   }
 
-  .is-mismatch {
-    border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.08);
-    color: #ef4444;
+  .is-converted {
+    color: #f43f5e;
   }
 
-  .is-in-k {
+  .is-in-cand {
     border-color: #f97316;
     background: rgba(249, 115, 22, 0.12);
     color: #f97316;
-  }
-
-  .in-sumk {
-    border-color: #8b5cf6;
-    background: rgba(139, 92, 246, 0.1);
-    color: #8b5cf6;
   }
 
   .is-match {
@@ -701,19 +707,13 @@
     color: white;
   }
 
+  .ptr-left {
+    background: #64748b;
+  }
+
   .ptr-mid {
     background: #8b5cf6;
     animation: popIn 0.3s ease-out forwards;
-  }
-
-  @keyframes pulseCheck {
-    0%, 100% {
-      box-shadow: 0 0 0 rgba(139, 92, 246, 0);
-    }
-
-    50% {
-      box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
-    }
   }
 
   @keyframes popIn {
@@ -730,7 +730,7 @@
 
   /* ================= 🖥️ 桌面端紧凑模式 ================= */
   @media (min-width: 768px) {
-    .subarray-container {
+    .contiguous-container {
       gap: 10px;
       padding: 8px 0;
     }
@@ -754,7 +754,6 @@
       gap: 14px;
     }
 
-    /* 左半标签：取内容自然宽度，右对齐贴向间隙；垂直中心对准方块中心 (26 + 18 = 44) */
     .divider {
       width: auto;
       flex: 0 0 auto;
@@ -773,7 +772,6 @@
       content: '';
     }
 
-    /* 右半内容：自然宽度、左对齐，整块随数组长度动态占比居中 */
     .array-wrapper {
       width: auto;
       flex: 0 1 auto;

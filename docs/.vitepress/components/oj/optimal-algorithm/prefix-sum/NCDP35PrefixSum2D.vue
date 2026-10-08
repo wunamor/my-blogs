@@ -538,7 +538,6 @@
     border-color: #8b5cf6;
     border-width: 2px;
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
-    transform: translateY(-2px);
   }
 
   .is-match {

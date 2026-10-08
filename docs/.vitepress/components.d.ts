@@ -20,6 +20,7 @@ declare module 'vue' {
     LC1089DuplicateZerosExtraSpace: typeof import('./components/oj/optimal-algorithm/two-pointers/LC1089DuplicateZerosExtraSpace.vue')['default']
     LC1089DuplicateZerosInPlace: typeof import('./components/oj/optimal-algorithm/two-pointers/LC1089DuplicateZerosInPlace.vue')['default']
     LC11ContainerWithMostWater: typeof import('./components/oj/optimal-algorithm/two-pointers/LC11ContainerWithMostWater.vue')['default']
+    LC1314MatrixBlockSum: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC1314MatrixBlockSum.vue')['default']
     LC138CopyRandomList: typeof import('./components/oj/LC138CopyRandomList.vue')['default']
     LC153FindMin: typeof import('./components/oj/optimal-algorithm/binary-search/LC153FindMin.vue')['default']
     LC15ThreeSum: typeof import('./components/oj/optimal-algorithm/two-pointers/LC15ThreeSum.vue')['default']

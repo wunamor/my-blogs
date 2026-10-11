@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scanDir, createNameResolver, stripNumericPrefix } from './scanner.mjs';
+import { scanDir, createNameResolver, stripNumericPrefix, vitepressSlugify } from './scanner.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.resolve(__dirname, '../docs');
@@ -10,17 +10,17 @@ const docsDir = path.resolve(__dirname, '../docs');
 // 💡 提取公共过滤规则：匹配所有(*)，排除隐藏文件(!.*)和导读页(!index.md)
 const ignorePatterns = ['*', '!.*', '!index.md', '!images'];
 
-// 👇 【新增】工具函数：模拟 VitePress 的标题转换逻辑生成锚点
-function slugify(text) {
+// 👇 【修正】：锚点生成必须与 VitePress 内核完全一致——
+// 先剥掉标题里的 Markdown 语法（等价于内核从 token 拼接纯文本），
+// 再套用 scanner 里逐字复刻的 vitepressSlugify（含“数字开头补 _”规则）。
+const slugify = (text) => {
   if (!text) return '';
-  return text
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+  const plain = text
+    .replace(/!?\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/[*_`]/g, '')
-    .toLowerCase()
-    .replace(/[\s`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
+    .trim();
+  return vitepressSlugify(plain);
+};
 
 function generateIndexForDir(dir) {
   const { directories, files } = scanDir(dir, ignorePatterns);

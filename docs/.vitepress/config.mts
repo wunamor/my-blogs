@@ -15,6 +15,7 @@ import { mathToolPlugin } from './plugins/markdown-math-tool.mts'
 import { syntaxSugarPlugin } from './plugins/markdown-syntax-sugar.mts'
 import { imageCaptionPlugin } from './plugins/markdown-image-caption.mts'
 import { codeToolPlugin } from './plugins/markdown-code-tool.mts'
+import { obsidianAnchorCompat } from './configs/obsidian-anchor-compat.mts'
 
 export default defineConfig({
 	lang: 'zh-CN',
@@ -46,6 +47,8 @@ export default defineConfig({
 			md.use(syntaxSugarPlugin)
 			md.use(imageCaptionPlugin)
 			md.use(codeToolPlugin)
+			// 兼容层放最后：需要等其余核心规则把标题 token 全部就绪
+			md.use(obsidianAnchorCompat)
 		},
 		math: true,
 	},

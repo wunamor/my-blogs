@@ -11,6 +11,9 @@ import 'viewerjs/dist/viewer.css'
 import { initMathCopy } from './math-interaction'
 import { initCodeTools } from './code-interaction'
 
+// 2.5 运行时锚点兜底层（Obsidian 风格链接的浏览器端自愈）
+import { attachClickFallback, fixHashAnchors, patchRouter } from './anchor-compat'
+
 // 3. 引入全局样式
 import './style.css'
 
@@ -29,10 +32,12 @@ export default {
 	},
 
 	// 💡 新增：enhanceApp 专门用来扩展 Vue 应用级别的内容（如注册全局组件）
-	enhanceApp({ app }) {
+	enhanceApp({ app, router }) {
 		// 2. 注册基础排版组件
 		app.component('Spoiler', Spoiler)
 		app.component('ArticleMetadata', ArticleMetadata)
+		// 运行时锚点兜底：包裹路由钩子，SPA 切页后自动修正 Obsidian 风格锚点
+		patchRouter(router)
 	},
 
 	setup() {
@@ -77,6 +82,8 @@ export default {
 			initViewer()
 			initMathCopy() // 注入数学公式复制监听
       initCodeTools()
+			attachClickFallback() // 同页锚点点击兜底
+			fixHashAnchors() // 首屏深链锚点自愈
 		})
 
 		// 监听路由变化，确保点击左侧菜单切换文章后，新页面的图片和公式也能重新绑定

@@ -22,19 +22,28 @@ const safeDecode = (s) => {
   try { return decodeURIComponent(s); } catch { return s; }
 };
 
+// 与 theme/anchor-compat.ts 同一算法：激进归一化（运行时兜底层的匹配规则）
+const aggressive = (s) =>
+  s.normalize('NFKD').toLowerCase()
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]*)\]/g, '$1')
+    .replace(/[^0-9a-z\u4e00-\u9fff]+/g, '');
+
 // 链接提取（按行匹配；行内 code span 中命中概率低，接受该简化）
 const LINK_RE = /(!?)\[(?:[^\]]*)\]\(\s*(?:<([^<>\n]*)>|([^\s()]*(?:\([^)\s]*\))?))\s*(?:\s+"[^"]*")?\)/g;
 const WIKILINK_RE = /(?<!!)\[\[[^\]|\n]*\]\]/g;
 const EMBED_RE = /!\[\[[^\]|\n]*\]\]/g;
 const EXTERNAL_RE = /^[a-z][a-z0-9+.-]*:/i;
 
-// ---------- 解析单文件的标题 id 集合（镜像 VitePress: {#id} > slugify(标题) > 重复追加 -N） ----------
-const headingCache = new Map(); // absMdPath -> { ids:Set, idsByNorm:Map } | null
+// ---------- 解析单文件的标题信息（镜像 VitePress: {#id} > slugify(标题) > 重复追加 -N） ----------
+// 返回 { ids:Set(真实DOM id), aggr:Set(标题的激进归一化形态) } | null
+const headingCache = new Map(); // absMdPath -> page data
 function parseHeadings(absMdPath) {
   if (headingCache.has(absMdPath)) return headingCache.get(absMdPath);
   if (!fs.existsSync(absMdPath)) { headingCache.set(absMdPath, null); return null; }
   const lines = fs.readFileSync(absMdPath, 'utf-8').split(/\r?\n/);
   const ids = new Set();
+  const aggr = new Set();
   const counts = new Map();
   let inFence = false;
   let inFront = lines[0] === '---' ? 1 : 0;
@@ -48,24 +57,32 @@ function parseHeadings(absMdPath) {
     let id = null;
     const custom = title.match(/\s*\{#([^}]+)\}\s*$/);
     if (custom) { id = custom[1]; title = title.slice(0, custom.index); }
+    aggr.add(aggressive(title));
     if (!id) id = vitepressSlugify(stripMarkdown(title));
     const seen = counts.get(id) || 0;
     counts.set(id, seen + 1);
     if (seen > 0) id = `${id}-${seen}`;
     ids.add(id);
   }
-  headingCache.set(absMdPath, ids);
-  return ids;
+  const page = { ids, aggr };
+  headingCache.set(absMdPath, page);
+  return page;
 }
 
-// 锚点是否合法：精确命中，或按 VitePress 归一化(剥 Markdown + slugify)后命中
-function anchorOk(anchor, ids) {
+// 锚点判定分级：
+//   exact   精确命中 DOM id（原生可用）
+//   build   构建期兼容层可改写（仅同页/同文件链接）
+//   runtime 运行时兜底层可自愈（theme/anchor-compat.ts 的激进归一化匹配）
+function anchorOk(anchor, page) {
   const raw = anchor.startsWith('#') ? anchor.slice(1) : anchor;
-  if (!raw) return { ok: true, rewritten: false };
-  if (ids && ids.has(raw)) return { ok: true, rewritten: false };
+  if (!raw) return { level: 'exact' };
+  if (!page) return { level: null };
+  if (page.ids.has(raw)) return { level: 'exact' };
   const norm = vitepressSlugify(stripMarkdown(safeDecode(raw)));
-  if (norm && ids && ids.has(norm)) return { ok: true, rewritten: true };
-  return { ok: false, norm };
+  if (norm && page.ids.has(norm)) return { level: 'build' };
+  const ag = aggressive(safeDecode(raw));
+  if (ag && page.aggr.has(ag)) return { level: 'runtime' };
+  return { level: null };
 }
 
 // 解析链接目标文件(支持 cleanUrl 与 public 资源): 返回绝对路径或 null
@@ -88,13 +105,15 @@ function resolveTarget(fromFile, p) {
 }
 
 // ---------- 扫描 ----------
-const errors = [];
-const rewritten = []; // 依赖兼容层自动改写的 Obsidian 风格锚点（可容忍，提示存在）
+const errors = [];      // 真·无法解析，需人工处理
+const rewritten = [];   // 构建期兼容层自动改写（同页/同文件锚点）
+const runtimeOk = [];   // 运行时兜底层自动适配（跨页锚点、模糊锚点）
+const backslashOk = []; // 反斜杠式资源链接（归一化后目标存在，依赖主机路径兼容）
 const notices = [];
 
 function checkFile(absMdPath) {
   const rel = path.relative(docsDir, absMdPath).replace(/\\/g, '/');
-  const ids = parseHeadings(absMdPath);
+  const page = parseHeadings(absMdPath);
   const lines = fs.readFileSync(absMdPath, 'utf-8').split(/\r?\n/);
   let inFence = false;
   let inFront = lines[0] === '---' ? 1 : 0;
@@ -118,29 +137,35 @@ function checkFile(absMdPath) {
       if (!dest) continue;
       if (EXTERNAL_RE.test(dest) || dest.startsWith('//')) continue; // 外链放过
       if (dest.startsWith('#')) { // 页内锚点
-        const r = anchorOk(dest, ids);
-        if (!r.ok) errors.push(`ERROR ${rel}:${ln + 1} 页内锚点无法解析: ${dest}`);
-        else if (r.rewritten) rewritten.push(`${rel}:${ln + 1} ${dest}`);
+        const r = anchorOk(dest, page);
+        if (r.level === null) errors.push(`ERROR ${rel}:${ln + 1} 页内锚点无法解析: ${dest}`);
+        else if (r.level === 'build') rewritten.push(`${rel}:${ln + 1} ${dest}`);
+        else if (r.level === 'runtime') runtimeOk.push(`${rel}:${ln + 1} ${dest}`);
         continue;
       }
       const hashAt = dest.indexOf('#');
       const p = hashAt === -1 ? dest : dest.slice(0, hashAt);
       const anchor = hashAt === -1 ? '' : dest.slice(hashAt);
       if (!p) continue;
-      if (p.includes('\\')) { errors.push(`ERROR ${rel}:${ln + 1} 链接含 Windows 反斜杠（浏览器端必死链）: ${p}`); continue; }
-      const target = resolveTarget(absMdPath, p);
-      if (!target) { errors.push(`ERROR ${rel}:${ln + 1} ${isImage ? '图片' : '页面'}不存在: ${p}`); continue; }
+      const hasBackslash = p.includes('\\');
+      const target = resolveTarget(absMdPath, hasBackslash ? p.replace(/\\/g, '/') : p);
+      if (!target) {
+        errors.push(`ERROR ${rel}:${ln + 1} ${isImage ? '图片' : '页面'}不存在${hasBackslash ? '（反斜杠归一化后仍未找到）' : ''}: ${p}`);
+        continue;
+      }
+      if (hasBackslash && /\.(zip|rar|7z|tar|gz|pdf|xlsx?|docx?|pptx?|mp[34]|exe|apk|ipa)$/i.test(p)) {
+        backslashOk.push(`${rel}:${ln + 1} ${p}`);
+        continue; // 资源下载链接：目标存在即可，不再校验锚点
+      }
       if (anchor && target.endsWith('.md')) {
+        const r = anchorOk(anchor, parseHeadings(target));
         const selfFile = path.resolve(target) === path.resolve(absMdPath);
-        if (selfFile) {
-          // 指向“本文件”的相对锚点：兼容层会收敛/改写，按同页标准判定
-          const r = anchorOk(anchor, ids);
-          if (!r.ok) errors.push(`ERROR ${rel}:${ln + 1} 同文件锚点无法解析（归一化也救不回）: ${p}${anchor}`);
-          else if (r.rewritten) rewritten.push(`${rel}:${ln + 1} ${p}${anchor}`);
-        } else {
-          const r = anchorOk(anchor, parseHeadings(target));
-          if (!r.ok) errors.push(`ERROR ${rel}:${ln + 1} 跨页锚点无法解析: ${p}${anchor}`);
-          else if (r.rewritten) rewritten.push(`${rel}:${ln + 1} ${p}${anchor}（注意：跨页锚点兼容层【不会】改写，需人工改写正文）`);
+        if (r.level === null) {
+          errors.push(`ERROR ${rel}:${ln + 1} ${selfFile ? '同文件' : '跨页'}锚点无法解析: ${p}${anchor}`);
+        } else if (r.level === 'build' && selfFile) {
+          rewritten.push(`${rel}:${ln + 1} ${p}${anchor}`);
+        } else if (r.level !== 'exact') {
+          runtimeOk.push(`${rel}:${ln + 1} ${p}${anchor}`);
         }
       }
     }
@@ -160,9 +185,11 @@ function checkFile(absMdPath) {
 
 // ---------- 报告 ----------
 console.log(`🔗 check-links: 扫描完成`);
-if (errors.length) { console.log(`\n❌ 阻断级问题 (${errors.length}):`); errors.forEach((e) => console.log('  ' + e)); }
-if (rewritten.length) { console.log(`\n🩹 Obsidian 风格锚点（同页由兼容层自动改写；跨页的需人工处理）(${rewritten.length}):`); rewritten.forEach((e) => console.log('  ' + e)); }
+if (errors.length) { console.log(`\n❌ 需人工处理 (${errors.length}):`); errors.forEach((e) => console.log('  ' + e)); }
+if (rewritten.length) { console.log(`\n🩹 构建期兼容层自动改写（同页/同文件锚点）(${rewritten.length}):`); rewritten.forEach((e) => console.log('  ' + e)); }
+if (runtimeOk.length) { console.log(`\n🧭 运行时兜底层自动适配（跨页/模糊锚点，theme/anchor-compat.ts）(${runtimeOk.length}):`); runtimeOk.forEach((e) => console.log('  ' + e)); }
+if (backslashOk.length) { console.log(`\n📦 反斜杠式资源下载链接（目标存在，依赖主机路径归一化，建议逐步换成正斜杠）(${backslashOk.length}):`); backslashOk.forEach((e) => console.log('  ' + e)); }
 if (notices.length) { console.log(`\n⚠️ 其它提示 (${notices.length}):`); notices.forEach((e) => console.log('  ' + e)); }
-if (!errors.length && !rewritten.length && !notices.length) console.log('   全部链接健康 ✅');
+if (!errors.length && !rewritten.length && !runtimeOk.length && !backslashOk.length && !notices.length) console.log('   全部链接健康 ✅');
 
 process.exitCode = STRICT && errors.length ? 1 : 0;

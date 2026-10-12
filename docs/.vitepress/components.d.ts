@@ -40,6 +40,7 @@ declare module 'vue' {
     LC560SubarraySumK: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC560SubarraySumK.vue')['default']
     LC611ValidTriangleNumber: typeof import('./components/oj/optimal-algorithm/two-pointers/LC611ValidTriangleNumber.vue')['default']
     LC69MySqrt: typeof import('./components/oj/optimal-algorithm/binary-search/LC69MySqrt.vue')['default']
+    LC6ZigzagConvert: typeof import('./components/oj/optimal-algorithm/simulation/LC6ZigzagConvert.vue')['default']
     LC704BinarySearch: typeof import('./components/oj/optimal-algorithm/binary-search/LC704BinarySearch.vue')['default']
     LC724PivotIndex: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC724PivotIndex.vue')['default']
     LC724PivotIndexTotalSum: typeof import('./components/oj/optimal-algorithm/prefix-sum/LC724PivotIndexTotalSum.vue')['default']

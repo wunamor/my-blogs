@@ -9,7 +9,7 @@ title: 测试
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>5</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>6</b> 篇笔记
 </div>
 
 - 📄 [认识测试](./2025-10-25-%E8%AE%A4%E8%AF%86%E6%B5%8B%E8%AF%95.md#_2025-10-25-认识测试)
@@ -17,3 +17,4 @@ title: 测试
 - 📄 [Bug篇](./2025-11-01-Bug%E7%AF%87.md#_2025-11-01-bug篇)
 - 📄 [用例篇](./2025-11-08-%E7%94%A8%E4%BE%8B%E7%AF%87.md#_2025-11-08-用例篇)
 - 📄 [自动化测试-基础概念](./2025-11-20-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5.md#_2025-11-20-自动化测试-基础概念)
+- 📄 [测试实战](./2025-12-04-%E6%B5%8B%E8%AF%95%E5%AE%9E%E6%88%98.md#_2025-12-04-测试实战)

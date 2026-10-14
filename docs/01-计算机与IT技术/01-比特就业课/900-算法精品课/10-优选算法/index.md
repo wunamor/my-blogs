@@ -9,7 +9,7 @@ title: 优选算法
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>6</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>7</b> 篇笔记
 </div>
 
 - 📄 [双指针](./01-%E5%8F%8C%E6%8C%87%E9%92%88.md#双指针)
@@ -18,3 +18,4 @@ title: 优选算法
 - 📄 [前缀和](./04-%E5%89%8D%E7%BC%80%E5%92%8C.md#_04-前缀和)
 - 📄 [位运算](./05-%E4%BD%8D%E8%BF%90%E7%AE%97.md#_05-位运算)
 - 📄 [模拟](./06-%E6%A8%A1%E6%8B%9F.md#_06-模拟)
+- 📄 [分治](./07-%E5%88%86%E6%B2%BB.md)

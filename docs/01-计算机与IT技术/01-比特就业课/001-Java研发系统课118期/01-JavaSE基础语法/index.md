@@ -9,7 +9,7 @@ title: JavaSE基础语法
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>5</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>5</b> 篇笔记 ｜ 篇均 <b>214</b> 字
 </div>
 
 - 📄 [Java-继承完+多态](./2025-06-03-118Java-%E7%BB%A7%E6%89%BF%E5%AE%8C%2B%E5%A4%9A%E6%80%81.md#_2025-06-03-java-继承完-多态)

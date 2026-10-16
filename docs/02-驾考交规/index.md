@@ -9,7 +9,7 @@ title: 驾考交规
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：下辖 <b>3</b> 个子文件夹 ｜ 累计收录 <b>3</b> 篇笔记
+  📊 <strong>本区统计</strong>：下辖 <b>3</b> 个子文件夹 ｜ 累计收录 <b>3</b> 篇笔记 ｜ 篇均 <b>924</b> 字
 </div>
 
 - 📂 [科目一](./01-%E7%A7%91%E7%9B%AE%E4%B8%80/#dir-title)

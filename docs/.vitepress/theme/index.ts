@@ -20,6 +20,8 @@ import './style.css'
 // 💡 新增：引入你刚写的马赛克组件 (使用你配置好的别名)
 import Spoiler from '@components/common/content/Spoiler.vue'
 import ArticleMetadata from '@components/common/content/ArticleMetadata.vue'
+// 🌳 导读页子树速览表格（数据来自 theme/tree.data.ts）
+import DirectoryTree from '@components/common/content/DirectoryTree.vue'
 
 export default {
 	extends: DefaultTheme,
@@ -36,6 +38,7 @@ export default {
 		// 2. 注册基础排版组件
 		app.component('Spoiler', Spoiler)
 		app.component('ArticleMetadata', ArticleMetadata)
+		app.component('DirectoryTree', DirectoryTree)
 		// 运行时锚点兜底：包裹路由钩子，SPA 切页后自动修正 Obsidian 风格锚点
 		patchRouter(router)
 	},

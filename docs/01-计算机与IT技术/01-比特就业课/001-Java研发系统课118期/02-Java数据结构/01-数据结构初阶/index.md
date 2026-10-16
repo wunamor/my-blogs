@@ -9,7 +9,7 @@ title: 数据结构初阶
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>8</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>8</b> 篇笔记 ｜ 篇均 <b>912</b> 字
 </div>
 
 - 📄 [学习心得（导言）](./00-%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97%EF%BC%88%E5%AF%BC%E8%A8%80%EF%BC%89.md#学习心得-导言)

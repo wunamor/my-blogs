@@ -9,7 +9,7 @@ title: 设计模式
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>5</b> 篇笔记
+  📊 <strong>本区统计</strong>：累计收录 <b>5</b> 篇笔记 ｜ 篇均 <b>345</b> 字
 </div>
 
 - 📄 [单例模式](./01-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.md#单例模式)

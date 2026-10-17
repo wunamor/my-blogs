@@ -50,3 +50,12 @@ test/
 # 5. 保留 VitePress 目录
 # =========================
 !.vitepress
+
+# =========================
+# 6. 导读页 index.md（构建产物，不入库）
+# =========================
+# 各目录的 index.md 由 scripts/auto-index.mjs 在构建前整文件重新生成，
+# 云端（ESA `npm run docs:build`）与本地 `npm run docs:dev/build` 都会重建；
+# 唯一手写、必须保留的是根目录首页 docs/index.md（故加 ! 反忽略）。
+docs/**/index.md
+!docs/index.md

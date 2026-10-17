@@ -127,6 +127,6 @@ components/common/content/DirectoryTree.vue   浏览器端筛选/排序/分页�
 
 ## 五、与 scripts/ 的关系
 
-`configs/theme-config.mts`、`scripts/auto-index.mjs`、`theme/tree.data.mts` 与 `plugins/glossary/glossary-scanner.mts` 均复用仓库根目录 `scripts/scanner.mjs` 的工具函数（`scanDir`、`stripNumericPrefix`、`matchAnyGlob`、`vitepressSlugify`、`createNameResolver`）。`scripts/auto-index.mjs` 负责导读页生成，挂在 `docs:dev` / `docs:build` 的 npm 前置步骤里。修改 scanner.mjs 的导出时记得这四处都是消费方。
+`configs/theme-config.mts`、`scripts/auto-index.mjs`、`theme/tree.data.mts` 与 `plugins/glossary/glossary-scanner.mts` 均复用仓库根目录 `scripts/scanner.mjs` 的工具函数（`scanDir`、`stripNumericPrefix`、`matchAnyGlob`、`vitepressSlugify`、`createNameResolver`）。`scripts/auto-index.mjs` 负责导读页生成，挂在 `docs:dev` / `docs:build` 的 npm 前置步骤里。**生成的各目录 `index.md` 是构建产物、不入 git**（`.gitignore` 里 `docs/**/index.md`，仅手写的 `docs/index.md` 例外），所以任何构建路径都不能绕过这个前置步骤——否则导读页缺失，`check-links.mjs` 会把目录链接全报成死链。修改 scanner.mjs 的导出时记得这四处都是消费方。
 
 此外，`configs/page-transform.mts`、`scripts/auto-index.mjs` 与 `theme/tree.data.mts` 共享 `scripts/word-count.mjs` 的 `countWords()`，以保证「每页徽章字数」「导读页篇均字数」「速览表字数」三者同源（见第二、四节说明）。

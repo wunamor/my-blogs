@@ -9,7 +9,7 @@ title: Redis
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：累计收录 <b>6</b> 篇笔记 ｜ 篇均 <b>709</b> 字
+  📊 <strong>本区统计</strong>：累计收录 <b>6</b> 篇笔记 ｜ 篇均 <b>799</b> 字
 </div>
 
 - 📄 [通用命令](./01-%E9%80%9A%E7%94%A8%E5%91%BD%E4%BB%A4.md#_01-通用命令)

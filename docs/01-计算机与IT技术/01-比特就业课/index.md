@@ -9,7 +9,7 @@ title: 比特就业课
 > 本页面由系统自动生成，请勿手动修改。
 
 <div style="color: var(--vp-c-text-2); font-size: 0.9em; margin-bottom: 20px; padding: 10px; background-color: var(--vp-c-bg-soft); border-radius: 8px;">
-  📊 <strong>本区统计</strong>：下辖 <b>19</b> 个子文件夹 ｜ 累计收录 <b>62</b> 篇笔记 ｜ 篇均 <b>1006</b> 字
+  📊 <strong>本区统计</strong>：下辖 <b>19</b> 个子文件夹 ｜ 累计收录 <b>62</b> 篇笔记 ｜ 篇均 <b>1018</b> 字
 </div>
 
 

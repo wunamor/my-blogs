@@ -4,7 +4,8 @@
   "baseFontSize": 21,
   "baseFontSizeAction": true,
   "enabledCssSnippets": [
-    "nav-font"
+    "nav-font",
+    "links-unresolved-guard"
   ],
   "showRibbon": true,
   "showViewHeader": true,

@@ -1,0 +1,15 @@
+/* ============================================================
+   links-unresolved-guard.css
+   用途：禁止点击“未解析(断链)”的内部链接，避免误建空笔记
+   范围：本 vault 全库（仅 Obsidian 生效，不影响 VitePress 发布）
+   依赖：Obsidian 自带的 .is-unresolved 类，不依赖任何插件
+   日期：2026-10-17
+   ============================================================ */
+
+.is-unresolved {
+  color: var(--text-warning) !important;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--text-warning);
+  pointer-events: none !important;
+}

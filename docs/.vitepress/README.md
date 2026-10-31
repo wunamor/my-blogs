@@ -36,7 +36,11 @@
 - **新增 Data Loader**：文件放 `theme/`，命名必须是 `xxx.data.mts`（扩展名规则见第四节），组件内 `import { data } from '.../xxx.data.mts'`。
 - **新增全局组件**：写到 `components/common/` 下，然后在 `theme/index.ts` 的 `enhanceApp` 里 `app.component(...)` 注册（`configs/vite-plugins.mts` 的 unplugin 只管算法可视化组件，不要混用）。
 - **构建产物**：`config.mts.timestamp-*.mjs`（vite 打包配置时的临时文件）、`dist/`、`cache/` 均已 gitignore，出现残留直接删。
-- **字数统计**：口径唯一，实现在仓库根 `scripts/word-count.mjs` 的 `countWords()`，由本目录 `configs/page-transform.mts`（每页字数/阅读时长徽章）与 `scripts/auto-index.mjs`（导读页「篇均字数」统计条）共用。**改计数规则必须两处同步生效，不要在本目录内私自复制一份正则**。注意它只剥离**文件开头**的 Frontmatter（`^---\n...\n---`），正文中间的 `---` 分割线会被计入字数，属预期行为，不要改回旧的宽松正则。
+- **字数统计**：口径唯一，实现在仓库根 `scripts/word-count.mjs`（`sanitizeMarkdown()` → `countWords()`），由本目录 `configs/page-transform.mts`（每页字数/阅读时长徽章）、`scripts/auto-index.mjs`（导读页「篇均字数」统计条）与 `theme/tree.data.mts`（速览表「字数」列）共用。**改计数规则只改这一处，不要在本目录内私自复制一份正则**。
+  - ✅ 计入：中文汉字（`[\u4E00-\u9FFF]`）+ 英文/数字词元（`zadd` 算 1 个词）。
+  - ❌ 不计入：文件头 Frontmatter、围栏代码块（含缩进在列表项里 4+ 空格的、以及引用块 / callout 里的）、链接与图片的 URL（链接文字保留）、引用式链接定义行、HTML / Vue 标签与注释、LaTeX 公式（`$$` 块级；`$` 行内仅在内容含数学符号时剥离，避免误吞金额）。
+  - 阅读时长 = `ceil(字数 / 150)`：**技术文档口径**，别按休闲阅读的 300~500 字/分钟调大（2026-10 曾误提过 300，已否决）。
+  - `scripts/word-count.test.mjs` 是口径自检（20 个 fixture），已挂在 `docs:dev` / `docs:build` 前置步骤，改口径后必须让它保持全绿。
 
 ## 三、术语词典子系统（plugins/glossary/）
 

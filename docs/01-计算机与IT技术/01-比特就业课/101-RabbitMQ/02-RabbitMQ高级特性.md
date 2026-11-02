@@ -74,3 +74,7 @@
 - Github地址：[rabbitmq-delayed-message-exchange](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange)
 - 参考文章: [Scheduling Messages with RabbitMQ](https://www.rabbitmq.com/blog/2015/04/16/scheduling-messages-with-rabbitmq)
 
+## 事务
+事务这个概念在 MySQL 里面就已经讲述过了，这里就不讲述了，概念很简单。
+
+

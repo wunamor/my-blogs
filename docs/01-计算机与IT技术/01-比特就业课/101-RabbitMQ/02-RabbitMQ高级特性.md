@@ -62,3 +62,15 @@
 1. **`TTL` 过期了**
 2. 消息被消费了，但是是 `nack`, 并且**没有被重新入队**
 3. **队列满了**，消息进入后被丢弃了
+
+## 延迟队列
+延迟队列是把消息延期交给消费者消息。比如会议在 10:00 召开，那么就可以提前 30 分钟发送消息。
+
+但是有点遗憾的是，在 `RabbitMQ` 中没有直接可以配置的延迟队列，**需要通过 死信队列+TTL 配合，才能实现延迟队列**
+
+如果是使用队列的 TTL 那么是没有什么问题的，**但是如果是使用消息的 TTL，在后来的消息先过期的情况下**，会导致延迟出现问题（消息积压）
+
+这个问题可以通过插件来解决：（注意版本号要配对， 4.1.x 就配对 4.1.x 的插件）
+- Github地址：[rabbitmq-delayed-message-exchange](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange)
+- 参考文章: [Scheduling Messages with RabbitMQ](https://www.rabbitmq.com/blog/2015/04/16/scheduling-messages-with-rabbitmq)
+

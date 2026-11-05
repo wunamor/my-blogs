@@ -1,15 +1,23 @@
 /* ============================================================
    links-unresolved-guard.css
-   用途：禁止点击“未解析(断链)”的内部链接，避免误建空笔记
+   用途：把「未解析(断链)」的内部链接标黄 + 波浪下划线，一眼可见
    范围：本 vault 全库（仅 Obsidian 生效，不影响 VitePress 发布）
-   依赖：Obsidian 自带的 .is-unresolved 类，不依赖任何插件
-   日期：2026-10-17
+   依赖：Obsidian 自带的 .is-unresolved 类
+
+   2026-11-05 修订：去掉 pointer-events 拦截
+   - Live Preview 下点击是按坐标定位 token、再查 event.target 是否在
+     .cm-underline 内，能否命中取决于 DOM 嵌套层级，实测不可靠；
+   - 它还会让「点断链 → 搜索」这类插件行为收不到事件。
+   真正不让 Obsidian 误建空笔记的做法是让链接能解析：
+     附件统一放 docs/public/attachments/...，
+     仓库根建 junction 指向它（mklink /J attachments docs\public\attachments），
+     笔记里写 /attachments/... 绝对链接 → 点开就是真实文件，不会新建。
+   若还想要「点断链只搜索不建文件」，再启用 Search Over Create 插件。
    ============================================================ */
 
-.is-unresolved {
+.is-unresolved,
+.is-unresolved * {
   color: var(--text-warning) !important;
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: var(--text-warning);
-  pointer-events: none !important;
+  text-decoration: underline wavy var(--text-warning) !important;
+  text-underline-offset: 3px;
 }

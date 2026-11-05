@@ -25,6 +25,12 @@ export default defineConfig({
 	cleanUrls: true,
 	lastUpdated: true,
 
+	// 附件下载链接（/attachments/... 指向 docs/public）不是页面：
+	// VitePress 的死链检查只认 pages 与 `${path}.html`，而 .sql 这类后缀
+	// 又不在它的 KNOWN_EXTENSIONS 资源白名单里（xlsx/zip/pdf 在，所以旧链接没事），
+	// 于是会被误判为死链。这里只豁免附件目录，其余死链照旧严格检查。
+	ignoreDeadLinks: [/^\/attachments\//],
+
 	vite: {
 		plugins: vitePlugins,
 		resolve: {

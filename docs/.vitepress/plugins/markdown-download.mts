@@ -8,7 +8,9 @@ const DOWNLOADABLE_EXTENSIONS = [
   // 压缩包
   'zip', 'rar', '7z', 'tar', 'gz',
   // 文档材料
-  'pdf', 'doc', 'docx', 'ppt', 'pptx'
+  'pdf', 'doc', 'docx', 'ppt', 'pptx',
+  // 数据库脚本
+  'sql'
 ];
 
 // ⚙️ 引擎自动将数组拼接为正则表达式 (例如: /\.(xlsx|xls|csv...)$/i )

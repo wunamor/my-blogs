@@ -59,3 +59,12 @@ test/
 # 唯一手写、必须保留的是根目录首页 docs/index.md（故加 ! 反忽略）。
 docs/**/index.md
 !docs/index.md
+
+# =========================
+# 7. 本地 Obsidian 用的 attachments junction
+# =========================
+# 仓库根的 attachments/ 是指向 docs/public/attachments 的目录联接（mklink /J），
+# 只为让 Obsidian 能解析笔记里的 /attachments/... 绝对链接（否则点击会补建空笔记）。
+# 它不属于源码，必须整目录忽略，否则 git 会顺着 junction 把附件当重复文件跟踪。
+# 注意：必须带前导 / 锚定仓库根，否则会连 docs/public/attachments 一起忽略。
+/attachments/

@@ -16,6 +16,7 @@ import { syntaxSugarPlugin } from './plugins/markdown-syntax-sugar.mts'
 import { imageCaptionPlugin } from './plugins/markdown-image-caption.mts'
 import { codeToolPlugin } from './plugins/markdown-code-tool.mts'
 import { obsidianAnchorCompat } from './configs/obsidian-anchor-compat.mts'
+import { mysqlLanguage } from './languages/mysql.mts'
 
 export default defineConfig({
 	lang: 'zh-CN',
@@ -46,6 +47,8 @@ export default defineConfig({
 
 	// 核心 Markdown 渲染配置
 	markdown: {
+		// 额外加载的 TextMate 语法：```mysql 用真·MySQL 语法（内置只有 sql，见 languages/README.md）
+		languages: [mysqlLanguage],
 		config: (md) => {
 			md.use(autoLinkKeywordsPlugin)
 			md.use(autoDownloadPlugin)

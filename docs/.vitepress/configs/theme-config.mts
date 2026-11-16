@@ -65,6 +65,33 @@ export const themeConfig: DefaultTheme.Config = {
   search: {
     provider: 'local',
     options: {
+      // 中文分词：MiniSearch 默认只按空格/标点切，中文整句会变成一个词，
+      // 只能靠 prefix 命中句首（正文中间的词搜不到）。这里把中文段切成
+      // 「相邻两字」的二元词，再保留单字段，保证任意位置的词都能命中。
+      // 实测索引体积 604 KB → 约 0.9~1 MB（首次 Ctrl+K 才懒加载）。
+      // ⚠️ 必须自包含：VitePress 会用 toString() 序列化配置里的函数，
+      //    再 new Function 注入浏览器，所以不能引用外部变量、常量或 import。
+      miniSearch: {
+        options: {
+          tokenize: (text: string): string[] => {
+            const tokens: string[] = []
+            const segments = String(text).split(/[\s\p{P}\p{Z}]+/u)
+            for (const segment of segments) {
+              if (!segment) continue
+              if (/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/.test(segment)) {
+                const chars = [...segment]
+                if (chars.length === 1) tokens.push(chars[0])
+                for (let i = 0; i + 1 < chars.length; i++) {
+                  tokens.push(chars[i] + chars[i + 1])
+                }
+              } else {
+                tokens.push(segment.toLowerCase())
+              }
+            }
+            return tokens
+          }
+        }
+      },
       translations: {
         button: {
           buttonText: '搜索文档',
